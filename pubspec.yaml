@@ -1,0 +1,409 @@
+name: smart_home
+description: A new Flutter application.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  focus_detector: ^2.0.1
+
+  wifi_iot: ^0.3.17
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+  form_field_validator: ^1.1.0
+  path_provider: ^2.0.2
+  sqflite: ^1.0.0
+  encrypt: ^5.0.1
+  fluttertoast: ^8.0.8
+  percent_indicator: ^3.0.1
+  network_info_plus: ^2.1.4+1
+  geolocator: ^9.0.0
+  connectivity_plus: ^1.1.0
+  http: ^0.13.4
+  dart_notification_center: ^1.0.0+1
+  dots_indicator: ^2.0.0
+  group_list_view: ^1.0.6
+  numberpicker: ^2.0.1
+  week_of_year: ^2.0.0
+  intl: ^0.17.0
+  flutter_colorpicker: ^1.0.3
+
+
+
+
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - images/connected.png
+    - images/local_sig.png
+    - images/disconnected.png
+    - images/3g.png
+    - images/nonet.png
+    - images/remote01.png
+    - images/rooms/im_accounts.png
+    - images/rooms/im_accounts1.png
+    - images/rooms/im_bathroomm.png
+    - images/rooms/im_bathroomm1.png
+    - images/rooms/im_bedroom.png
+    - images/rooms/im_bedroom1.png
+    - images/rooms/im_cgm.png
+    - images/rooms/im_cgm1.png
+    - images/rooms/im_chef.png
+    - images/rooms/im_chef1.png
+    - images/rooms/im_childcare.png
+    - images/rooms/im_childcare1.png
+    - images/rooms/im_civilroom.png
+    - images/rooms/im_civilroom1.png
+    - images/rooms/im_conference.png
+    - images/rooms/im_conference1.png
+    - images/rooms/im_corridor.png
+    - images/rooms/im_corridor1.png
+    - images/rooms/im_cross.png
+    - images/rooms/im_cross1.png
+    - images/rooms/im_dgm.png
+    - images/rooms/im_dgm1.png
+    - images/rooms/im_diningroom.png
+    - images/rooms/im_diningroom1.png
+    - images/rooms/im_entertain.png
+    - images/rooms/im_entertain1.png
+    - images/rooms/im_entrance.png
+    - images/rooms/im_entrance1.png
+    - images/rooms/im_finance.png
+    - images/rooms/im_finance1.png
+    - images/rooms/im_garden.png
+    - images/rooms/im_garden1.png
+    - images/rooms/im_gm.png
+    - images/rooms/im_gm1.png
+    - images/rooms/im_guest.png
+    - images/rooms/im_guest1.png
+    - images/rooms/im_gym.png
+    - images/rooms/im_gym1.png
+    - images/rooms/im_hall.png
+    - images/rooms/im_hall1.png
+    - images/rooms/im_kitchen.png
+    - images/rooms/im_kitchen1.png
+    - images/rooms/im_laundryy.png
+    - images/rooms/im_laundryy1.png
+    - images/rooms/im_liftlobby.png
+    - images/rooms/im_liftlobby1.png
+    - images/rooms/im_liftspace.png
+    - images/rooms/im_liftspace1.png
+    - images/rooms/im_livingroom.png
+    - images/rooms/im_livingroom1.png
+    - images/rooms/im_movie.png
+    - images/rooms/im_movie1.png
+    - images/rooms/im_multimedia.png
+    - images/rooms/im_multimedia1.png
+    - images/rooms/im_om.png
+    - images/rooms/im_om1.png
+    - images/rooms/im_pa.png
+    - images/rooms/im_pa1.png
+    - images/rooms/im_playroom.png
+    - images/rooms/im_playroom1.png
+    - images/rooms/im_poojaa.png
+    - images/rooms/im_poojaa1.png
+    - images/rooms/im_ps.png
+    - images/rooms/im_ps1.png
+    - images/rooms/im_psaccount.png
+    - images/rooms/im_psaccount1.png
+    - images/rooms/im_psec.png
+    - images/rooms/im_psec1.png
+    - images/rooms/im_recept.png
+    - images/rooms/im_recept1.png
+    - images/rooms/im_reception.png
+    - images/rooms/im_reception1.png
+    - images/rooms/im_servent1.png
+    - images/rooms/im_servent.png
+    - images/rooms/im_serverroom.png
+    - images/rooms/im_serverroom1.png
+    - images/rooms/im_sikh.png
+    - images/rooms/im_sikh1.png
+    - images/rooms/im_stairs.png
+    - images/rooms/im_stairs1.png
+    - images/rooms/im_storeroom.png
+    - images/rooms/im_storeroom1.png
+    - images/rooms/im_studyroom.png
+    - images/rooms/im_studyroom1.png
+    - images/rooms/im_swimmingpool.png
+    - images/rooms/im_swimmingpool1.png
+    - images/rooms/im_toiletcorridor.png
+    - images/rooms/im_toiletcorridor1.png
+    - images/rooms/im_toiletdis.png
+    - images/rooms/im_toiletdis1.png
+    - images/rooms/im_toiletf.png
+    - images/rooms/im_toiletf1.png
+
+    - images/rooms/im_toiletm.png
+    - images/rooms/im_toiletm1.png
+    - images/rooms/im_visitorroom.png
+    - images/rooms/im_visitorroom1.png
+    - images/rooms/im_workstation.png
+    - images/rooms/im_workstation1.png
+    - images/gridicons/switch01.png
+    - images/gridicons/switch02.png
+    - images/gridicons/curtain01.png
+    - images/gridicons/curtain02.png
+    - images/gridicons/dimer01.png
+    - images/gridicons/dimer02.png
+    - images/gridicons/pir01.png
+    - images/gridicons/pir02.png
+    - images/gridicons/rgb01.png
+    - images/gridicons/rgb02.png
+    - images/gridicons/dog01.png
+    - images/gridicons/dog02.png
+    - images/gridicons/fm01.png
+    - images/gridicons/fm02.png
+    - images/gridicons/projector01.png
+    - images/gridicons/projector02.png
+    - images/gridicons/sprinkler01.png
+    - images/gridicons/sprinkler02.png
+    - images/gridicons/slide01.png
+    - images/gridicons/slide02.png
+    - images/gridicons/swing01.png
+    - images/gridicons/swing02.png
+    - images/gridicons/ac01.png
+    - images/gridicons/ac02.png
+    - images/gridicons/alxa01.png
+    - images/gridicons/alxa02.png
+    - images/gridicons/aqua01.png
+    - images/gridicons/aqua02.png
+    - images/gridicons/bell01.png
+    - images/gridicons/bell02.png
+    - images/gridicons/cam01.png
+    - images/gridicons/cam02.png
+    - images/gridicons/geyser01.png
+    - images/gridicons/geyser02.png
+    - images/gridicons/lock01.png
+    - images/gridicons/lock02.png
+    - images/gridicons/mir_n01.png
+    - images/gridicons/mir_p02.png
+    - images/gridicons/roller01.png
+    - images/gridicons/roller02.png
+    - images/gridicons/projectorlift01.png
+    - images/gridicons/projectorlift02.png
+
+
+    - images/switchicons/0.png
+    - images/switchicons/1.png
+    - images/switchicons/2.png
+    - images/switchicons/3.png
+    - images/switchicons/4.png
+    - images/switchicons/all_off.png
+    - images/switchicons/all_on.png
+    - images/switchicons/bulb_off.png
+    - images/switchicons/bulb_on.png
+    - images/switchicons/fan0.png
+    - images/switchicons/fan1.png
+    - images/switchicons/highvolt_off.png
+    - images/switchicons/highvolt_on.png
+    - images/switchicons/speed_down.png
+    - images/switchicons/speed_up.png
+    - images/switchicons/ac_off.png
+    - images/switchicons/ac_on.png
+    - images/switchicons/aqua_off.png
+    - images/switchicons/aqua_on.png
+    - images/switchicons/bulb_on.png
+    - images/switchicons/bulb_off.png
+    - images/switchicons/cfl_on.png
+    - images/switchicons/cfl_off.png
+    - images/switchicons/cur_on.png
+    - images/switchicons/cur_off.png
+    - images/switchicons/dimmer_on.png
+    - images/switchicons/dimmer_off.png
+    - images/switchicons/dlock_off.png
+    - images/switchicons/dlock_on.png
+    - images/switchicons/eb_off.png
+    - images/switchicons/eb_on.png
+    - images/switchicons/gey_off.png
+    - images/switchicons/gey_on.png
+    - images/switchicons/lamp_off.png
+    - images/switchicons/lamp_on.png
+    - images/switchicons/nameboard_off.png
+    - images/switchicons/nameboard_on.png
+    - images/switchicons/rgb_off.png
+    - images/switchicons/rgb_on.png
+    - images/switchicons/socket_off.png
+    - images/switchicons/socket_on.png
+    - images/switchicons/speaker_on.png
+    - images/switchicons/speaker_off.png
+    - images/switchicons/tb_off.png
+    - images/switchicons/tb_on.png
+    - images/switchicons/tv_on.png
+    - images/switchicons/tv_off.png
+
+    - images/Curtain/close.png
+    - images/Curtain/close01.png
+    - images/Curtain/open.png
+    - images/Curtain/open01.png
+    - images/Curtain/stop.png
+    - images/Curtain/stop01.png
+    - images/Curtain/slideclose.png
+    - images/Curtain/slideclose01.png
+    - images/Curtain/slideopen.png
+    - images/Curtain/slideopen01.png
+    - images/Curtain/swclose.png
+    - images/Curtain/swclose01.png
+    - images/Curtain/swopen.png
+    - images/Curtain/swopen01.png
+
+    - images/intensity.png
+    - images/intensity01.png
+    - images/motion.png
+    - images/motion01.png
+    - images/off.png
+    - images/on.png
+    - images/radio.png
+    - images/radio01.png
+    - images/timer_settings.png
+    - images/settings_icon.png
+    - images/switchicons/set.png
+    - images/switchicons/ir_reset.png
+    - images/switchicons/fan_speed.png
+    - images/switchicons/plus.png
+    - images/switchicons/minus.png
+    - images/Moods/mood1.png
+    - images/Moods/mood2.png
+    - images/Moods/mood3.png
+    - images/Moods/save_button.png
+    - images/Moods/moods.png
+
+    - images/RGB/blue.png
+    - images/RGB/downarrow.png
+    - images/RGB/fade01.png
+    - images/RGB/fade02.png
+    - images/RGB/flash01.png
+    - images/RGB/flash02.png
+    - images/RGB/green.png
+    - images/RGB/orange.png
+    - images/RGB/pink.png
+    - images/RGB/red.png
+    - images/RGB/smooth01.png
+    - images/RGB/smooth02.png
+    - images/RGB/strobe01.png
+    - images/RGB/strobe02.png
+    - images/RGB/uparrow.png
+    - images/RGB/white.png
+    - images/RGB/yellow.png
+
+
+    - images/navigation_icon/aboutus.png
+    - images/navigation_icon/aboutus01.png
+    - images/navigation_icon/add_home.png
+    - images/navigation_icon/home.png
+    - images/navigation_icon/home01.png
+    - images/navigation_icon/operator_settings.png
+    - images/navigation_icon/operator_settings01.png
+    - images/navigation_icon/support.png
+    - images/navigation_icon/support01.png
+    - images/navigation_icon/user_settings.png
+    - images/navigation_icon/user_settings01.png
+    - images/navigation_icon/homeauto.png
+    - images/usersettings/cancel.png
+    - images/usersettings/change_applock_password.png
+    - images/usersettings/change_user_password.png
+    - images/usersettings/delete_home.png
+    - images/usersettings/download_updates.png
+    - images/usersettings/ok.png
+    - images/usersettings/signin_another_acc.png
+    - images/UGA.png
+    - images/check_box.png
+    - images/check_box01.png
+    - images/up.png
+    - images/down.png
+    - images/GatewaySettings/date_time_display.png
+    - images/GatewaySettings/drop_down.png
+    - images/GatewaySettings/reboot_gateway.png
+    - images/GatewaySettings/select_date.png
+    - images/GatewaySettings/server_reboot.png
+    - images/GatewaySettings/set.png
+    - images/GatewaySettings/set_ssid.png
+    - images/GatewaySettings/ssid_edit_box.png
+    - images/GatewaySettings/edit.png
+    - images/Timer/f.png
+    - images/Timer/f01.png
+    - images/Timer/m.png
+    - images/Timer/m01.png
+    - images/Timer/set_operation.png
+    - images/Timer/sun_sat.png
+    - images/Timer/sun_sat01.png
+    - images/Timer/timer_list.png
+    - images/Timer/tue_thur.png
+    - images/Timer/tue_thur_01.png
+    - images/Timer/w.png
+    - images/Timer/w01.png
+    - images/Timer/check_box.png
+    - images/Timer/check_box01.png
+
+
+
+
+
+
+
+
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
