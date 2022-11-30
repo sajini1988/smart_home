@@ -654,7 +654,7 @@ class _MoodListPageState extends State<MoodListPage>{
       }
       );
     }
-    else if(ddevmodel =="PSC1"||  ddevmodel=="PLC1" || ddevmodel=="SOSH" || ddevmodel == "SWG1" || ddevmodel == "SLG1") {
+    else if(ddevmodel =="PSC1" || ddevmodel=="SOSH" || ddevmodel == "SWG1" || ddevmodel == "SLG1") {
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
@@ -671,7 +671,7 @@ class _MoodListPageState extends State<MoodListPage>{
       );
     }
 
-    else if(ddevmodel =="ACR1" || ddevmodel == "GSR1" || ddevmodel == "GSK1" || ddevmodel == "SDG1") {
+    else if(ddevmodel =="ACR1" || ddevmodel == "GSR1" || ddevmodel == "GSK1" || ddevmodel == "SDG1" || ddevmodel == "PLC1") {
       AlertDialog alert = AlertDialog(
 
         elevation: 0,

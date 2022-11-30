@@ -299,6 +299,8 @@ class _RoomNameEditPageState extends State<RoomNameEditPage>{
                                     String roomname= roomnameController.text;
                                     print(roomname);
 
+                                    showAlertDialogUpdateSuccess(context);
+
                                     DBProvider.db.updateSwitchBoardTableRName(hname, hnum, roomnumber.toString(), roomname);
                                     DBProvider.db.updateMasterTableRName(hname, hnum, roomnumber.toString(), roomname);
                                   }
@@ -312,6 +314,39 @@ class _RoomNameEditPageState extends State<RoomNameEditPage>{
               )
             ))
       ),
+    );
+  }
+
+  showAlertDialogUpdateSuccess(BuildContext context) {
+
+    // Create button
+    Widget yesButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        Navigator.of(context,rootNavigator: true).pop();
+
+        _value=0;
+        roomnumber=0;
+        getrooms();
+
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text("Updated"),
+      actions: [
+        yesButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 

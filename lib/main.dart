@@ -478,6 +478,8 @@ class MyHomePageState extends State<MyHomePage> {
         nwimage(s.networkconnected);
         swimage(s.socketconnected);
 
+        function1();
+
       },
       child: WillPopScope(
         onWillPop: () async {
@@ -522,7 +524,13 @@ class MyHomePageState extends State<MyHomePage> {
             children: <Widget>[
               Expanded(
                 //flex: 2,
-                child: Container(
+                child: Column(
+                children:[
+
+                  Image.asset("images/rooms/logo.png", fit: BoxFit.fill,height: 50.0,),
+
+                  Flexible(
+                    child:Container(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
 
@@ -612,7 +620,7 @@ class MyHomePageState extends State<MyHomePage> {
                                             child: Align(
                                               alignment: Alignment.bottomCenter,
                                               child: Text(snapshot.data[index]['b'],
-                                                  style: TextStyle(fontWeight: FontWeight.bold,fontSize: 10.0, color: selectedindexl == index ? Color.fromRGBO(66, 130, 208, 1) : Colors.grey,
+                                                  style: TextStyle(fontWeight: FontWeight.normal,fontSize: 11.0, color: selectedindexl == index ? Color.fromRGBO(66, 130, 208, 1) : Colors.grey,
                                                 ),
                                               ),
                                             ),
@@ -644,7 +652,7 @@ class MyHomePageState extends State<MyHomePage> {
                     },
                   ),
                 ),
-              ),
+              ),],),),
               Container(
                 width: 2.5,
                 height: double.maxFinite,
@@ -854,630 +862,640 @@ class MyHomePageState extends State<MyHomePage> {
 
   moodtap(String number)async{
 
-    DBHelper dbHelper = DBHelper();
 
-    mdb = MDBHelper();
+    if(userAdmin == "A" || userAdmin == "SA" || userAdmin == "U"){
 
-    hnum=_globalService.hnum;
-    rnum=_globalService.rnum;
-    hname=_globalService.hname;
+      DBHelper dbHelper = DBHelper();
 
-    List result = await dbHelper.getLocalDateHName(hname);
-   // print("res $result");
+      mdb = MDBHelper();
 
-    String username = result[0]['ld'];
+      hnum=_globalService.hnum;
+      rnum=_globalService.rnum;
+      hname=_globalService.hname;
 
-    List res = await mdb.getcountofmoods(hname,hnum, rnum, number, username);
-    f=0;
-  //  print("res count $res");
+      List result = await dbHelper.getLocalDateHName(hname);
+      // print("res $result");
 
-    if(res.length == 0){
+      String username = result[0]['ld'];
 
-      print("moods not set. Please set moods");
-      fluttertoast("Mood Not Set. Please set Moods");
-
-    }
-
-    else{
-
-      showDialog(
-          context: context,
-          barrierDismissible:false ,
-          builder: (BuildContext context) {
-            return Center(child: CircularProgressIndicator(),);
-          }
-      );
-
+      List res = await mdb.getcountofmoods(hname,hnum, rnum, number, username);
       f=0;
-      List res1 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S051", username);
-      for(int i=0;i<res1.length;i++){
+      //  print("res count $res");
 
-        b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
-        print("S051 $res1");
+      if(res.length == 0){
 
-        String deviceData = res1[i]['dd'];
-        String _s051dvnum = res1[i]['dno'];
-        String _s051Yes = res1[i]['ea'];
-
-        print("data $deviceData,$_s051dvnum,$_s051Yes");
-
-        if(_s051Yes.contains("Yes")){
-          switchboard(_s051dvnum, deviceData);
-          timerSwitch("s051");
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-      List res2 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S021", username);
-      for(int i=0;i<res2.length;i++){
-
-        b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
-        print("S021 $res2");
-
-        String deviceData = res2[i]['dd'];
-        String _s021dvnum = res2[i]['dno'];
-
-        String _s021Yes = res2[i]['ea'];
-
-        if(_s021Yes.contains("Yes")){
-          switchboard(_s021dvnum, deviceData);
-          timerSwitch("s021");
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res3 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S030", username);
-      for(int i=0;i<res3.length;i++){
-
-        b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
-        print("S030 $res3");
-
-        String deviceData = res3[i]['dd'];
-        String _s030dvnum = res3[i]['dno'];
-        String _s030Yes = res3[i]['ea'];
-
-        if(_s030Yes.contains("Yes")){
-          switchboard(_s030dvnum, deviceData);
-          timerSwitch("s030");
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-
+        print("moods not set. Please set moods");
+        fluttertoast("Mood Not Set. Please set Moods");
 
       }
 
-      List res4 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S080", username);
-      for(int i=0;i<res4.length;i++){
+      else{
 
-        b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
-        print("S080 $res4");
+        showDialog(
+            context: context,
+            barrierDismissible:false ,
+            builder: (BuildContext context) {
+              return Center(child: CircularProgressIndicator(),);
+            }
+        );
 
-        String deviceData = res4[i]['dd'];
-        String _s080dvnum = res4[i]['dno'];
-        String _s080Yes = res4[i]['ea'];
+        f=0;
+        List res1 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S051", username);
+        for(int i=0;i<res1.length;i++){
 
-        if(_s080Yes.contains("Yes")){
-          switchboard(_s080dvnum, deviceData);
-          timerSwitch("S080");
-          await Future.delayed(const Duration(milliseconds: 500));
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S051 $res1");
+
+          String deviceData = res1[i]['dd'];
+          String _s051dvnum = res1[i]['dno'];
+          String _s051Yes = res1[i]['ea'];
+
+          print("data $deviceData,$_s051dvnum,$_s051Yes");
+
+          if(_s051Yes.contains("Yes")){
+            switchboard(_s051dvnum, deviceData);
+            timerSwitch("s051");
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
         }
-      }
+        List res2 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S021", username);
+        for(int i=0;i<res2.length;i++){
 
-      List res5 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S020", username);
-      for(int i=0;i<res5.length;i++){
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S021 $res2");
 
-        b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
-        print("S020 $res5");
+          String deviceData = res2[i]['dd'];
+          String _s021dvnum = res2[i]['dno'];
 
-        String deviceData = res5[i]['dd'];
-        String _s020dvnum = res5[i]['dno'];
-        String _s020Yes = res5[i]['ea'];
+          String _s021Yes = res2[i]['ea'];
 
-        if(_s020Yes.contains("Yes")){
-          switchboard(_s020dvnum, deviceData);
-          timerSwitch("s020");
-          await Future.delayed(const Duration(milliseconds: 500));
+          if(_s021Yes.contains("Yes")){
+            switchboard(_s021dvnum, deviceData);
+            timerSwitch("s021");
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
         }
-      }
 
-      List res6 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S010", username);
-      for(int i=0;i<res6.length;i++){
+        List res3 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S030", username);
+        for(int i=0;i<res3.length;i++){
 
-        b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
-        print("S010 $res6");
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S030 $res3");
 
-        String deviceData = res6[i]['dd'];
-        String _s010dvnum = res6[i]['dno'];
-        String _s010Yes = res6[i]['ea'];
+          String deviceData = res3[i]['dd'];
+          String _s030dvnum = res3[i]['dno'];
+          String _s030Yes = res3[i]['ea'];
 
-        print("data $deviceData,dnum $_s010dvnum,yes $_s010Yes");
+          if(_s030Yes.contains("Yes")){
+            switchboard(_s030dvnum, deviceData);
+            timerSwitch("s030");
 
-        if(_s010Yes.contains("Yes")){
-          switchboard(_s010dvnum, deviceData);
-          timerSwitch("s010");
-          await Future.delayed(const Duration(milliseconds: 500));
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+
+
         }
-      }
 
-      List res7 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "CLNR", username);
+        List res4 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S080", username);
+        for(int i=0;i<res4.length;i++){
 
-      for(int i=0;i<res7.length;i++){
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S080 $res4");
 
-        String deviceData = res7[i]['dd'];
-        String curDvnum = res7[i]['dno'];
-        String curYes = res7[i]['ea'];
+          String deviceData = res4[i]['dd'];
+          String _s080dvnum = res4[i]['dno'];
+          String _s080Yes = res4[i]['ea'];
 
-        print("dd $deviceData dvnum$curDvnum yes$curYes");
+          if(_s080Yes.contains("Yes")){
+            switchboard(_s080dvnum, deviceData);
+            timerSwitch("S080");
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
 
-        if(curYes.contains("Yes")){
+        List res5 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S020", username);
+        for(int i=0;i<res5.length;i++){
 
-          print(" CLNR $res7");
-          List<String> dvnum = curDvnum.split(',');
-          print(dvnum);
-          List<String> data = deviceData.split(',');
-          print(data);
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S020 $res5");
 
-          String dvnumcu,dvnumsh,datacu,dataSh,curdata,sheerData;
+          String deviceData = res5[i]['dd'];
+          String _s020dvnum = res5[i]['dno'];
+          String _s020Yes = res5[i]['ea'];
 
-          if(data.length == 1){
+          if(_s020Yes.contains("Yes")){
+            switchboard(_s020dvnum, deviceData);
+            timerSwitch("s020");
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
 
-            dvnumcu = dvnum[0];
-            datacu = data[0];
+        List res6 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S010", username);
+        for(int i=0;i<res6.length;i++){
 
-            curdata = dvnumcu+','+datacu;
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S010 $res6");
 
+          String deviceData = res6[i]['dd'];
+          String _s010dvnum = res6[i]['dno'];
+          String _s010Yes = res6[i]['ea'];
+
+          print("data $deviceData,dnum $_s010dvnum,yes $_s010Yes");
+
+          if(_s010Yes.contains("Yes")){
+            switchboard(_s010dvnum, deviceData);
+            timerSwitch("s010");
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res7 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "CLNR", username);
+
+        for(int i=0;i<res7.length;i++){
+
+          String deviceData = res7[i]['dd'];
+          String curDvnum = res7[i]['dno'];
+          String curYes = res7[i]['ea'];
+
+          print("dd $deviceData dvnum$curDvnum yes$curYes");
+
+          if(curYes.contains("Yes")){
+
+            print(" CLNR $res7");
+            List<String> dvnum = curDvnum.split(',');
+            print(dvnum);
+            List<String> data = deviceData.split(',');
+            print(data);
+
+            String dvnumcu,dvnumsh,datacu,dataSh,curdata,sheerData;
+
+            if(data.length == 1){
+
+              dvnumcu = dvnum[0];
+              datacu = data[0];
+
+              curdata = dvnumcu+','+datacu;
+
+              Timer(Duration(seconds: f
+              ), () {
+                print(f);
+                print("Yeah cu_n, this line is printed after $f second");
+                curtain(curdata);
+                f+=1;
+              });
+
+            }
+            else if(dvnum.length == 2){
+
+              dvnumcu = dvnum[0];
+              dvnumsh = dvnum[1];
+
+              datacu = data[0];
+              dataSh = data[1];
+
+              curdata = dvnumcu+','+datacu;
+              sheerData = dvnumsh +','+dataSh;
+
+              Timer(Duration(seconds: f
+              ), () {
+                print(f);
+                print("Yeah cu_n, this line is printed after $f second");
+                curtain(curdata);
+                f+=1;
+              });
+
+              await Future.delayed(const Duration(milliseconds: 500));
+
+              print("clnrsh $f");
+              Timer(Duration(seconds: f
+              ), () {
+                print(f);
+                print("Yeah cn_sh, this line is printed after $f second");
+                curtain(sheerData);
+                f+=1;
+
+              });
+
+            }
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res8 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "CRS1", username);
+
+        for(int i=0;i<res8.length;i++){
+
+          String deviceData = res8[i]['dd'];
+          String curDvnum = res8[i]['dno'];
+          String curYes = res8[i]['ea'];
+
+          if(curYes.contains("Yes")){
+
+            print("CRS1 $res8");
+
+            List<String> dvnum = curDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumcu = dvnum[0];
+            String datacu = data[0];
+
+            String curdata = dvnumcu+','+datacu;
+
+            print("fcr is $f");
             Timer(Duration(seconds: f
             ), () {
-              print(f);
-              print("Yeah cu_n, this line is printed after $f second");
+              print("Yeah crs, this line is printed after $f second");
               curtain(curdata);
-              f+=1;
+              f+=0;
+
             });
 
+            await Future.delayed(const Duration(milliseconds: 500));
           }
-          else if(dvnum.length == 2){
+        }
 
-            dvnumcu = dvnum[0];
-            dvnumsh = dvnum[1];
+        List res9 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "CLS1", username);
+        for(int i=0;i<res9.length;i++){
 
-            datacu = data[0];
-            dataSh = data[1];
+          String deviceData = res9[i]['dd'];
+          String curDvnum = res9[i]['dno'];
+          String curYes = res9[i]['ea'];
 
-            curdata = dvnumcu+','+datacu;
-            sheerData = dvnumsh +','+dataSh;
+          if(curYes.contains("Yes")){
 
+            print("CLS1 $res9");
+
+            List<String> dvnum = curDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumcu = dvnum[0];
+            String datacu = data[0];
+
+            String curdata = dvnumcu+','+datacu;
+
+            print("cls1 $f");
             Timer(Duration(seconds: f
             ), () {
               print(f);
-              print("Yeah cu_n, this line is printed after $f second");
+              print("Yeah cls, this line is printed after $f second");
               curtain(curdata);
-              f+=1;
+              f+=0;
+
             });
 
             await Future.delayed(const Duration(milliseconds: 500));
 
-            print("clnrsh $f");
-            Timer(Duration(seconds: f
-            ), () {
-              print(f);
-              print("Yeah cn_sh, this line is printed after $f second");
-              curtain(sheerData);
-              f+=1;
-
-            });
-
           }
 
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res8 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "CRS1", username);
-
-      for(int i=0;i<res8.length;i++){
-
-        String deviceData = res8[i]['dd'];
-        String curDvnum = res8[i]['dno'];
-        String curYes = res8[i]['ea'];
-
-        if(curYes.contains("Yes")){
-
-          print("CRS1 $res8");
-
-          List<String> dvnum = curDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumcu = dvnum[0];
-          String datacu = data[0];
-
-          String curdata = dvnumcu+','+datacu;
-
-          print("fcr is $f");
-          Timer(Duration(seconds: f
-          ), () {
-            print("Yeah crs, this line is printed after $f second");
-            curtain(curdata);
-            f+=0;
-
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res9 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "CLS1", username);
-      for(int i=0;i<res9.length;i++){
-
-        String deviceData = res9[i]['dd'];
-        String curDvnum = res9[i]['dno'];
-        String curYes = res9[i]['ea'];
-
-        if(curYes.contains("Yes")){
-
-          print("CLS1 $res9");
-
-          List<String> dvnum = curDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumcu = dvnum[0];
-          String datacu = data[0];
-
-          String curdata = dvnumcu+','+datacu;
-
-          print("cls1 $f");
-          Timer(Duration(seconds: f
-          ), () {
-            print(f);
-            print("Yeah cls, this line is printed after $f second");
-            curtain(curdata);
-            f+=0;
-
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-
         }
 
-      }
+        List res10 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SOSH", username);
+        for(int i=0;i<res10.length;i++) {
+          String deviceData = res10[i]['dd'];
+          String soshDvnum = res10[i]['dno'];
+          String soshYes = res10[i]['ea'];
 
-      List res10 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SOSH", username);
-      for(int i=0;i<res10.length;i++) {
-        String deviceData = res10[i]['dd'];
-        String soshDvnum = res10[i]['dno'];
-        String soshYes = res10[i]['ea'];
+          if (soshYes==("Yes")) {
+            print("SOSH $res10");
 
-        if (soshYes==("Yes")) {
-          print("SOSH $res10");
+            List<String> dvnum = soshDvnum.split(',');
+            List<String> data = deviceData.split(',');
 
-          List<String> dvnum = soshDvnum.split(',');
-          List<String> data = deviceData.split(',');
+            String dvnumSosh = dvnum[0];
+            String dataSosh = data[0];
 
-          String dvnumSosh = dvnum[0];
-          String dataSosh = data[0];
-
-          String soshData = dvnumSosh + ',' + dataSosh;
-
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(soshData
-            );
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-
-      }
-
-      List res11 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SWG1", username);
-      for(int i=0;i<res11.length;i++) {
-        String deviceData = res11[i]['dd'];
-        String swingDvnum = res11[i]['dno'];
-        String swingYes = res11[i]['ea'];
-
-        if (swingYes==("Yes")) {
-          print("SWG1 $res11");
-
-
-          List<String> dvnum = swingDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumSwg = dvnum[0];
-          String dataSwg= data[0];
-
-          String swngData = dvnumSwg + ',' + dataSwg;
-
-          Timer(Duration(seconds: f
-          ), () {
-            print(f);
-            print("Yeah cls, this line is printed after $f second");
-            curtain(swngData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res12 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SLG1", username);
-      for(int i=0;i<res12.length;i++) {
-        String deviceData = res12[i]['dd'];
-        String slideDvnum = res12[i]['dno'];
-        String slideYes = res12[i]['ea'];
-
-        if (slideYes==("Yes")) {
-          print("SLG1 $res12");
-
-          List<String> dvnum = slideDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumSlg = dvnum[0];
-          String dataSlg= data[0];
-
-          String swngData = dvnumSlg + ',' + dataSlg;
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(swngData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res13 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "GSK1", username);
-      for(int i=0;i<res13.length;i++) {
-        String deviceData = res13[i]['dd'];
-        String spnkDvnum = res13[i]['dno'];
-        String spnkYes = res13[i]['ea'];
-
-        if (spnkYes==("Yes")) {
-          print("SLG1 $res12");
-
-          List<String> dvnum = spnkDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumSpnk = dvnum[0];
-          String dataSpnk= data[0];
-
-          String spnkData = dvnumSpnk + ',' + dataSpnk;
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(spnkData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-
-
-      }
-
-      List res14 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SDG1", username);
-
-      for(int i=0;i<res14.length;i++) {
-        String deviceData = res14[i]['dd'];
-        String sdgDvnum = res14[i]['dno'];
-        String sdgYes = res14[i]['ea'];
-
-        if (sdgYes==("Yes")) {
-          print("SLG1 $res12");
-
-          List<String> dvnum = sdgDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumSdg = dvnum[0];
-          String dataSdg= data[0];
-
-          String spnkData = dvnumSdg + ',' + dataSdg;
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(spnkData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res15 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "PSC1", username);
-      for(int i=0;i<res15.length;i++) {
-        String deviceData = res15[i]['dd'];
-        String sdgDvnum = res15[i]['dno'];
-        String sdgYes = res15[i]['ea'];
-
-        if (sdgYes==("Yes")) {
-          print("SLG1 $res15");
-
-          List<String> dvnum = sdgDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumSdg = dvnum[0];
-          String dataSdg= data[0];
-
-          String spnkData = dvnumSdg + ',' + dataSdg;
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(spnkData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res16 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "PLC1", username);
-      for(int i=0;i<res16.length;i++) {
-        String deviceData = res16[i]['dd'];
-        String sdgDvnum = res16[i]['dno'];
-        String sdgYes = res16[i]['ea'];
-
-        if (sdgYes==("Yes")) {
-          print("SLG1 $res16");
-
-          List<String> dvnum = sdgDvnum.split(',');
-
-          List<String> data = deviceData.split(',');
-
-          String dvnumSdg = dvnum[0];
-          String dataSdg= data[0];
-
-          String spnkData = dvnumSdg + ',' + dataSdg;
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(spnkData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res17 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "ACR1", username);
-      for(int i=0;i<res17.length;i++) {
-        String deviceData = res17[i]['dd'];
-        String sdgDvnum = res17[i]['dno'];
-        String sdgYes = res17[i]['ea'];
-
-        if (sdgYes==("Yes")) {
-          print("SLG1 $res17");
-
-          List<String> dvnum = sdgDvnum.split(',');
-          List<String> data = deviceData.split(',');
-
-          String dvnumSdg = dvnum[0];
-          String dataSdg= data[0];
-
-          String spnkData = dvnumSdg + ',' + dataSdg;
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(spnkData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res18 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "GSR1", username);
-      for(int i=0;i<res18.length;i++) {
-        String deviceData = res18[i]['dd'];
-        String sdgDvnum = res18[i]['dno'];
-        String sdgYes = res18[i]['ea'];
-
-        if (sdgYes==("Yes")) {
-          print("SLG1 $res18");
-
-          List<String> dvnum = sdgDvnum.split(',');
-
-          List<String> data = deviceData.split(',');
-
-          String dvnumSdg = dvnum[0];
-          String dataSdg= data[0];
-
-          String spnkData = dvnumSdg + ',' + dataSdg;
-
-          Timer(Duration(seconds: f
-          ), () {
-            curtain(spnkData);
-            f += 0;
-          });
-
-          await Future.delayed(const Duration(milliseconds: 500));
-        }
-      }
-
-      List res19 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "RGB1", username);
-      print("res $res19");
-      for(int i=0;i<res19.length;i++) {
-        String deviceData = res19[i]['dd'];
-        String rgbDvnum = res19[i]['dno'];
-        String rgbYes = res19[i]['ea'];
-
-        if (rgbYes==("Yes")) {
-
-          print(" data rgb yes $deviceData,$rgbDvnum,$rgbYes");
-          List<String> dvnum = rgbDvnum.split(',');
-          String dvnumRgb = dvnum[0];
-          String onOff = res19[i]['OnOff'];
-
-
-          if(onOff == "1"){
-
-            String rgbData = dvnumRgb + ',' + "102";
-            List<String> dd = deviceData.split(';');
-            String dd0=dd[0];
-            String dd1=dd[1];
-            String dd2=dd[2];
-
-            final splitData0 = dd0
-                .split(",")
-                .map((x) => x.trim())
-                .where((element) =>
-            element.isNotEmpty)
-                .toList();
-
-
-            final splitData1 = dd1
-                .split(",")
-                .map((x) => x.trim())
-                .where((element) =>
-            element.isNotEmpty)
-                .toList();
-
-            final splitData2 = dd2
-                .split(",")
-                .map((x) => x.trim())
-                .where((element) =>
-            element.isNotEmpty)
-                .toList();
+            String soshData = dvnumSosh + ',' + dataSosh;
 
 
             Timer(Duration(seconds: f
             ), () {
-              curtain(rgbData);
+              curtain(soshData
+              );
               f += 0;
             });
 
             await Future.delayed(const Duration(milliseconds: 500));
-            transmitData(splitData0[0],splitData0[1],splitData0[2],splitData0[3],splitData0[4]);
-
-            await Future.delayed(const Duration(milliseconds: 500));
-            transmitData(splitData1[0],splitData1[1],splitData1[2],splitData1[3],splitData1[4]);
-
-            await Future.delayed(const Duration(milliseconds: 500));
-            transmitData(splitData2[0],splitData2[1],splitData2[2],splitData2[3],splitData2[4]);
-
-
-            await Future.delayed(const Duration(milliseconds: 0));
-
           }
-          else{
 
-            String rgbData = dvnumRgb + ',' + "103";
+        }
+
+        List res11 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SWG1", username);
+        for(int i=0;i<res11.length;i++) {
+          String deviceData = res11[i]['dd'];
+          String swingDvnum = res11[i]['dno'];
+          String swingYes = res11[i]['ea'];
+
+          if (swingYes==("Yes")) {
+            print("SWG1 $res11");
+
+
+            List<String> dvnum = swingDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumSwg = dvnum[0];
+            String dataSwg= data[0];
+
+            String swngData = dvnumSwg + ',' + dataSwg;
 
             Timer(Duration(seconds: f
             ), () {
-              curtain(rgbData);
+              print(f);
+              print("Yeah cls, this line is printed after $f second");
+              curtain(swngData);
               f += 0;
             });
 
-            await Future.delayed(const Duration(milliseconds: 0));
+            await Future.delayed(const Duration(milliseconds: 500));
           }
         }
 
+        List res12 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SLG1", username);
+        for(int i=0;i<res12.length;i++) {
+          String deviceData = res12[i]['dd'];
+          String slideDvnum = res12[i]['dno'];
+          String slideYes = res12[i]['ea'];
 
+          if (slideYes==("Yes")) {
+            print("SLG1 $res12");
+
+            List<String> dvnum = slideDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumSlg = dvnum[0];
+            String dataSlg= data[0];
+
+            String swngData = dvnumSlg + ',' + dataSlg;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(swngData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res13 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "GSK1", username);
+        for(int i=0;i<res13.length;i++) {
+          String deviceData = res13[i]['dd'];
+          String spnkDvnum = res13[i]['dno'];
+          String spnkYes = res13[i]['ea'];
+
+          if (spnkYes==("Yes")) {
+            print("SLG1 $res12");
+
+            List<String> dvnum = spnkDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumSpnk = dvnum[0];
+            String dataSpnk= data[0];
+
+            String spnkData = dvnumSpnk + ',' + dataSpnk;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(spnkData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+
+
+        }
+
+        List res14 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "SDG1", username);
+
+        for(int i=0;i<res14.length;i++) {
+          String deviceData = res14[i]['dd'];
+          String sdgDvnum = res14[i]['dno'];
+          String sdgYes = res14[i]['ea'];
+
+          if (sdgYes==("Yes")) {
+            print("SLG1 $res12");
+
+            List<String> dvnum = sdgDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumSdg = dvnum[0];
+            String dataSdg= data[0];
+
+            String spnkData = dvnumSdg + ',' + dataSdg;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(spnkData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res15 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "PSC1", username);
+        for(int i=0;i<res15.length;i++) {
+          String deviceData = res15[i]['dd'];
+          String sdgDvnum = res15[i]['dno'];
+          String sdgYes = res15[i]['ea'];
+
+          if (sdgYes==("Yes")) {
+            print("SLG1 $res15");
+
+            List<String> dvnum = sdgDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumSdg = dvnum[0];
+            String dataSdg= data[0];
+
+            String spnkData = dvnumSdg + ',' + dataSdg;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(spnkData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res16 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "PLC1", username);
+        for(int i=0;i<res16.length;i++) {
+          String deviceData = res16[i]['dd'];
+          String sdgDvnum = res16[i]['dno'];
+          String sdgYes = res16[i]['ea'];
+
+          if (sdgYes==("Yes")) {
+            print("SLG1 $res16");
+
+            List<String> dvnum = sdgDvnum.split(',');
+
+            List<String> data = deviceData.split(',');
+
+            String dvnumSdg = dvnum[0];
+            String dataSdg= data[0];
+
+            String spnkData = dvnumSdg + ',' + dataSdg;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(spnkData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res17 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "ACR1", username);
+        for(int i=0;i<res17.length;i++) {
+          String deviceData = res17[i]['dd'];
+          String sdgDvnum = res17[i]['dno'];
+          String sdgYes = res17[i]['ea'];
+
+          if (sdgYes==("Yes")) {
+            print("SLG1 $res17");
+
+            List<String> dvnum = sdgDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumSdg = dvnum[0];
+            String dataSdg= data[0];
+
+            String spnkData = dvnumSdg + ',' + dataSdg;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(spnkData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res18 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "GSR1", username);
+        for(int i=0;i<res18.length;i++) {
+          String deviceData = res18[i]['dd'];
+          String sdgDvnum = res18[i]['dno'];
+          String sdgYes = res18[i]['ea'];
+
+          if (sdgYes==("Yes")) {
+            print("SLG1 $res18");
+
+            List<String> dvnum = sdgDvnum.split(',');
+
+            List<String> data = deviceData.split(',');
+
+            String dvnumSdg = dvnum[0];
+            String dataSdg= data[0];
+
+            String spnkData = dvnumSdg + ',' + dataSdg;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(spnkData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res19 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "RGB1", username);
+        print("res $res19");
+        for(int i=0;i<res19.length;i++) {
+          String deviceData = res19[i]['dd'];
+          String rgbDvnum = res19[i]['dno'];
+          String rgbYes = res19[i]['ea'];
+
+          if (rgbYes==("Yes")) {
+
+            print(" data rgb yes $deviceData,$rgbDvnum,$rgbYes");
+            List<String> dvnum = rgbDvnum.split(',');
+            String dvnumRgb = dvnum[0];
+            String onOff = res19[i]['OnOff'];
+
+
+            if(onOff == "1"){
+
+              String rgbData = dvnumRgb + ',' + "102";
+              List<String> dd = deviceData.split(';');
+              String dd0=dd[0];
+              String dd1=dd[1];
+              String dd2=dd[2];
+
+              final splitData0 = dd0
+                  .split(",")
+                  .map((x) => x.trim())
+                  .where((element) =>
+              element.isNotEmpty)
+                  .toList();
+
+
+              final splitData1 = dd1
+                  .split(",")
+                  .map((x) => x.trim())
+                  .where((element) =>
+              element.isNotEmpty)
+                  .toList();
+
+              final splitData2 = dd2
+                  .split(",")
+                  .map((x) => x.trim())
+                  .where((element) =>
+              element.isNotEmpty)
+                  .toList();
+
+
+              Timer(Duration(seconds: f
+              ), () {
+                curtain(rgbData);
+                f += 0;
+              });
+
+              await Future.delayed(const Duration(milliseconds: 500));
+              transmitData(splitData0[0],splitData0[1],splitData0[2],splitData0[3],splitData0[4]);
+
+              await Future.delayed(const Duration(milliseconds: 500));
+              transmitData(splitData1[0],splitData1[1],splitData1[2],splitData1[3],splitData1[4]);
+
+              await Future.delayed(const Duration(milliseconds: 500));
+              transmitData(splitData2[0],splitData2[1],splitData2[2],splitData2[3],splitData2[4]);
+
+
+              await Future.delayed(const Duration(milliseconds: 0));
+
+            }
+            else{
+
+              String rgbData = dvnumRgb + ',' + "103";
+
+              Timer(Duration(seconds: f
+              ), () {
+                curtain(rgbData);
+                f += 0;
+              });
+
+              await Future.delayed(const Duration(milliseconds: 0));
+            }
+          }
+
+
+        }
+        Navigator.of(context,rootNavigator: true).pop();
       }
-      Navigator.of(context,rootNavigator: true).pop();
+
     }
+    else if(userAdmin == "G"){
+      fluttertoast("Access Denied");
+    }
+
+
 
 
   }
@@ -1969,387 +1987,400 @@ class MyHomePageState extends State<MyHomePage> {
     modeltypeset = _globalService.modeltype;
     devicenameset = _globalService.devicename;
 
-    if(ddevmodel == ("SDG1") || ddevmodel == ("GSR1") || ddevmodel == ("ACR1") || ddevmodel == ("GSK1") ){
+    if (userAdmin == "G") {
 
-      AlertDialog alert = AlertDialog(
-
-        elevation:0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        //insetPadding: EdgeInsets.all(5.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        title: Text(""),
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodOnPage(number: "0"),
-        ),
-        //content: //MoodS010Page(number: "0"),
-        backgroundColor: Colors.transparent,
-        actions: [],
-      );
-      showDialog(
-        // barrierColor: Colors.white.withOpacity(0),
-          barrierDismissible: false,
-          context: context, builder: (BuildContext context) {
-
-        return alert;
-      }
-      );
-
-    }
-
-    else if (ddevmodel==("RGB1")) {
-      AlertDialog alert = AlertDialog(
-
-        elevation:0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        title: Text(""),
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodRGBPage(number: "0"),
-        ),
-        //content: //MoodS010Page(number: "0"),
-        backgroundColor: Colors.transparent,
-        actions: [],
-      );
-      showDialog(
-        // barrierColor: Colors.white.withOpacity(0),
-          barrierDismissible: false,
-          context: context, builder: (BuildContext context) {
-
-        return alert;
-      }
-      );
-    }
-    else if (ddevmodel==("S010")) {
-      AlertDialog alert = AlertDialog(
-
-        elevation:0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        //insetPadding: EdgeInsets.all(5.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        title: Text(""),
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodS010Page(number: "0"),
-        ),
-        //content: //MoodS010Page(number: "0"),
-        backgroundColor: Colors.transparent,
-        actions: [],
-      );
-      showDialog(
-         // barrierColor: Colors.white.withOpacity(0),
-          barrierDismissible: false,
-          context: context, builder: (BuildContext context) {
-
-        return alert;
-      }
-      );
-    }
-    else if(ddevmodel==("S051")){
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        title:Text(""),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:S051Page(number: "0"),
-        ),
-
-       // content: S051Page(number: "0"),
-        backgroundColor: Colors.transparent,
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
-    }
-    else if(ddevmodel==("S080")){
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        // ),
-        title: Text(""),
-        //content: MoodS080Page(number: "0",),
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodS080Page(number: "0"),
-        ),
-
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
-    }
-    else if(ddevmodel==("S020")){
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        // ),
-        title: Text(""),
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-       // content: MoodS020Page(number: "0",),
-        backgroundColor: Colors.transparent,
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodS020Page(number: "0"),
-        ),
-
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
-    }
-
-    else if(ddevmodel==("S021")){
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        // ),
-        title: Text(""),
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
-        //content: MoodS021Page(number: "0",),
-
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodS021Page(number: "0"),
-        ),
-
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
-    }
-
-    else if(ddevmodel==("S030")){
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        //),
-        title: Text(""),
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
-       // content: MoodS030Page(number: "0",),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodS030Page(number: "0"),
-        ),
-
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
-    }
-    else if(ddevmodel==("CLS1")){
-
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        //),
-        title: Text(""),
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodCurtain(number: "0"),
-        ),
-
-        //content: MoodCurtain(number: "0",),
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
-    }
-    else if(ddevmodel==("CRS1")){
-
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        title: Text(""),
-        //content: MoodCurtain(number: "0",),
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodCurtain(number: "0"),
-        ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-    }
-    else if(ddevmodel==("CLNR")) {
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        //),
-        title: Text(""),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodCurtain(number: "0"),
-        ),
-
-       // content: MoodCurtain(number: "0",),
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
-
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context) {
-        return alert;
-      }
-      );
-    }
-    else if(ddevmodel =="PSC1"||  ddevmodel=="PLC1" || ddevmodel=="SOSH" || ddevmodel == "SWG1" || ddevmodel == 'SLG1'){
-
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        title: Text(""),
-        //content: MoodCurtain(number: "0",),
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width*0.75,
-          child:MoodProjSom(number: "0"),
-        ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
-    }
-    else if(ddevmodel==("WPD1"))
-    {
       fluttertoast("Access Denied");
+
     }
-    else if(ddevmodel==("WPS1"))
-    {
-      fluttertoast("Access Denied");
+    else if(userAdmin == "U" || userAdmin == "SA" || userAdmin == "A"){
+
+
+      if(ddevmodel == ("SDG1") || ddevmodel == ("GSR1") || ddevmodel == ("ACR1") || ddevmodel == ("GSK1") || ddevmodel == ("PLC1")){
+
+        AlertDialog alert = AlertDialog(
+
+          elevation:0,
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          //insetPadding: EdgeInsets.all(5.0),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          title: Text(""),
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodOnPage(number: "0"),
+          ),
+          //content: //MoodS010Page(number: "0"),
+          backgroundColor: Colors.transparent,
+          actions: [],
+        );
+        showDialog(
+          // barrierColor: Colors.white.withOpacity(0),
+            barrierDismissible: false,
+            context: context, builder: (BuildContext context) {
+
+          return alert;
+        }
+        );
+
+      }
+
+      else if (ddevmodel==("RGB1")) {
+        AlertDialog alert = AlertDialog(
+
+          elevation:0,
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          title: Text(""),
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodRGBPage(number: "0"),
+          ),
+          //content: //MoodS010Page(number: "0"),
+          backgroundColor: Colors.transparent,
+          actions: [],
+        );
+        showDialog(
+          // barrierColor: Colors.white.withOpacity(0),
+            barrierDismissible: false,
+            context: context, builder: (BuildContext context) {
+
+          return alert;
+        }
+        );
+      }
+      else if (ddevmodel==("S010")) {
+        AlertDialog alert = AlertDialog(
+
+          elevation:0,
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          //insetPadding: EdgeInsets.all(5.0),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          title: Text(""),
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodS010Page(number: "0"),
+          ),
+          //content: //MoodS010Page(number: "0"),
+          backgroundColor: Colors.transparent,
+          actions: [],
+        );
+        showDialog(
+          // barrierColor: Colors.white.withOpacity(0),
+            barrierDismissible: false,
+            context: context, builder: (BuildContext context) {
+
+          return alert;
+        }
+        );
+      }
+      else if(ddevmodel==("S051")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          title:Text(""),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:S051Page(number: "0"),
+          ),
+
+          // content: S051Page(number: "0"),
+          backgroundColor: Colors.transparent,
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     MoodS051()
+          //   ],
+          // ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+      else if(ddevmodel==("S080")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          // insetPadding: EdgeInsets.symmetric(
+          //   horizontal: 50.0,
+          //   vertical: 100.0,
+          // ),
+          title: Text(""),
+          //content: MoodS080Page(number: "0",),
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodS080Page(number: "0"),
+          ),
+
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     MoodS051()
+          //   ],
+          // ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+      else if(ddevmodel==("S020")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          // insetPadding: EdgeInsets.symmetric(
+          //   horizontal: 50.0,
+          //   vertical: 100.0,
+          // ),
+          title: Text(""),
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          // content: MoodS020Page(number: "0",),
+          backgroundColor: Colors.transparent,
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodS020Page(number: "0"),
+          ),
+
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     MoodS051()
+          //   ],
+          // ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+
+      else if(ddevmodel==("S021")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          // insetPadding: EdgeInsets.symmetric(
+          //   horizontal: 50.0,
+          //   vertical: 100.0,
+          // ),
+          title: Text(""),
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          //content: MoodS021Page(number: "0",),
+
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodS021Page(number: "0"),
+          ),
+
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     MoodS051()
+          //   ],
+          // ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+
+      else if(ddevmodel==("S030")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          // insetPadding: EdgeInsets.symmetric(
+          //   horizontal: 50.0,
+          //   vertical: 100.0,
+          //),
+          title: Text(""),
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          // content: MoodS030Page(number: "0",),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodS030Page(number: "0"),
+          ),
+
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     MoodS051()
+          //   ],
+          // ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+      else if(ddevmodel==("CLS1")){
+
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          // insetPadding: EdgeInsets.symmetric(
+          //   horizontal: 50.0,
+          //   vertical: 100.0,
+          //),
+          title: Text(""),
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodCurtain(number: "0"),
+          ),
+
+          //content: MoodCurtain(number: "0",),
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     MoodS051()
+          //   ],
+          // ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+      else if(ddevmodel==("CRS1")){
+
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          title: Text(""),
+          //content: MoodCurtain(number: "0",),
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodCurtain(number: "0"),
+          ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+      }
+      else if(ddevmodel==("CLNR")) {
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          // insetPadding: EdgeInsets.symmetric(
+          //   horizontal: 50.0,
+          //   vertical: 100.0,
+          //),
+          title: Text(""),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodCurtain(number: "0"),
+          ),
+
+          // content: MoodCurtain(number: "0",),
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          // new Row(
+          //   mainAxisSize: MainAxisSize.min,
+          //   crossAxisAlignment: CrossAxisAlignment.start,
+          //   children: <Widget>[
+          //     MoodS051()
+          //   ],
+          // ),
+
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context) {
+          return alert;
+        }
+        );
+      }
+      else if(ddevmodel =="PSC1" || ddevmodel=="SOSH" || ddevmodel == "SWG1" || ddevmodel == 'SLG1'){
+
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          title: Text(""),
+          //content: MoodCurtain(number: "0",),
+          contentPadding: EdgeInsets.zero,
+          titlePadding: EdgeInsets.zero,
+          backgroundColor: Colors.transparent,
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          content: Container(
+            width: MediaQuery.of(context).size.width*0.75,
+            child:MoodProjSom(number: "0"),
+          ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+      else if(ddevmodel==("WPD1"))
+      {
+        fluttertoast("Access Denied");
+      }
+      else if(ddevmodel==("WPS1"))
+      {
+        fluttertoast("Access Denied");
+      }
+      else
+      {
+        fluttertoast("Access Denied");
+      }
+
+
     }
-    else
-    {
-      fluttertoast("Access Denied");
-    }
+
+
   }
 
   getchild(){
