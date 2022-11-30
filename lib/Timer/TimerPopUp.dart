@@ -118,8 +118,8 @@ class _TimerpageState extends State<Timerpage>{
 
     repVisible=true;
     repPatternVisible= true;
-    cycVisible=false;
-    dateVisible=false;
+    cycVisible=true;
+    dateVisible=true;
 
     sunday=false;
     monday=false;
@@ -272,11 +272,14 @@ class _TimerpageState extends State<Timerpage>{
         home: Scaffold(
           body: Center(
               child:Container(
-                width: MediaQuery.of(context).size.width ,
-                color: Colors.white,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height ,
+                  padding: EdgeInsets.all(0),
+                  color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+
                       Expanded(
                         flex:1,
                         child: Row(
@@ -590,39 +593,66 @@ class _TimerpageState extends State<Timerpage>{
                         ),
                       ),
 
-                      SizedBox(height: 1),
+                     // Expanded(child: SizedBox.shrink()),
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                      child:
+                      Expanded(
+                        flex:1,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              flex:5,
+                              child: Center(child: Text("FROM")),
+                            ),
+                            Expanded(
+                              flex:5,
+                              child: Center(child: Text("TO")),
+                            ),
+                          ],
+                        ),
+
+                      ),
+                  ),
+
 
 
                       Expanded(
-                        flex:2,
+                        flex:1,
                         child: Container(
                           color: Colors.white,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children:[
-                              Expanded(
-                                flex:1,
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Expanded(
-                                      flex:5,
-                                      child: Center(child: Text("FROM")),
-                                    ),
-                                    Expanded(
-                                      flex:5,
-                                      child: Center(child: Text("TO")),
-                                    ),
-                                ],
-                                )
-                              ),
+                              // Expanded(
+                              //   flex:1,
+                              //   child:Row(
+                              //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              //     children: [
+                              //       Expanded(
+                              //         flex:5,
+                              //         child: Center(child: Text("FROM")),
+                              //       ),
+                              //       Expanded(
+                              //         flex:5,
+                              //         child: Center(child: Text("TO")),
+                              //       ),
+                              //   ],
+                              //   )
+                              // ),
                               Expanded(
                                   flex:1,
                                   child:Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
+
                                       Expanded(
-                                        flex:2,
+                                          flex:1,
+                                          child:Container()
+                                      ),
+                                      Expanded(
+                                        flex:1,
                                         child: NumberPicker(
                                         //  itemCount: 2,
                                           value: _currentvalue1,
@@ -645,7 +675,7 @@ class _TimerpageState extends State<Timerpage>{
                                         child:Center(child: Text(":"))
                                       ),
                                       Expanded(
-                                        flex:2,
+                                        flex:1,
                                         child: NumberPicker(
                                           value: _currentvalue2,
                                           minValue: 00,
@@ -663,7 +693,12 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
 
                                       Expanded(
-                                        flex:2,
+                                          flex:1,
+                                          child:Container()
+                                      ),
+
+                                      Expanded(
+                                        flex:1,
                                         child: NumberPicker(
                                           value: _currentvalue3,
                                           minValue: 00,
@@ -684,7 +719,7 @@ class _TimerpageState extends State<Timerpage>{
                                           child:Center(child: Text(":"))
                                       ),
                                       Expanded(
-                                        flex:2,
+                                        flex:1,
                                         child: NumberPicker(
                                           value: _currentvalue4,
                                           minValue: 00,
@@ -700,6 +735,10 @@ class _TimerpageState extends State<Timerpage>{
                                           ),
                                           onChanged: (value) => setState(() => _currentvalue4 = value),
                                         ),
+                                      ),
+                                      Expanded(
+                                          flex:1,
+                                          child:Container()
                                       ),
                                     ],
                                   )
@@ -741,8 +780,8 @@ class _TimerpageState extends State<Timerpage>{
                                                 cyc=false;
                                                 repd=false;
                                                 repVisible=true;
-                                                cycVisible=false;
-                                                dateVisible=false;
+                                                cycVisible=true;
+                                                dateVisible=true;
                                                 repPatternVisible=true;
                                               }
                                               else if(rep == false){
@@ -752,8 +791,8 @@ class _TimerpageState extends State<Timerpage>{
                                                 cyc=false;
                                                 repd=false;
                                                 repVisible=true;
-                                                cycVisible=false;
-                                                dateVisible=false;
+                                                cycVisible=true;
+                                                dateVisible=true;
                                                 repPatternVisible=true;
                                               }
                                               setState(() {
@@ -772,7 +811,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                         flex:9,
-                                        child: Text("REPEAT ON DAYS"),
+                                        child: Text("  REPEAT ON DAYS  "),
                                       ),
                                     ],
                                   )
@@ -784,6 +823,9 @@ class _TimerpageState extends State<Timerpage>{
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
+                                        Expanded(
+                                          child: Container(),
+                                        ),
                                         Expanded(
                                          // flex:1,
                                           child: Transform.scale(scale: 1.5,
@@ -955,7 +997,10 @@ class _TimerpageState extends State<Timerpage>{
                                             },
                                           ),
                                         ),
-                                      )
+                                      ),
+                                        Expanded(
+                                          child: Container(),
+                                        ),
                                     ],
                                   )
                                 ),
@@ -979,6 +1024,7 @@ class _TimerpageState extends State<Timerpage>{
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
 
+
                                     Expanded(
                                       flex:1,
                                       child: Transform.scale(scale:1.5,
@@ -997,8 +1043,8 @@ class _TimerpageState extends State<Timerpage>{
                                               rep=false;
                                               repd=false;
                                               cycVisible=true;
-                                              repVisible=false;
-                                              dateVisible=false;
+                                              repVisible=true;
+                                              dateVisible=true;
                                               repPatternVisible=false;
                                             }
                                             else if(cyc == false){
@@ -1008,8 +1054,8 @@ class _TimerpageState extends State<Timerpage>{
                                               rep=false;
                                               repd=false;
                                               cycVisible=true;
-                                              repVisible=false;
-                                              dateVisible=false;
+                                              repVisible=true;
+                                              dateVisible=true;
                                               repPatternVisible=false;
                                             }
                                             setState(() {
@@ -1027,7 +1073,7 @@ class _TimerpageState extends State<Timerpage>{
                                     ),
                                     Expanded(
                                       flex:9,
-                                      child: Text("CYCLIC"),
+                                      child: Text("  CYCLIC  "),
                                     ),
 
                                   ]
@@ -1042,7 +1088,11 @@ class _TimerpageState extends State<Timerpage>{
                                     children: [
                                       Expanded(
                                         flex:2,
-                                        child: Text("ON TIME"),
+                                        child: Container(),
+                                      ),
+                                      Expanded(
+                                        flex:2,
+                                        child: Center(child: Text("ON TIME")),
                                       ),
                                       Expanded(
                                         flex:2,
@@ -1065,7 +1115,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                         flex:2,
-                                        child: Text("OFF TIME"),
+                                        child: Center(child: Text("OFF TIME")),
                                       ),
                                       Expanded(
                                         flex:2,
@@ -1086,6 +1136,11 @@ class _TimerpageState extends State<Timerpage>{
 
                                         ),
                                       ),
+
+                                      Expanded(
+                                        flex:2,
+                                        child: Container(),
+                                      )
                                     ]
                                   ),
                                 )
@@ -1125,8 +1180,8 @@ class _TimerpageState extends State<Timerpage>{
                                                     rep=false;
                                                     cyc=false;
                                                     dateVisible=true;
-                                                    cycVisible=false;
-                                                    repVisible=false;
+                                                    cycVisible=true;
+                                                    repVisible=true;
                                                     repPatternVisible=true;
                                                   }
                                                   else{
@@ -1137,8 +1192,8 @@ class _TimerpageState extends State<Timerpage>{
                                                     cyc=false;
                                                     rep=false;
                                                     dateVisible=true;
-                                                    cycVisible=false;
-                                                    repVisible=false;
+                                                    cycVisible=true;
+                                                    repVisible=true;
                                                     repPatternVisible=true;
                                                   }
                                                   setState(() {
@@ -1156,7 +1211,7 @@ class _TimerpageState extends State<Timerpage>{
                                           ),
                                           Expanded(
                                             flex:9,
-                                            child: Text("SELECTED DATE"),
+                                            child: Text("  SELECTED DATE  "),
                                           ),
                                         ]
                                     ),
@@ -1170,7 +1225,11 @@ class _TimerpageState extends State<Timerpage>{
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Expanded(
-                                            flex:10,
+                                            flex:1,
+                                            child: Container(),
+                                          ),
+                                          Expanded(
+                                            flex:8,
                                             child:DefaultTextStyle.merge(
                                               style:TextStyle(fontSize: 5),
                                               child: CupertinoDatePicker(
@@ -1188,6 +1247,11 @@ class _TimerpageState extends State<Timerpage>{
                                                   }),
                                             )
                                           ),
+                                          Expanded(
+                                            flex:1,
+                                            child: Container(),
+                                          ),
+
                                         ]
                                       ),
                                     )

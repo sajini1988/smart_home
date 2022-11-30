@@ -222,15 +222,18 @@ class _SwitchlayoutState extends State<Switchlayout> {
 
       AlertDialog alert = AlertDialog(
 
-        elevation:0,
-        titlePadding: EdgeInsets.zero,
+       // elevation:0,
         contentPadding: EdgeInsets.zero,
-        insetPadding: EdgeInsets.all(40.0),
+        titlePadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(25.0),
         shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
         title: Text(""),
         content: Container(
-          width: MediaQuery.of(context).size.width*0.90,
+
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
           child:Timerpage(),
         ),
         backgroundColor: Colors.white,

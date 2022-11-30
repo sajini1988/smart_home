@@ -183,12 +183,27 @@ class _LockLayoutState extends State<LockLayout>{
   showAlertDialog(BuildContext context) async {
 
     AlertDialog alert = AlertDialog(
-      titlePadding: EdgeInsets.zero,
+
+      // elevation:0,
       contentPadding: EdgeInsets.zero,
+      titlePadding: EdgeInsets.zero,
+      clipBehavior:Clip.antiAliasWithSaveLayer,
+      insetPadding: EdgeInsets.all(25.0),
+      shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
       title: Text(""),
-      content: Timerpage(),
-      actions: [ ],
+      content: Container(
+
+        width: MediaQuery.of(context).size.width,
+        color: Colors.white,
+        child:Timerpage(),
+      ),
+      backgroundColor: Colors.white,
+      actions: [
+
+      ],
     );
+
     showDialog(context: context, builder: (BuildContext context){
       return alert;
     }

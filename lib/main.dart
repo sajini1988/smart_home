@@ -527,7 +527,7 @@ class MyHomePageState extends State<MyHomePage> {
                 child: Column(
                 children:[
 
-                  Image.asset("images/rooms/logo.png", fit: BoxFit.fill,height: 50.0,),
+                  Image.asset("images/rooms/logo.png", fit: BoxFit.fill,height: 62.0),
 
                   Flexible(
                     child:Container(
@@ -606,7 +606,7 @@ class MyHomePageState extends State<MyHomePage> {
                                       elevation: 00,
                                       //shadowColor: Colors.black,
                                       //color: Colors.grey[300],
-                                      color: selectedindexl == index ?  Colors.grey[300] : Colors.white,
+                                      color: selectedindexl == index ?  Colors.grey[300] : Colors.white70,
 
                                       child:  Stack(
 
@@ -3218,7 +3218,7 @@ class MyHomePageState extends State<MyHomePage> {
 
   checkGridFunction()async{
 
-    await method1();
+    method1();
     print("method2 $empty");
     empty=await getMeSomethingBetter();
     print("method2 $empty");
