@@ -357,7 +357,7 @@ class MyHomePageState extends State<MyHomePage> {
 
       signalFunc().then((int value) {
 
-        fluttertoast(value.toString());
+       // fluttertoast(value.toString());
         // periodicTimer = Timer.periodic(
         //   const Duration(seconds: 1),
         //       (timer) {

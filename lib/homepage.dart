@@ -74,7 +74,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         return Navigator.canPop(context);
       },
       child: Scaffold(
-        appBar: AppBar(title: Text("Download Home")),
+        appBar: AppBar(
+            backgroundColor: Color.fromRGBO(66, 130, 208, 1),
+            title: Text("Download Home")
+        ),
         body:ListView(
           children:[
             Column(

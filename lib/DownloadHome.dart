@@ -187,7 +187,7 @@ class _Downloadhome extends State<Downloadhome> {
                                 child: Text('Clear', style: TextStyle(color: Colors.white),),
                                   style: ElevatedButton.styleFrom(
                                   onPrimary: Colors.white,
-                                  primary: Colors.blue,
+                                  primary: Color.fromRGBO(66, 130, 208, 1),
                                   onSurface: Colors.grey,
                                   // side: BorderSide(color: Colors.black, width: 1),
                                   // elevation: 20,
@@ -205,7 +205,7 @@ class _Downloadhome extends State<Downloadhome> {
                                     color: Colors.white),),
                                 style: ElevatedButton.styleFrom(
                                   onPrimary: Colors.white,
-                                  primary: Colors.blue,
+                                  primary: Color.fromRGBO(66, 130, 208, 1),
                                   onSurface: Colors.grey,
                                 ),
                                 onPressed: () async {

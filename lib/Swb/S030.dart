@@ -556,7 +556,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     print(UserAdmin);
 
-    if(UserAdmin == 'A' || UserAdmin == 'SA') {
+
 
       List res1 = await DBProvider.db.getSwitchBoardDateFromRNumAndHNumWithDN(rnum30, hnum30, dnum30, hname30);
       print("S051 $res1");
@@ -739,7 +739,7 @@ class _MyHomePageState extends State<MyHomePage> {
         img3_Off=img3_Off;
         devicename=devicename;
       });
-    }
+
 
     socketsend();
   }

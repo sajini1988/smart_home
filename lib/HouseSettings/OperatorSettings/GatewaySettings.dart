@@ -77,16 +77,52 @@ class _GatewaySettingsPageState extends State<GatewaySettingsPage>{
       }, observer: null,
     );
 
+    send();
+
+
+
+  }
+
+  send() async {
     String data = "150";
     String send = "{"+data+'?';
-
     if(s.socketconnected == true){
       s.socket1(send);
     }
     else{
       s.checkindevice(hname, hnum);
     }
+    await Future.delayed(const Duration(milliseconds: 500));
 
+    String data1 = "151";
+    String datasend1 = "{"+data1+'#';
+    if(s.socketconnected==true){
+      s.socket1(datasend1);
+    }
+    else {
+
+    }
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    String data2 = "153";
+    String send2 = '{'+data2+'%';
+    if(s.socketconnected == true){
+      s.socket1(send2);
+    }
+    else{
+
+    }
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
+    String data3 = "154";
+    String send3 = '{'+data3+'!';
+    if(s.socketconnected == true){
+      s.socket1(send3);
+    }
+    else{
+
+    }
   }
 
   void nwimage(String options){

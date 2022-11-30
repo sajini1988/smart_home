@@ -579,6 +579,8 @@ class _MyHomePageState extends State<MyHomePage>{
 
     imagenum_on=image_on;
 
+    print("icon $icontype");
+
     switch(icontype) {
       case 'dimmr':
         imagenum_on = dimmerOn;
@@ -844,7 +846,7 @@ class _MyHomePageState extends State<MyHomePage>{
 
     print(UserAdmin);
 
-    if(UserAdmin == 'A' || UserAdmin == 'SA') {
+
 
       List res1 = await DBProvider.db.getSwitchBoardDateFromRNumAndHNumWithDN(rnum51, hnum51, dnum51, hname51);
       print("S051 $res1");
@@ -1090,28 +1092,27 @@ class _MyHomePageState extends State<MyHomePage>{
         default:
           img4_Off=imagehvoff;
       }
-      switch(icon5){
-
+      switch(icon5) {
         case 'geyser':
-          img5_Off=geyOff;
+          img5_Off = geyOff;
           break;
         case 'ac':
-          img5_Off=acoff;
+          img5_Off = acoff;
           break;
         case 'Bicon5':
-          img5_Off=imagehvoff;
+          img5_Off = imagehvoff;
           break;
         case "":
-          img5_Off=imagehvoff;
+          img5_Off = imagehvoff;
           break;
         case 'Bulb':
-          img5_Off=imagehvoff;
+          img5_Off = imagehvoff;
           break;
         case 'null':
-          img5_Off=imagehvoff;
+          img5_Off = imagehvoff;
           break;
         default:
-          img5_Off=imagehvoff;
+          img5_Off = imagehvoff;
       }
 
       _globalService.devicenameset=devicename;
@@ -1126,7 +1127,7 @@ class _MyHomePageState extends State<MyHomePage>{
         img5_Off=img5_Off;
         devicename=devicename;
       });
-    }
+
     socketsend();
   }
 

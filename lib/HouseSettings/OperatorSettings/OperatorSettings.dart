@@ -32,6 +32,18 @@ class _OperatorSettings extends State<OperatorSettings>{
   String imgso = "disconnected";
   String imgno= "nonet";
 
+  bool visibleC=false;
+  bool visibleIp=false;
+  bool visibleG=false;
+
+  bool deleteR=false;
+  bool deleteD=false;
+
+  bool hideVup=false,deleteVRm=false,deleteVdv=false,deleteVHou=false,editVr=false;
+
+
+
+
   //Operator_Settings _site1=Operator_Settings.IPSettings;
 
   OperatorSett _site1=OperatorSett.empty;
@@ -45,14 +57,75 @@ class _OperatorSettings extends State<OperatorSettings>{
   bool disableIp=false,userSettings=false,gatewaySettings=false,configuration=false,userAccess=false;
   GlobalKey<FormState> _key1 = new GlobalKey();
 
+  String userAdmin,userName;
+
   DBHelper dbHelper;
+
+  Color colorOn=Colors.black,colorOff= Color.fromRGBO(211, 211, 211, 0.7);
+  Color colorBoth;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    colorBoth=colorOff;
     hname = _globalService.hname;
     hnum = _globalService.hnum;
+
+    dbHelper = DBHelper();
+    userAdminAccess();
+
+
+
+  }
+
+  userAdminAccess() async {
+
+
+    List result = await dbHelper.getLocalDateHName(hname);
+    userAdmin = result[0]['lg'];
+    userName = result[0]['ld'];
+
+    if(userAdmin == "A") {
+
+      visibleC = false;
+      visibleIp = false;
+      visibleG = false;
+
+      hideVup = false;
+      deleteVRm = false;
+      deleteVdv = false;
+      deleteVHou = false;
+      editVr = false;
+
+      colorBoth=colorOff;
+
+    }
+    else if(userAdmin == "SA"){
+
+
+      colorBoth=colorOn;
+
+
+      visibleC=true;
+      visibleIp=true;
+      visibleG=true;
+
+      hideVup = true;
+      deleteVRm = true;
+      deleteVdv = true;
+      deleteVHou = true;
+      editVr = true;
+
+    }
+  }
+
+  clearRadio(){
+
+    setState(() {
+      _site1=OperatorSett.empty;
+    });
 
   }
 
@@ -131,6 +204,8 @@ class _OperatorSettings extends State<OperatorSettings>{
 
         nwimage(s.networkconnected);
         swimage(s.socketconnected);
+
+       // clearRadio();
       },
     child: WillPopScope(onWillPop: () async {
 
@@ -169,31 +244,47 @@ class _OperatorSettings extends State<OperatorSettings>{
                     children: [
                       Expanded(
                           child: ListTile(
-                            title: const Text('IP Settings'),
-                            leading: Radio(
+                            title: Text('IP Settings',
+                              style: TextStyle(
+                                  color: colorBoth,
+                                  fontWeight: FontWeight.w600,
+                                  fontStyle: FontStyle.normal
+                              ),),
+                            leading: Visibility(
+                              visible: visibleIp,
+                              child: Radio(
                               value: OperatorSett.IPSettings,
                               groupValue: _site1,
                               onChanged: (OperatorSett value) {
-                                print("changed $_site1,$value");
-                                setState(() {
-                                  print("$_site1,$value");
-                                  _site1=value;
-                                  print("$_site1,$value");
-                                  deleteuserenabled=false;
-                                  adduserenabled=false;
-                                  edituserenabled=false;
-                                  updatehouseenabled=false;
-                                  deleteRoomenabled=false;
-                                  deleteDeviceenabled=false;
-                                  deleteHouseenabled=false;
-                                  editroomname=false;
 
-                                });
 
-                                ipsettingsdialog();
+                                if(userAdmin=="SA"){
 
-                              },
-                            ),
+                                  print("changed $_site1,$value");
+                                  setState(() {
+                                    print("$_site1,$value");
+                                    _site1=value;
+                                    print("$_site1,$value");
+                                    deleteuserenabled=false;
+                                    adduserenabled=false;
+                                    edituserenabled=false;
+                                    updatehouseenabled=false;
+                                    deleteRoomenabled=false;
+                                    deleteDeviceenabled=false;
+                                    deleteHouseenabled=false;
+                                    editroomname=false;
+
+                                  });
+
+                                  ipsettingsdialog();
+
+                                }
+                                else{
+                                  fluttertoast("ACCESS DENIED");
+                                }
+
+                                },
+                            ),),
                             onTap: (){
 
                               print("on tap change");
@@ -207,7 +298,12 @@ class _OperatorSettings extends State<OperatorSettings>{
                     children: [
                       Expanded(
                           child: ListTile(
-                            title: const Text('User Settings'),
+                            title: Text('User Settings',
+                              style: TextStyle(
+                                  color: colorOn,
+                                  fontWeight: FontWeight.w600,
+                                  fontStyle: FontStyle.normal
+                              ),),
                             leading: Radio(
                               value: OperatorSett.UserSettings,
                               groupValue: _site1,
@@ -332,25 +428,43 @@ class _OperatorSettings extends State<OperatorSettings>{
                     children: [
                       Expanded(
                           child: ListTile(
-                            title: const Text('Gateway Settings'),
-                            leading: Radio(
+                            title: Text('Gateway Settings',style: TextStyle(
+                                color: colorBoth,
+                                fontWeight: FontWeight.w600,
+                                fontStyle: FontStyle.normal
+                            ),),
+                            leading:
+                            Visibility(
+                              visible: visibleG,
+                              child:Radio(
                               value: OperatorSett.GatewaySettings,
                               groupValue: _site1,
                               onChanged: (OperatorSett value){
                                 setState(() {
-                                  _site1=value;
-                                  adduserenabled=false;
-                                  edituserenabled=false;
-                                  deleteuserenabled=false;
-                                  updatehouseenabled=false;
-                                  deleteRoomenabled=false;
-                                  deleteDeviceenabled=false;
-                                  deleteHouseenabled=false;
-                                  editroomname=false;
+
+                                  if(userAdmin=="SA"){
+
+                                    _site1=value;
+                                    adduserenabled=false;
+                                    edituserenabled=false;
+                                    deleteuserenabled=false;
+                                    updatehouseenabled=false;
+                                    deleteRoomenabled=false;
+                                    deleteDeviceenabled=false;
+                                    deleteHouseenabled=false;
+                                    editroomname=false;
+                                    _site1=OperatorSett.empty;
+
+                                  }
+                                  else  if( userAdmin == "A"){
+                                    fluttertoast("Access Denied");
+                                  }
+
+
                                 });
                                 Navigator.push(context, MaterialPageRoute(builder: (context) => GatewaySettingsPage()));
                               },
-                            ),
+                            ),),
                             onTap: (){
 
 
@@ -367,8 +481,15 @@ class _OperatorSettings extends State<OperatorSettings>{
                     children: [
                       Expanded(
                           child: ListTile(
-                            title: const Text('Configuration'),
-                            leading: Radio(
+                            title: Text('Configuration',
+                              style: TextStyle(
+                                  color: colorBoth,
+                                  fontWeight: FontWeight.w600,
+                                  fontStyle: FontStyle.normal
+                              ),),
+                            leading:Visibility(
+                              visible: visibleC,
+                              child:Radio(
                               value: OperatorSett.Configuration,
                               groupValue: _site1,
                               onChanged: (OperatorSett value){
@@ -385,7 +506,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                                   editroomname=true;
                                 });
                               },
-                            ),
+                            ),),
                             onTap: (){
 
 
@@ -401,7 +522,10 @@ class _OperatorSettings extends State<OperatorSettings>{
                       children: [
                         Expanded(
                           flex: 3,
-                          child:MaterialButton(
+                          child:
+                          Visibility(
+                            visible: hideVup,
+                            child:MaterialButton(
                             padding: EdgeInsets.all(8.0),
                             textColor: Colors.white,
                             // splashColor: Colors.greenAccent,
@@ -427,10 +551,12 @@ class _OperatorSettings extends State<OperatorSettings>{
                             },
 
                           ),
-                        ),
+                        ),),
                         Expanded(
                           flex: 3,
-                          child:MaterialButton(
+                          child:Visibility(
+                            visible:deleteVRm,
+                            child:MaterialButton(
                             padding: EdgeInsets.all(8.0),
                             textColor: Colors.white,
                             // splashColor: Colors.greenAccent,
@@ -456,7 +582,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                           ),
                         ),
 
-                      ],
+                        ),],
                     ),
                   ),
 
@@ -467,7 +593,9 @@ class _OperatorSettings extends State<OperatorSettings>{
                       children: [
                         Expanded(
                           flex: 3,
-                          child:MaterialButton(
+                          child: Visibility(
+                            visible:deleteVdv,
+                            child:MaterialButton(
                             padding: EdgeInsets.all(8.0),
                             textColor: Colors.white,
                             // splashColor: Colors.greenAccent,
@@ -492,10 +620,12 @@ class _OperatorSettings extends State<OperatorSettings>{
 
                               },
                           ),
-                        ),
+                        ),),
                         Expanded(
                           flex: 3,
-                          child:MaterialButton(
+                          child:Visibility(
+                            visible: deleteVHou,
+                            child:MaterialButton(
                             padding: EdgeInsets.all(8.0),
                             textColor: Colors.white,
                             // splashColor: Colors.greenAccent,
@@ -522,7 +652,7 @@ class _OperatorSettings extends State<OperatorSettings>{
 
                           ),
                         ),
-                      ],
+                        ),],
                     ),
                   ),
                   Padding(
@@ -532,7 +662,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                       children: [
                         Expanded(
                          // flex: 3,
-                          child:MaterialButton(
+                          child:Visibility(visible:editVr,child:MaterialButton(
                             padding: EdgeInsets.all(8.0),
                             textColor: Colors.white,
                             // splashColor: Colors.greenAccent,
@@ -559,7 +689,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                           ),
                         ),
 
-                      ],
+                        ),],
                     ),
                   ),
                 ],
