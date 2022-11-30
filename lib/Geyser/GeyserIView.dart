@@ -8,7 +8,6 @@ import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 
 class GeyIViewState extends StatefulWidget {
-
   @override
   _GeyIViewState createState() => _GeyIViewState();
 
@@ -24,10 +23,15 @@ class _GeyIViewState extends State<GeyIViewState> {
   String devicename="name";
   String status="OFF";
 
+  Color colorBoth;
+  Color colorOn=Colors.green,colorOff=Colors.red;
+
   @override
   void initState() {
 
     super.initState();
+
+    colorBoth=colorOff;
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
@@ -176,6 +180,31 @@ class _GeyIViewState extends State<GeyIViewState> {
                   ),
                 ],
               ),
+
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: Center(
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          status,
+                          style: TextStyle(
+                              color:colorBoth,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal
+                          ),
+                          maxLines: 2,
+                        ),
+                      ),
+
+                    ),
+                  )
+
+                ],
+              ),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
 
@@ -196,22 +225,17 @@ class _GeyIViewState extends State<GeyIViewState> {
       if(state==("1")){
         setState(() {
           status="ON";
+          colorBoth=colorOn;
         });
       }
       else{
         setState(() {
           status="OFF";
+          colorBoth=colorOff;
         });
       }
 
 
     }
   }
-
-
-
-
-
-
-
 }

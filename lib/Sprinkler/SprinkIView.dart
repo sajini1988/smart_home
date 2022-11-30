@@ -45,10 +45,15 @@ class _MyHomePageState extends State<MyHomePage> {
   String devicename="name";
   String status="OFF";
 
+  Color colorBoth;
+  Color colorOn=Colors.green,colorOff=Colors.red;
+
   @override
   void initState() {
 
     super.initState();
+
+    colorBoth=colorOff;
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
@@ -80,12 +85,14 @@ class _MyHomePageState extends State<MyHomePage> {
       if(state==("1")){
         setState(() {
             status="ON";
+            colorBoth=colorOn;
         });
       }
 
-      else{
+      else if(state==("0")){
         setState(() {
           status="OFF";
+          colorBoth=colorOff;
         });
       }
 
@@ -237,7 +244,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Text(
                             status,
                             style: TextStyle(
-                                color: Colors.red,
+                                color: colorBoth,
                                 fontWeight: FontWeight.w600,
                                 fontStyle: FontStyle.normal
                             ),

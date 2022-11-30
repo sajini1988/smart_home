@@ -67,9 +67,6 @@ class _SingleCurtainState extends State<SingleCurtain> {
     List result=await dbHelper.getLocalDateHName(hnameSCur);
     String userAdmin=result[0]['lg'];
 
-    if(userAdmin == 'U' || userAdmin == 'G'){
-
-    }
     List curdata = await DBProvider.db.DataFromMTRNumAndHNumGroupIdDetails1WithDN(
         rnumSCur, hnumSCur, hnameSCur, groupIdSCur, dnumSCur);
     devicename = curdata[0]['ec'];

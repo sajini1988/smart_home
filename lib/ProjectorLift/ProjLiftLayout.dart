@@ -353,7 +353,7 @@ class _PlcLayoutState extends State<PlcLayout> {
           print(devmnum);
           print(devicename);
 
-          if(feature==("ACR1")){
+          if(feature==("PLC1")){
             dnumlist.add(devNom.toString());
             featuretypelist.add(feature);
             devicenamea.add(devicename);

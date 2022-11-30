@@ -113,9 +113,7 @@ class _MyHomePageState extends State<DoubleCurtain> {
     List result=await dbHelper.getLocalDateHName(hnamedcur);
     String userAdmin=result[0]['lg'];
 
-    if(userAdmin == 'U' || userAdmin == 'G'){
 
-    }
     List curdata = await DBProvider.db.DataFromMTRNumAndHNumGroupIdDetails1WithDN(rnumdcur, hnumdcur, hnamedcur, groupIddcur, dnumdcur);
     devicename = curdata[0]['ec'];
 

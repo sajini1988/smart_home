@@ -21,24 +21,17 @@ class _PLCPageState extends State<PLCPage> {
 
   String hnamepsc1,hnumpsc1,rnumpsc1,dnumpsc1,rnamepsc1,groupIdpsc1,dtypepsc1;
   String devicename="name";
+  String status = "OFF";
+  Color colorBoth;
+  Color colorOn=Colors.green,colorOff = Colors.red;
 
-  Image open=Image.asset('images/Curtain/open.png');
-  Image open01=Image.asset('images/Curtain/open01.png');
-
-  Image close=Image.asset('images/Curtain/close.png');
-  Image close01=Image.asset('images/Curtain/close01.png');
-
-  Image stop=Image.asset('images/Curtain/stop.png');
-  Image stop01=Image.asset('images/Curtain/stop01.png');
-
-  bool openChange = false;
-  bool closeChange = false;
-  bool stopChange = false;
 
   @override
   void initState(){
 
     super.initState();
+
+    colorBoth=colorOff;
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
@@ -86,10 +79,6 @@ class _PLCPageState extends State<PLCPage> {
     String userAdmin = result[0]['lg'];
     print(userAdmin);
 
-    if (userAdmin == 'U' || userAdmin == 'G') {
-
-    }
-
     List pscdata = await DBProvider.db.DataFromMTRNumAndHNumGroupIdDetails1WithDN(
         rnumpsc1, hnumpsc1, hnamepsc1, groupIdpsc1, dnumpsc1);
 
@@ -134,6 +123,19 @@ class _PLCPageState extends State<PLCPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
+
+                        Expanded(
+                          child: IconButton(
+                            iconSize: MediaQuery.of(context).size.width/10,
+                            splashRadius: 0.1,
+                            splashColor:Colors.transparent,
+                            icon:Image.asset('images/switchicons/all_on.png'),
+                            onPressed: () {
+                              sendDataPsc(senddata: "201",castType: "01");
+                            },
+                          ),
+                        ),
+
                         Center(
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
@@ -147,64 +149,47 @@ class _PLCPageState extends State<PLCPage> {
                               maxLines: 2,
                             ),
                           ),
-                        )
+                        ),
+
+                        Expanded(
+                          child: IconButton(
+                            iconSize: MediaQuery.of(context).size.width/10,
+                            splashRadius: 0.1,
+                            splashColor:Colors.transparent,
+                            icon:Image.asset('images/switchicons/all_off.png'),
+                            onPressed: () {
+                              sendDataPsc(senddata: "301",castType: "01");
+                            },
+                          ),
+                        ),
                       ],
                     ),
 
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child:Transform.scale(
-                              scale: 2.0,
-                              child: IconButton(
-                                  iconSize: MediaQuery.of(context).size.width/10,
-                                  icon: openChange?open01:open,
-                                  splashRadius: 0.1,
-                                  splashColor:Colors.transparent ,
-
-                                  onPressed: () {
-                                    sendDataPsc(senddata: "101", castType: "01");
-                                  }
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child: Text(
+                                status,
+                                style: TextStyle(
+                                    color: colorBoth,
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.normal
+                                ),
+                                maxLines: 2,
                               ),
                             ),
+
                           ),
-                          Padding(
-                            padding: const EdgeInsets.all(05.0),
+                        )
 
-                            child:Transform.scale(
-                              scale: 2.0,
-                              child: IconButton(
-                                  iconSize: MediaQuery.of(context).size.width/10,
-                                  icon: stopChange?stop01:stop,
-                                  splashRadius: 0.1,
-                                  splashColor:Colors.transparent ,
-
-                                  onPressed: () {
-                                    sendDataPsc(senddata: "103", castType: "01");
-                                  }
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(05.0),
-                            child:Transform.scale(
-                              scale: 2.0,
-                              child: IconButton(
-                                  iconSize: MediaQuery.of(context).size.width/10,
-                                  icon: closeChange?close01:close,
-                                  onPressed: () {
-                                    sendDataPsc(senddata: "102", castType: "01");
-                                  }
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                      ],
                     ),
+
                   ],
                 )
             )
@@ -224,29 +209,18 @@ class _PLCPageState extends State<PLCPage> {
 
     if (cDev==(rDev)) {
 
-      String state = notification.substring(8,10);
-      print("$state");
-      if(state==("01")){
+      String state = notification.substring(8,9);
 
+      if(state==("1")){
         setState(() {
-          openChange=true;
-          stopChange=false;
-          closeChange=false;
-        });
-
-      }
-      else if(state==("02")){
-        setState(() {
-          openChange=false;
-          closeChange=true;
-          stopChange=false;
+          status="ON";
+          colorBoth=colorOn;
         });
       }
-      else if(state==("03")){
+      else{
         setState(() {
-          openChange=false;
-          closeChange=false;
-          stopChange=true;
+          status="OFF";
+          colorBoth=colorOff;
         });
       }
 

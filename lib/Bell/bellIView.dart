@@ -23,11 +23,15 @@ class _BellIViewState extends State<BellIViewState> {
   String hnameBell,hnumBell,rnumBell,dnumBell,rnameBell,groupIdBell,dtypeBell;
   String devicename="name";
   String status="OFF";
+  Color colorBoth;
+  Color colorOn=Colors.green,colorOff=Colors.red;
 
   @override
   void initState() {
 
     super.initState();
+
+    colorBoth=colorOff;
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
@@ -58,11 +62,13 @@ class _BellIViewState extends State<BellIViewState> {
       if(state==("01")){
         setState(() {
           status="ON";
+          colorBoth=colorOn;
         });
       }
       else if(state==("02")){
         setState(() {
           status="OFF";
+          colorBoth=colorOff;
         });
       }
 
@@ -168,7 +174,7 @@ class _BellIViewState extends State<BellIViewState> {
                       iconSize: MediaQuery.of(context).size.width/10,
                       splashRadius: 0.1,
                       splashColor:Colors.transparent,
-                      icon:Image.asset('images/switchicons/all_on.png'),
+                      icon:Image.asset('images/switchicons/all_off.png'),
                       onPressed: () {
                         sendDataBell(senddata: "301",castType: "01");
                       },
@@ -176,6 +182,33 @@ class _BellIViewState extends State<BellIViewState> {
                   ),
 
                 ],
+              ),
+
+              Row(
+
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+
+                  Expanded(
+                    child:Center(
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: Text(
+                          status,
+                          style: TextStyle(
+                              color: colorBoth,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal
+                          ),
+                          maxLines: 2,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+
               ),
               Row(
 
@@ -198,32 +231,7 @@ class _BellIViewState extends State<BellIViewState> {
                   ],
 
               ),
-              Row(
 
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-
-                  Expanded(
-                    child:Center(
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          status,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontStyle: FontStyle.normal
-                          ),
-                          maxLines: 2,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                ],
-
-              ),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
 

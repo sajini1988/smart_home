@@ -445,14 +445,14 @@ class _PirlayoutState extends State<Pirlayout>{
           String ddevmodelnum = curdata[0]['c'];
 
 
-          if (feature.contains("WPD1")) {
+          if (feature==("WPD1")) {
             dnumlist.add(devNom.toString());
             featuretypelist.add(feature);
             devicenamea.add(devicename);
             deviceID.add(ddevID);
             devicemodelnum.add(ddevmodelnum);
           }
-          else if (feature.contains("WPS1")) {
+          else if (feature==("WPS1")) {
             dnumlist.add(devNom.toString());
             featuretypelist.add(feature);
             devicenamea.add(devicename);

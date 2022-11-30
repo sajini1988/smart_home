@@ -8,7 +8,6 @@ import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 
 class ACIViewState extends StatefulWidget {
-
   @override
   _ACIViewState createState() => _ACIViewState();
 
@@ -23,11 +22,15 @@ class _ACIViewState extends State<ACIViewState> {
   String hnameAc,hnumAc,rnumAc,dnumAc,rnameAc,groupIdAc,dtypeAc;
   String devicename="name";
   String status="OFF";
+  Color colorBoth;
+  Color colorOn=Colors.green,colorOff=Colors.red;
 
   @override
   void initState() {
 
     super.initState();
+
+    colorBoth=colorOff;
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
@@ -75,10 +78,6 @@ class _ACIViewState extends State<ACIViewState> {
     String userAdmin = result[0]['lg'];
     print(userAdmin);
 
-    if (userAdmin == 'U' || userAdmin == 'G') {
-
-    }
-
     List acdata = await DBProvider.db.DataFromMTRNumAndHNumGroupIdDetails1WithDN(rnumAc, hnumAc, hnameAc, groupIdAc, dnumAc);
     devicename = acdata[0]['ec'];
     _globalService.devicenameset=devicename;
@@ -110,11 +109,13 @@ class _ACIViewState extends State<ACIViewState> {
       if(state==("1")){
         setState(() {
           status="ON";
+          colorBoth=colorOn;
         });
       }
-      else{
+      else if(state == ("0")){
         setState(() {
           status="OFF";
+          colorBoth=colorOff;
         });
       }
 
@@ -191,7 +192,7 @@ class _ACIViewState extends State<ACIViewState> {
                         child: Text(
                           status,
                           style: TextStyle(
-                              color: Colors.red,
+                              color: colorBoth,
                               fontWeight: FontWeight.w600,
                               fontStyle: FontStyle.normal
                           ),

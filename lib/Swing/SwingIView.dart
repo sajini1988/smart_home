@@ -197,7 +197,7 @@ class _SlideIViewState extends State<SwingIView> {
                         scale: 2.0,
                         child: IconButton(
                             iconSize: MediaQuery.of(context).size.width/10,
-                            icon: openchange?open01:open,
+                            icon: openChange?open01:open,
                             splashRadius: 0.1,
                             splashColor:Colors.transparent ,
 
@@ -214,7 +214,7 @@ class _SlideIViewState extends State<SwingIView> {
                         scale: 2.0,
                         child: IconButton(
                             iconSize: MediaQuery.of(context).size.width/10,
-                            icon: stopchange?stop01:stop,
+                            icon: stopChange?stop01:stop,
                             splashRadius: 0.1,
                             splashColor:Colors.transparent ,
 
@@ -230,7 +230,7 @@ class _SlideIViewState extends State<SwingIView> {
                         scale: 2.0,
                         child: IconButton(
                             iconSize: MediaQuery.of(context).size.width/10,
-                            icon: closechange?close01:close,
+                            icon: closeChange?close01:close,
                             onPressed: () {
                               sendDataCur(senddata: "102", castType: "01");
                             }

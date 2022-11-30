@@ -200,6 +200,9 @@ class _TimerpageState extends State<Timerpage>{
     else if(devicemodel == 'SDG1' || devicemodel == 'DLS1' || devicemodel == 'SOSH'){
       setoperationvisible = false;
     }
+    else if(devicemodel == 'CLB1'){
+      setoperationvisible = false;
+    }
 
     setState(() {
       setoperationvisible=setoperationvisible;
@@ -211,9 +214,14 @@ class _TimerpageState extends State<Timerpage>{
 
   setdatadevices(){
     
-    if(devicemodel == 'PSC1' || devicemodel == 'PLC1'){
+    if(devicemodel == 'PSC1'){
       sendonData("101", "01");
       sendoffData("102", "01");
+      switchnumber.add("0");
+    }
+    else if(devicemodel == 'PLC1'){
+      sendonData("201", "01");
+      sendoffData("301", "01");
       switchnumber.add("0");
     }
     else if(devicemodel == 'GSK1'){
@@ -232,6 +240,11 @@ class _TimerpageState extends State<Timerpage>{
       switchnumber.add("0");
     }
     else if(devicemodel == 'GSR1'){
+      sendonData("201", "01");
+      sendoffData("301", "01");
+      switchnumber.add("0");
+    }
+    else if(devicemodel == 'CLB1'){
       sendonData("201", "01");
       sendoffData("301", "01");
       switchnumber.add("0");
