@@ -41,9 +41,6 @@ class _OperatorSettings extends State<OperatorSettings>{
 
   bool hideVup=false,deleteVRm=false,deleteVdv=false,deleteVHou=false,editVr=false;
 
-
-
-
   //Operator_Settings _site1=Operator_Settings.IPSettings;
 
   OperatorSett _site1=OperatorSett.empty;

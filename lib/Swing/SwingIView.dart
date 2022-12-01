@@ -12,7 +12,6 @@ class SwingIView extends StatefulWidget {
   @override
   _SlideIViewState createState() => _SlideIViewState();
 }
-
 class _SlideIViewState extends State<SwingIView> {
 
   GlobalService _globalService = GlobalService();

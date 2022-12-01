@@ -10,7 +10,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class UserSettings extends StatefulWidget{
   UserSettings({Key key, todo,}): super(key:key);
-
   @override
   _UserSettings createState() => _UserSettings();
 }

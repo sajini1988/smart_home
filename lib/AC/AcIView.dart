@@ -197,6 +197,7 @@ class _ACIViewState extends State<ACIViewState> {
                               fontStyle: FontStyle.normal
                           ),
                           maxLines: 2,
+
                         ),
                       ),
 
@@ -207,7 +208,6 @@ class _ACIViewState extends State<ACIViewState> {
               ),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
-
 
             ],
           ),

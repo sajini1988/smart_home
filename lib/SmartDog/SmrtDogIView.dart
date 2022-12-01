@@ -24,7 +24,6 @@ class _SmartDogIViewState extends State<SmartDogIView> {
   Color colorBoth;
   Color colorOn=Colors.green,colorOff=Colors.red;
 
-
   @override
   void initState() {
     // TODO: implement initState

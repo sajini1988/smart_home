@@ -17,7 +17,6 @@ import 'package:smart_home/Moods/MoodCurtain.dart';
 import 'package:smart_home/Moods/MoodPrjSosh.dart';
 import 'package:smart_home/Moods/MoodOn.dart';
 
-
 class MoodListPage extends StatefulWidget {
 
   MoodListPage({Key key, this.title}) :super(key: key);

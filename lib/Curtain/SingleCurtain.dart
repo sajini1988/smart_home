@@ -17,6 +17,7 @@ class _SingleCurtainState extends State<SingleCurtain> {
 
   GlobalService _globalService = GlobalService();
   var s = Singleton();
+
   Image open=Image.asset('images/Curtain/open.png');
   Image open01=Image.asset('images/Curtain/open01.png');
 

@@ -10,7 +10,6 @@ import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
 
 String hnameRGB,hnumRGB,rnumRGB,dnumRGB,rnameRGB,groupIdRGB,dtypeRGB,firstRGB,devicenumRGB;
-
 class RGBLayout extends StatefulWidget {
   @override
   _RGBLayoutState createState() => _RGBLayoutState();

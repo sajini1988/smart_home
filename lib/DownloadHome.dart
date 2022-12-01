@@ -10,10 +10,8 @@ import 'package:smart_home/LDatabaseModelClass.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/homepage.dart';
 import 'package:smart_home/main.dart';
-
 import 'package:encrypt/encrypt.dart';
 import 'package:path/path.dart';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 

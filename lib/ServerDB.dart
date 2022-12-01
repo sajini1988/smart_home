@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 //import 'dart:typed_data';
@@ -9,9 +8,7 @@ import 'package:encrypt/encrypt.dart';
 
 String databaseex = ".db";
 class DBProvider {
-
   static String dbname;
-
   // make this a singleton class
   DBProvider._privateConstructor();
   static final DBProvider db = DBProvider._privateConstructor();
@@ -28,8 +25,6 @@ class DBProvider {
    // print("here1");
     return _database;
   }
-
-
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, dbname+databaseex);

@@ -18,7 +18,6 @@ class MyStatefulWidget extends StatefulWidget {
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
-
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   String lc;

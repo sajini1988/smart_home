@@ -195,8 +195,7 @@ class _GeylayoutState extends State<Geylayout>{
       ),
       backgroundColor: Colors.white,
       actions: [
-
-      ],
+        ],
     );
 
     showDialog(context: context, builder: (BuildContext context){

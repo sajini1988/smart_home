@@ -8,12 +8,10 @@ import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-
 class RGBIViewState extends StatefulWidget {
   @override
   _RGBIViewState createState() => _RGBIViewState();
 }
-
 class _RGBIViewState extends State<RGBIViewState> {
 
   GlobalService _globalService = GlobalService();

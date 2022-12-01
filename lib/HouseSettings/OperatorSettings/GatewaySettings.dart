@@ -93,7 +93,6 @@ class _GatewaySettingsPageState extends State<GatewaySettingsPage>{
       s.checkindevice(hname, hnum);
     }
     await Future.delayed(const Duration(milliseconds: 500));
-
     String data1 = "151";
     String datasend1 = "{"+data1+'#';
     if(s.socketconnected==true){

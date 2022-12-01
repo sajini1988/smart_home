@@ -71,7 +71,7 @@ class FanspeedState extends State<Fanspeed> {
            Container(
              width: MediaQuery.of(context).size.width,
              height: MediaQuery.of(context).size.height*0.35,
-             color: Colors.yellowAccent,
+             color: Colors.white,
              child: Center(
                child: Column(
                  mainAxisAlignment: MainAxisAlignment.center,

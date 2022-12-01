@@ -18,9 +18,7 @@ class _TimerFanPageState extends State<TimerFanPage> {
 
   _TimerFanPageState({this.number1});
   final String number1;
-
   String dropdownValue="0";
-
   String username,usertype;
   String hname,hnum,rnum,rname,dnum,groupIdset,ddevmodel,modeltypeset,devicenameset="name";
 

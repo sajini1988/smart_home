@@ -25,7 +25,6 @@ class S051 extends StatelessWidget {
     );
   }
 }
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -1171,10 +1170,10 @@ class _MyHomePageState extends State<MyHomePage>{
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.white30,
           body: Center(
             child: Container(
-              color: Colors.white,
+              color: Color.fromRGBO(255, 254, 250,1),
               width: MediaQuery.of(context).size.width/1.4,
 
               child: Column(

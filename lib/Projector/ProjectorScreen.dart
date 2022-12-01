@@ -18,7 +18,6 @@ class _PSCPageState extends State<PSCPage> {
 
   GlobalService _globalService = GlobalService();
   var s=Singleton();
-
   String hnamepsc1,hnumpsc1,rnumpsc1,dnumpsc1,rnamepsc1,groupIdpsc1,dtypepsc1;
   String devicename="name";
 

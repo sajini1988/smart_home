@@ -19,7 +19,6 @@ class DBHelper {
     _db = await initDatabase();
     return _db;
   }
-
   initDatabase() async {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, 'localdb.db');

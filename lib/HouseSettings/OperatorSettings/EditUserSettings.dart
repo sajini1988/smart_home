@@ -13,7 +13,6 @@ class Edituser extends StatefulWidget{
 
   Edituser({Key key,this.username}):super(key:key);
   final String username;
-
   @override
   _Edituser createState()=>_Edituser(username);
 }

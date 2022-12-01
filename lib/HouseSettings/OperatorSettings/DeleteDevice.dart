@@ -15,7 +15,6 @@ class DeleteDevicePage extends StatefulWidget {
 
   DeleteDevicePage({Key key, this.title}) :super(key: key);
   final String title;
-
   @override
   _DeleteDevicePageState createState() => _DeleteDevicePageState();
 }

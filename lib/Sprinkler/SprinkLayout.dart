@@ -11,7 +11,6 @@ import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
 
 String hnamesp,hnumsp,rnumsp,dnumsp,rnamesp,groupIdsp,dtypesp,firstsp;
-
 class Spnklayout extends StatefulWidget {
   @override
   _SpnklayoutState createState() => _SpnklayoutState();

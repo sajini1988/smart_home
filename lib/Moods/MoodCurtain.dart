@@ -12,7 +12,6 @@ class MoodCurtain extends StatefulWidget{
   _MyHomePageState createState()=>_MyHomePageState(number1: number);
 }
 class _MyHomePageState extends State<MoodCurtain> {
-
   _MyHomePageState({this.number1});
   final String number1;
 

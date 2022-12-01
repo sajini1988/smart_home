@@ -273,8 +273,8 @@ class _TimerpageState extends State<Timerpage>{
           body: Center(
               child:Container(
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height ,
-                  padding: EdgeInsets.all(0),
+
+
                   color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -661,7 +661,7 @@ class _TimerpageState extends State<Timerpage>{
                                           zeroPad: true,
                                           onChanged: (value) => setState(() => _currentvalue1 = value),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -683,7 +683,7 @@ class _TimerpageState extends State<Timerpage>{
                                           zeroPad: true,
                                           onChanged: (value) => setState(() => _currentvalue2 = value),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -706,7 +706,7 @@ class _TimerpageState extends State<Timerpage>{
                                           zeroPad: true,
                                           onChanged: (value) => setState(() => _currentvalue3 = value),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -728,7 +728,7 @@ class _TimerpageState extends State<Timerpage>{
                                           infiniteLoop: false,
                                           haptics: false,
                                           selectedTextStyle:TextStyle(
-                                              color: Colors.blue,
+                                              color: Color.fromRGBO( 66,130, 208,1),
                                               fontWeight: FontWeight.bold,
                                               //fontSize: 5.0,
                                               fontStyle: FontStyle.normal,
@@ -748,8 +748,6 @@ class _TimerpageState extends State<Timerpage>{
                         ),
                       ),
 
-                      SizedBox(height: 1),
-
                       Expanded(
                         flex:1,
                         child:Container(
@@ -763,10 +761,11 @@ class _TimerpageState extends State<Timerpage>{
                                   child:Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
+                                      Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
 
                                       Expanded(
                                         flex:1,
-                                        child: Transform.scale(scale: 1.5,
+                                        child: Transform.scale(scale: 1.30,
                                           child: IconButton(
                                             //iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 5.0,
@@ -828,7 +827,7 @@ class _TimerpageState extends State<Timerpage>{
                                         ),
                                         Expanded(
                                          // flex:1,
-                                          child: Transform.scale(scale: 1.5,
+                                          child: Transform.scale(scale: 1.25,
                                               child: IconButton(
                                                 //iconSize: MediaQuery.of(context).size.width/10,
                                                 splashRadius: 5.0,
@@ -853,7 +852,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 1.0,
@@ -876,7 +875,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                          child: IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 1.0,
@@ -902,7 +901,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                          child:
                                           IconButton(
                                             //iconSize: MediaQuery.of(context).size.width/10,
@@ -926,7 +925,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale: 1.5,
+                                        child: Transform.scale(scale: 1.25,
                                           child:
                                           IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
@@ -950,7 +949,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 1.0,
@@ -975,7 +974,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:
                                           IconButton(
                                             // iconSize: MediaQuery.of(context).size.width/10,
@@ -1024,10 +1023,11 @@ class _TimerpageState extends State<Timerpage>{
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
 
+                                    Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
 
                                     Expanded(
                                       flex:1,
-                                      child: Transform.scale(scale:1.5,
+                                      child: Transform.scale(scale:1.30,
                                         child:
                                         IconButton(
                                           // iconSize: MediaQuery.of(context).size.width/10,
@@ -1104,7 +1104,7 @@ class _TimerpageState extends State<Timerpage>{
                                           step: 2,
                                           zeroPad: false,
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -1127,7 +1127,7 @@ class _TimerpageState extends State<Timerpage>{
                                           step: 2,
                                           zeroPad: false,
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -1162,9 +1162,11 @@ class _TimerpageState extends State<Timerpage>{
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
 
+                                          Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
+
                                           Expanded(
                                             flex:1,
-                                            child: Transform.scale(scale:1.5,
+                                            child: Transform.scale(scale:1.30,
                                               child:
                                               IconButton(
                                                 // iconSize: MediaQuery.of(context).size.width/10,

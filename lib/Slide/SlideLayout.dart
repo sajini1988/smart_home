@@ -23,7 +23,6 @@ class _SlideLayoutState extends State<SlideLayout>{
   int sl;
   String ddevmodel;
   int empty=0;
-
   bool timerVisible = false;
   bool settingsVisible = false;
 

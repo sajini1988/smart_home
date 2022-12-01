@@ -13,7 +13,6 @@ class TimerCurtainPage extends StatefulWidget {
   @override
   _TimerCurtainPageState createState() => _TimerCurtainPageState(number1: number);
 }
-
 class _TimerCurtainPageState extends State<TimerCurtainPage> {
 
   _TimerCurtainPageState({this.number1});

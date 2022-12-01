@@ -40,7 +40,6 @@ void main(){
   runApp(MyApp());//
 }
 
-
 class MyApp extends StatelessWidget {
 
   const MyApp({Key key, this.name, this.lb}) : super(key: key);
@@ -145,6 +144,8 @@ class MyHomePageState extends State<MyHomePage> {
   var s=Singleton();
 
   List bothr=[];
+
+  int foregroungl=0;
 
 
   // Image Imager1 = Image.asset("images/rooms/im_accounts1.png", fit: BoxFit.fill,);
@@ -341,7 +342,7 @@ class MyHomePageState extends State<MyHomePage> {
 
       signalFunc().then((int value) {
 
-        fluttertoast(value.toString());
+      //  fluttertoast(value.toString());
         // periodicTimer = Timer.periodic(
         //   const Duration(seconds: 1),
         //       (timer) {
@@ -439,6 +440,24 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context)=>FocusDetector(
 
+    onVisibilityLost: (){
+      print("vl");
+
+    },
+      onVisibilityGained: (){
+      print("vg");
+
+      function1();
+      },
+
+      onForegroundGained: (){
+      print("fg");
+      },
+
+      onForegroundLost: (){
+      print("fl");
+      },
+
       onFocusLost: () {
         print("focus lost");
 
@@ -478,9 +497,10 @@ class MyHomePageState extends State<MyHomePage> {
         nwimage(s.networkconnected);
         swimage(s.socketconnected);
 
-        function1();
+
 
       },
+
       child: WillPopScope(
         onWillPop: () async {
         return _onBackPressed();
@@ -527,7 +547,7 @@ class MyHomePageState extends State<MyHomePage> {
                 child: Column(
                 children:[
 
-                  Image.asset("images/rooms/logo.png", fit: BoxFit.fill,height: 62.0),
+                  Image.asset("images/rooms/logo.png", fit: BoxFit.fill,height: 53),
 
                   Flexible(
                     child:Container(
@@ -616,11 +636,12 @@ class MyHomePageState extends State<MyHomePage> {
                                             //alignment: Alignment.center,
                                             child:imager,
                                           ),
-                                          Positioned.fill(
-                                            child: Align(
+                                          Positioned.fill(child:
+                                            Align(
                                               alignment: Alignment.bottomCenter,
                                               child: Text(snapshot.data[index]['b'],
-                                                  style: TextStyle(fontWeight: FontWeight.normal,fontSize: 11.0, color: selectedindexl == index ? Color.fromRGBO(66, 130, 208, 1) : Colors.grey,
+                                                  style: TextStyle(fontWeight: FontWeight.bold
+                                                    ,fontSize: 10, color: selectedindexl == index ? Color.fromRGBO(66, 130, 208, 1) : Colors.grey,
                                                 ),
                                               ),
                                             ),
@@ -646,7 +667,7 @@ class MyHomePageState extends State<MyHomePage> {
                       }
                       if (snapshot.data == null || snapshot.data.length == 0) {
                         print("NoDataFound");
-                        return Text('No Data Found');
+                        return Text('');
                       }
                       return CircularProgressIndicator();
                     },
@@ -654,9 +675,9 @@ class MyHomePageState extends State<MyHomePage> {
                 ),
               ),],),),
               Container(
-                width: 2.5,
+                width: 2.7,
                 height: double.maxFinite,
-                color: Colors.grey,
+                color:  Color.fromRGBO(211, 211, 211,1),
               ),
 
               //Gridview
@@ -670,7 +691,7 @@ class MyHomePageState extends State<MyHomePage> {
                         child: Column(
                         children: <Widget>[
                           Expanded(
-                          flex:2000,
+                          flex:2250,
                             child:Container(
                               child: FutureBuilder<List<Gridmodle>>(
                                 future: gridarray,
@@ -735,11 +756,11 @@ class MyHomePageState extends State<MyHomePage> {
                           Container(
                             width: MediaQuery.of(context).size.width * .70,
                             height: 2.5,
-                            color: Colors.grey,
+                            color: Color.fromRGBO(211, 211, 211,1),
                           ),
                           Expanded(
 
-                            flex: 5000,
+                            flex: 5500,
                             child:Container(
                               width: MediaQuery.of(context).size.width * .70,
                               color: Colors.white38,
@@ -752,10 +773,10 @@ class MyHomePageState extends State<MyHomePage> {
                           ),
 
                           Expanded(
-                            flex:550,
+                            flex:650,
                             child:Container(
                               width: MediaQuery.of(context).size.width * .70,
-                              color: Colors.black26,
+                              color: Color.fromRGBO(211, 211, 211,1),
                               child:Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[

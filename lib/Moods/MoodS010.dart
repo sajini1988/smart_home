@@ -23,7 +23,6 @@ class _MoodS010PageState extends State<MoodS010Page> {
   String hname,hnum,rnum,rname,dnum,groupIdset,ddevmodel,modeltypeset,devicenameset="name",moodname;
   GlobalService _globalService = GlobalService();
   String number="0";
-
   String devicedata,state,onoffnum,aData,bData,cData,dData,eData,fData,gData,hData,iData,jData;
 
   String swValueS="";

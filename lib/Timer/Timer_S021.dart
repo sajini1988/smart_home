@@ -19,7 +19,6 @@ class _TimerS021PageState extends State<TimerS021Page> {
   final String number1;
 
   String username,usertype;
-
   var s = Singleton();
 
   GlobalService _globalService = GlobalService();

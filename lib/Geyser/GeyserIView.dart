@@ -16,7 +16,6 @@ class GeyIViewState extends StatefulWidget {
 class _GeyIViewState extends State<GeyIViewState> {
 
   GlobalService _globalService = GlobalService();
-
   var s=Singleton();
 
   String hnameGy,hnumGy,rnumGy,dnumGy,rnameGy,groupIdGy,dtypeGy;

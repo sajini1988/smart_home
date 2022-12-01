@@ -12,7 +12,6 @@ class SomphyView extends StatefulWidget {
   @override
   _SomphyIViewState createState() => _SomphyIViewState();
 }
-
 class _SomphyIViewState extends State<SomphyView> {
 
   GlobalService _globalService = GlobalService();

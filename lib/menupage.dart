@@ -12,10 +12,8 @@ import 'package:smart_home/HouseSettings/OperatorSettings/UserSettings.dart';
 import 'package:smart_home/HouseSettings/OperatorSettings/OperatorSettings.dart';
 import 'package:smart_home/Timer/TimerDB.dart';
 
-
 class SideDrawer extends StatefulWidget {
   const SideDrawer({Key key}) : super(key: key);
-
   @override
   _SideDrawerState createState() => _SideDrawerState();
 

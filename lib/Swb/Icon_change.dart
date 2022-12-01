@@ -13,7 +13,6 @@ class IconchangePage extends StatefulWidget{
 
 class _IconChangePageState extends State<IconchangePage>{
 
-
   GlobalService _globalService = GlobalService();
   String hname,hnum,rnum,rname,dnum,devicemodel,devicemodelnum,devicename,deviceID,bulbnumber;
   List<String> images=["ac_off","aqua_off","bulb_off","cfl_off","cur_off","dimmer_off","dlock_off","eb_off","gey_off","lamp_off","nameboard_off","rgb_off","socket_off","speaker_off","tb_off","tv_off"];

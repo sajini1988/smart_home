@@ -13,7 +13,6 @@ class Globaltimer {
     _offdataarray=[];
 
   }
-
   List _switchnumber=[],_ondataarray=[],_offdataarray=[];
   bool _subscription=false;
 

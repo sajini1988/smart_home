@@ -13,7 +13,6 @@ class PLCPage extends StatefulWidget {
   @override
   _PLCPageState createState() => _PLCPageState();
 }
-
 class _PLCPageState extends State<PLCPage> {
 
   GlobalService _globalService = GlobalService();

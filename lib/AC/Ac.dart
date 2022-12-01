@@ -11,7 +11,6 @@ import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
 
 String hnameac,hnumac,rnumac,dnumac,rnameac,groupIdac,dtypeac,firstac;
-
 class Aclayout extends StatefulWidget {
   @override
   _AclayoutState createState() => _AclayoutState();

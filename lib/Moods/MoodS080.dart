@@ -23,7 +23,6 @@ class _MoodS080PageState extends State<MoodS080Page> {
   String hname,hnum,rnum,rname,dnum,groupIdset,ddevmodel,modeltypeset,devicenameset="name",moodName;
   String number="0";
 
-
   String fanv="No";
 
   String deviceData,state,onOffNum,aData,bData,cData,dData,eData,fData,gData,hData,iData,jData;

@@ -555,7 +555,6 @@ class _CurtainlayoutState extends State<Curtainlayout>{
       clipBehavior:Clip.antiAliasWithSaveLayer,
       insetPadding: EdgeInsets.all(25.0),
       shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
       title: Text(""),
       content: Container(
 

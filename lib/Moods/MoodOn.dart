@@ -19,7 +19,6 @@ class _MoodOnPageState extends State<MoodOnPage> {
 
   _MoodOnPageState({this.number1});
   final String number1;
-
   String username,usertype;
   String hname,hnum,rnum,rname,dnum,groupIdset,ddevmodel,modeltypeset,devicenameset="name",moodname;
   GlobalService _globalService = GlobalService();

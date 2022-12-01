@@ -12,7 +12,6 @@ class SpnkIView extends StatefulWidget {
   @override
   State<SpnkIView> createState() => _SpnkIViewState();
 }
-
 class _SpnkIViewState extends State<SpnkIView> {
 
   @override

@@ -12,7 +12,6 @@ import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
 
 String hnamepsc,hnumpsc,rnumpsc,dnumpsc,rnamepsc,groupIdpsc,dtypepsc,firstpsc;
-
 class PscLayout extends StatefulWidget {
   @override
   _PscLayoutState createState() => _PscLayoutState();

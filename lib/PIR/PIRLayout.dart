@@ -18,7 +18,6 @@ class Pirlayout extends StatefulWidget {
   _PirlayoutState createState() => _PirlayoutState();
 }
 class _PirlayoutState extends State<Pirlayout>{
-
   GlobalService _globalService = GlobalService();
   double currentindex=0;
   int listcount=1;

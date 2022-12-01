@@ -18,7 +18,6 @@ class EditTimerPage extends StatefulWidget{
 class _EditTimerPageState extends State<EditTimerPage> {
 
   var s = Singleton();
-
   GlobalEdittimer _globalServiceEditTimer = GlobalEdittimer();
 
   Image sunsatimg = Image.asset('images/Timer/sun_sat.png');

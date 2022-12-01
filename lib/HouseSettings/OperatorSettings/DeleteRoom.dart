@@ -13,7 +13,6 @@ class DeleteRoomPage extends StatefulWidget {
 
   DeleteRoomPage({Key key, this.title}) :super(key: key);
   final String title;
-
   @override
   _DeleteRoomPageState createState() => _DeleteRoomPageState();
 }

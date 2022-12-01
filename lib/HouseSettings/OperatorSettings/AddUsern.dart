@@ -24,7 +24,6 @@ class _AddUserPageState extends State<AddUserPage> {
   Image image2;
   Image image3;
 
-
   GlobalService _globalService = GlobalService();
   GlobalKey<FormState> _key1 = new GlobalKey();
   var usernamecontroller = TextEditingController();

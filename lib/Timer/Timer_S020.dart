@@ -24,7 +24,6 @@ class _TimerS020PageState extends State<TimerS020Page> {
 
   GlobalService _globalService = GlobalService();
   Globaltimer _globaltimer = Globaltimer();
-
   String hname,hnum,rnum,rname,dnum,GroupIdset,ddevmodel,modeltypeset,devicenameset="name";
   String number="0";
 

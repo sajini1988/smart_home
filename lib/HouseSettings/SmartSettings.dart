@@ -5,7 +5,6 @@ import 'package:focus_detector/focus_detector.dart';
 
 class SmartSettings extends StatefulWidget{
   SmartSettings({Key key, todo,}): super(key:key);
-
   @override
   _SmartSettings createState() => _SmartSettings();
 }

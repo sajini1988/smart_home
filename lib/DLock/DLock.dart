@@ -193,7 +193,6 @@ class _LockLayoutState extends State<LockLayout>{
 
       title: Text(""),
       content: Container(
-
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child:Timerpage(),

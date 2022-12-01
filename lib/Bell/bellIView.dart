@@ -8,7 +8,6 @@ import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 
 class BellIViewState extends StatefulWidget {
-
   @override
   _BellIViewState createState() => _BellIViewState();
 

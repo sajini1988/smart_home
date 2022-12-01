@@ -201,8 +201,7 @@ class _BellLayoutState extends State<BellLayout>{
       ),
       backgroundColor: Colors.white,
       actions: [
-
-      ],
+        ],
     );
 
     showDialog(context: context, builder: (BuildContext context){

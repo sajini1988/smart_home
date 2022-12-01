@@ -33,7 +33,6 @@ class Singleton {
   ConnectivityResult result;
   int maxsize,maxsizet;
   String serverssid;
-
   DBHelper dbHelper;
   Geolocator geolocator;
   bool socketconnected=false;
