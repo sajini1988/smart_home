@@ -13,7 +13,6 @@ class DBProvider {
   DBProvider._privateConstructor();
   static final DBProvider db = DBProvider._privateConstructor();
   static Database _database;
-
   Future<Database> get database async {
    // print("enter database");
   //  print(_database);
