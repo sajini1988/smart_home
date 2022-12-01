@@ -44,7 +44,7 @@ dev_dependencies:
   encrypt: ^5.0.1
   fluttertoast: ^8.0.8
   percent_indicator: ^3.0.1
-  network_info_plus: ^2.1.4+1
+  network_info_plus: ^3.0.1
   geolocator: ^9.0.0
   connectivity_plus: ^1.1.0
   http: ^0.13.4
