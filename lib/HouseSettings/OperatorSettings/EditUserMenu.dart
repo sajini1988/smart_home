@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:smart_home/HouseSettings/OperatorSettings/EditUserSettings.dart';
+import 'package:smart_home/HouseSettings/OperatorSettings/roleChange.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -174,7 +175,32 @@ void showDialogBoxEdituser(BuildContext context)async{
         actions: [
 
           TextButton(
-            onPressed: () => Navigator.of(context,rootNavigator: true).pop(),
+            onPressed: () {
+
+
+              Navigator.pop(context);
+              AlertDialog alert = AlertDialog(
+                elevation: 0,
+                //insetPadding: EdgeInsets.zero,
+                // contentPadding: EdgeInsets.zero,
+                //clipBehavior: Clip.antiAliasWithSaveLayer,
+                contentPadding: EdgeInsets.zero,
+                titlePadding: EdgeInsets.zero,
+                backgroundColor: Colors.transparent,
+                title: Text(""),
+                // content: TimerS010Page(),
+                content: Container(
+                  width: MediaQuery.of(context).size.width*0.75,
+                  child:RoleChangePage(username: selectedusername,role: selectedusertype),
+                ),
+                actions: [],
+              );
+              showDialog(context: context, builder: (BuildContext context) {
+                return alert;
+              }
+              );
+
+            },
             child: Text('Change Role'),
           ),
 

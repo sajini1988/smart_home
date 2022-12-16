@@ -16,10 +16,7 @@ import 'package:smart_home/DLock/DLock.dart';
 import 'package:smart_home/Geyser/Geyser.dart';
 import 'package:smart_home/ProjectorLift/ProjLiftLayout.dart';
 import 'package:smart_home/RGB/RGBLayout.dart';
-
-
 String device1,roomName1,roomNum1,houseNum1,houseName1,groupId1,deviceType1,deviceNum1,dType1,gType1,first1;
-
 class MainlayoutPage extends StatefulWidget {
   @override
   _MainlayoutPageState createState() => _MainlayoutPageState();

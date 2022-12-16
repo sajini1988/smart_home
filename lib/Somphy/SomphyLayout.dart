@@ -10,7 +10,6 @@ import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
 
 String hnameSh,hnumSh,rnumSh,dnumSh,rnameSh,groupIdSh,dtypeSh,firstSh,devicenumSh;
-
 class SomphyLayout extends StatefulWidget {
   @override
   _SomphyLayoutState createState() => _SomphyLayoutState();

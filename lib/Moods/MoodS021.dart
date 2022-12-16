@@ -195,8 +195,6 @@ class _MoodS021PageState extends State<MoodS021Page> {
               child: ListView(
                 shrinkWrap: true,
                 children: <Widget>[
-
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -472,7 +470,7 @@ class _MoodS021PageState extends State<MoodS021Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -503,7 +501,7 @@ class _MoodS021PageState extends State<MoodS021Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),

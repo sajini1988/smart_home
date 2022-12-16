@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/AC/Ac.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -29,6 +30,12 @@ class _ACIViewState extends State<ACIViewState> {
   void initState() {
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     colorBoth=colorOff;
 
@@ -197,6 +204,7 @@ class _ACIViewState extends State<ACIViewState> {
                               fontStyle: FontStyle.normal
                           ),
                           maxLines: 2,
+
                         ),
                       ),
 
@@ -207,7 +215,6 @@ class _ACIViewState extends State<ACIViewState> {
               ),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
-
 
             ],
           ),

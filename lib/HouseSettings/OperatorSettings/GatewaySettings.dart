@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
@@ -38,6 +39,12 @@ class _GatewaySettingsPageState extends State<GatewaySettingsPage>{
   @override
   void initState(){
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     hname=_globalService.hname;
     hnum=_globalService.hnum;
@@ -93,7 +100,6 @@ class _GatewaySettingsPageState extends State<GatewaySettingsPage>{
       s.checkindevice(hname, hnum);
     }
     await Future.delayed(const Duration(milliseconds: 500));
-
     String data1 = "151";
     String datasend1 = "{"+data1+'#';
     if(s.socketconnected==true){

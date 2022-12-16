@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'dart:io';
 //import 'dart:typed_data';
@@ -9,9 +8,7 @@ import 'package:encrypt/encrypt.dart';
 
 String databaseex = ".db";
 class DBProvider {
-
   static String dbname;
-
   // make this a singleton class
   DBProvider._privateConstructor();
   static final DBProvider db = DBProvider._privateConstructor();
@@ -28,8 +25,6 @@ class DBProvider {
    // print("here1");
     return _database;
   }
-
-
   initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, dbname+databaseex);
@@ -76,6 +71,7 @@ class DBProvider {
     List <Map> result=[];
     try{
       result = await db.rawQuery("""SELECT * FROM ServerTable""");
+      print(result);
     }
     catch(e){
       print("Exception in retrieving = $e");
@@ -90,6 +86,7 @@ class DBProvider {
     List<Map>result=[];
     try {
       result = await db.rawQuery("""SELECT * FROM MasterTable""");
+      print(result);
     }
     catch(e){
       print("Expection in retrieving = $e");
@@ -103,6 +100,7 @@ class DBProvider {
     List<Map>result = [];
     try{
       result = await db.rawQuery("""SELECT * FROM SwitchBoardTable""");
+      print(result);
     }
     catch(e){
       print("Expection in retrieving =$e");
@@ -119,6 +117,9 @@ class DBProvider {
   }
 
   Future<int> update(String dd, String de) async {
+
+    print("$dd,$de");
+
     var dbClient = await database;
     int res = await dbClient.rawUpdate(
         'UPDATE ServerTable SET  dd = ? ,de = ? ',['$dd','$de']);
@@ -591,6 +592,16 @@ class DBProvider {
     int res = await dbClient.rawUpdate(
         'UPDATE SwitchBoardTable SET  bi1 = ? , bi2 = ? , bi3 = ? , bi4 = ? , bi5 = ? , bi6 = ? , bi7 = ? , bi8 = ?  WHERE a = ? AND de = ? AND d = ? ',['$ubi1','$ubi2','$ubi3','$ubi4','$ubi5','$ubi6','$ubi7','$ubi8','$rnum','$hnum','$devicenum']);
     return res;
+  }
+
+  Future<int>updateServerDetailsRoleChange(String username, String usertype)async{
+
+
+    var dbClient = await database;
+    int res = await dbClient.rawUpdate(
+        'UPDATE ServerDetails SET  da = ? WHERE un = ?',['$usertype','$username']);
+    return res;
+
   }
 
 }

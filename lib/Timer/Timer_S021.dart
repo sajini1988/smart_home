@@ -19,7 +19,6 @@ class _TimerS021PageState extends State<TimerS021Page> {
   final String number1;
 
   String username,usertype;
-
   var s = Singleton();
 
   GlobalService _globalService = GlobalService();
@@ -385,7 +384,7 @@ class _TimerS021PageState extends State<TimerS021Page> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage('images/Moods/save_button.png'),
-                                      fit: BoxFit.cover),
+                                      fit: BoxFit.fill),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
@@ -408,7 +407,7 @@ class _TimerS021PageState extends State<TimerS021Page> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage('images/Moods/save_button.png'),
-                                      fit: BoxFit.cover),
+                                      fit: BoxFit.fill),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),

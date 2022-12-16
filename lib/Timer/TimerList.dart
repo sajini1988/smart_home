@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:smart_home/LDatabase.dart';
@@ -41,6 +42,11 @@ class _TimerListState extends State<TimerList>{
   void initState(){
     super.initState();
 
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'deleteSuccess');
@@ -420,12 +426,14 @@ class _TimerListState extends State<TimerList>{
                               elevation:0,
                               titlePadding: EdgeInsets.zero,
                               contentPadding: EdgeInsets.zero,
-                              insetPadding: EdgeInsets.all(5.0),
+                              clipBehavior:Clip.antiAliasWithSaveLayer,
+                              insetPadding: EdgeInsets.all(25.0),
                               shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
                               title: Text(""),
                               content: Container(
-                                width: MediaQuery.of(context).size.width*0.75,
+                                width: MediaQuery.of(context).size.width,
+                                color: Colors.white,
                                 child:EditTimerPage(),
                               ),
                               backgroundColor: Colors.white,
@@ -491,6 +499,7 @@ class _TimerListState extends State<TimerList>{
       return Navigator.canPop(context);
       }, child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 40,
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
           title: Text('Timer List'),
           actions: <Widget>[

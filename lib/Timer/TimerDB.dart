@@ -26,7 +26,6 @@ class TimerDBProvider {
     return _tdatabase;
   }
 
-
   initDB() async {
       Directory documentsDirectory = await getApplicationDocumentsDirectory();
       tdbname = tdbname.replaceAll(' ','');

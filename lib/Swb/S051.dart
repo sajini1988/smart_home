@@ -25,7 +25,6 @@ class S051 extends StatelessWidget {
     );
   }
 }
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
@@ -1171,14 +1170,15 @@ class _MyHomePageState extends State<MyHomePage>{
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.white30,
           body: Center(
             child: Container(
-              color: Colors.white,
+              color: Color.fromRGBO(255, 254, 250,1),
               width: MediaQuery.of(context).size.width/1.4,
 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
+
                 children:<Widget> [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -1224,77 +1224,100 @@ class _MyHomePageState extends State<MyHomePage>{
                       ),
                     ],
                   ),
-                  Padding(padding: const EdgeInsets.all(10.0),),
+                  // Padding(padding: const EdgeInsets.all(10.0),),
                   Padding(padding: const EdgeInsets.all(0.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
+
                       children: [
-                        Padding(padding: const EdgeInsets.all(0.0),
-                          child:GestureDetector(
-                            onLongPress: (){
-                              _globalService.bulbnumberset="b1t";
-                              showAlertDialog(context);
-                            },
-                            child: Transform.scale(scale: 2.5,
-                                child: IconButton(
-                                  iconSize: MediaQuery.of(context).size.width/10,
-                                    icon: imgchange1?img1_On:img1_Off,
-                                  splashRadius: 0.1,
-                                  splashColor:Colors.transparent ,
-                                  onPressed: (){
-                                    SendDataSw(senddata: "101", CastType: "01");
-                                  },
+                        Expanded(
+                          flex:10,
+
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Padding(padding: const EdgeInsets.all(0.0),
+                                  child:GestureDetector(
+                                    onLongPress: (){
+                                      _globalService.bulbnumberset="b1t";
+                                      showAlertDialog(context);
+                                    },
+                                    child: Transform.scale(scale: 2.5,
+                                        child: IconButton(
+                                          iconSize: MediaQuery.of(context).size.width/10,
+                                            icon: imgchange1?img1_On:img1_Off,
+                                          splashRadius: 0.1,
+                                          splashColor:Colors.transparent ,
+                                          onPressed: (){
+                                            SendDataSw(senddata: "101", CastType: "01");
+                                          },
+                                        ),
+                                    ),
+                                  )
                                 ),
+                                Padding(padding: const EdgeInsets.all(10.0),),
+                                Padding(padding:const EdgeInsets.all(0.0),
+                                    child:GestureDetector(
+                                      onLongPress: (){
+                                        _globalService.bulbnumberset="b4t";
+                                        showAlertDialog(context);
+                                      },
+                                      child:Transform.scale(scale: 2.5,
+                                        child: IconButton(
+                                          iconSize: MediaQuery.of(context).size.width/10,
+                                          icon: imgchange4?img4_On:img4_Off,
+                                          splashRadius: 0.1,
+                                          splashColor:Colors.transparent ,
+                                          onPressed: (){
+                                            SendDataSw(senddata: "104", CastType: "01");
+                                          },
+                                        ),
+                                      )
+                                    )
+                                )
+                              ],
                             ),
-                          )
+                          ),
                         ),
-                        Padding(padding: const EdgeInsets.all(10.0),),
-                        Padding(padding:const EdgeInsets.all(0.0),
-                            child:GestureDetector(
-                              onLongPress: (){
-                                _globalService.bulbnumberset="b4t";
-                                showAlertDialog(context);
-                              },
-                              child:Transform.scale(scale: 2.5,
-                                child: IconButton(
-                                  iconSize: MediaQuery.of(context).size.width/10,
-                                  icon: imgchange4?img4_On:img4_Off,
-                                  splashRadius: 0.1,
-                                  splashColor:Colors.transparent ,
-                                  onPressed: (){
-                                    SendDataSw(senddata: "104", CastType: "01");
-                                  },
-                                ),
-                              )
-                            )
-                        )
                       ],
                     ),
                   ),
 
                   Padding(padding: const EdgeInsets.all(0.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+
                       children: [
-                        Padding(padding: const EdgeInsets.all(0.0),
-                          child:GestureDetector(
-                            onLongPress: (){
-                              _globalService.bulbnumberset="b3t";
-                              showAlertDialog(context);
-                            },
-                            child: Transform.scale(scale: 2.5,
-                              child: IconButton(
-                                iconSize: MediaQuery.of(context).size.width/10,
-                                icon: imgchange3?img3_On:img3_Off,
-                                splashRadius: 0.1,
-                                splashColor:Colors.transparent ,
-                                onPressed: (){
-                                    SendDataSw(senddata: "103", CastType: "01");
-                                },
-                              ),
+                        Expanded(
+                          flex:10,
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Padding(padding: const EdgeInsets.all(0.0),
+                                  child:GestureDetector(
+                                    onLongPress: (){
+                                      _globalService.bulbnumberset="b3t";
+                                      showAlertDialog(context);
+                                    },
+                                    child: Transform.scale(scale: 2.5,
+                                      child: IconButton(
+                                        iconSize: MediaQuery.of(context).size.width/10,
+                                        icon: imgchange3?img3_On:img3_Off,
+                                        splashRadius: 0.1,
+                                        splashColor:Colors.transparent ,
+                                        onPressed: (){
+                                            SendDataSw(senddata: "103", CastType: "01");
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                )
+                              ],
                             ),
-                          )
-                        )
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -1303,124 +1326,147 @@ class _MyHomePageState extends State<MyHomePage>{
                     padding: const EdgeInsets.all(0.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
 
-                        Padding(padding: const EdgeInsets.all(0.0),
-                          child:GestureDetector(
-                            onLongPress: (){
-                              _globalService.bulbnumberset="b2t";
-                              showAlertDialog(context);
-                            },
-                            child: Transform.scale(
-                              scale: 2.5,
-                              child: new IconButton(
-                                iconSize: MediaQuery.of(context).size.width/10,
-                                icon: imgchange2?img2_On:img2_Off,
-                                splashRadius: 0.1,
-                                splashColor:Colors.transparent ,
-                                onPressed: (){
-                                  SendDataSw(senddata: "102", CastType: "01");
-                                },
-                              ),
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: Container(
+                            color: Colors.white,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+
+                                Padding(padding: const EdgeInsets.all(0.0),
+                                  child:GestureDetector(
+                                    onLongPress: (){
+                                      _globalService.bulbnumberset="b2t";
+                                      showAlertDialog(context);
+                                    },
+                                    child: Transform.scale(
+                                      scale: 2.5,
+                                      child: new IconButton(
+                                        iconSize: MediaQuery.of(context).size.width/10,
+                                        icon: imgchange2?img2_On:img2_Off,
+                                        splashRadius: 0.1,
+                                        splashColor:Colors.transparent ,
+                                        onPressed: (){
+                                          SendDataSw(senddata: "102", CastType: "01");
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ),
+                                Padding(padding: const EdgeInsets.all(10.0),),
+                                Padding(padding: const EdgeInsets.all(5.0),
+                                  child:GestureDetector(
+                                    onLongPress: (){
+                                      _globalService.bulbnumberset="b5t";
+                                      showAlertDialog(context);
+                                    },
+                                    child:Transform.scale(scale: 2.5,
+                                      child: IconButton(
+                                        iconSize: MediaQuery.of(context).size.width/10,
+                                        icon: imgchange5?img5_On:img5_Off,
+                                        splashRadius: 0.1,
+                                        splashColor:Colors.transparent ,
+                                        onPressed: (){
+                                          SendDataSw(senddata: "105", CastType: "01");
+                                        },
+                                      ),
+                                    )
+                                  )
+                                )
+                              ],
                             ),
-                          )
+                          ),
                         ),
-                        Padding(padding: const EdgeInsets.all(10.0),),
-                        Padding(padding: const EdgeInsets.all(5.0),
-                          child:GestureDetector(
-                            onLongPress: (){
-                              _globalService.bulbnumberset="b5t";
-                              showAlertDialog(context);
-                            },
-                            child:Transform.scale(scale: 2.5,
-                              child: IconButton(
-                                iconSize: MediaQuery.of(context).size.width/10,
-                                icon: imgchange5?img5_On:img5_Off,
-                                splashRadius: 0.1,
-                                splashColor:Colors.transparent ,
-                                onPressed: (){
-                                  SendDataSw(senddata: "105", CastType: "01");
-                                },
-                              ),
-                            )
-                          )
-                        )
                       ],
                     ),
                   ),
 
                   //Padding(padding: const EdgeInsets.all(8.0),),
-                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),
+                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/45),),
                   Padding(padding: EdgeInsets.all(0.0),
-                    child: Row(
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                     Expanded(
+                       flex:10,
+                      child: Container(
+                        color: Colors.white,
 
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 0.0),
-                              child: Transform.scale(scale: 1.40,
-                                      child: IconButton(
+                        child: Row(
 
-                                        iconSize: MediaQuery.of(context).size.width/10,
-                                        icon:fanimgchange?imagefanon:imagefanoff,
-                                        splashRadius: 0.1,
-                                        splashColor:Colors.transparent ,
-                                        onPressed: (){
-                                          SendDataSw(senddata: "700", CastType: "01");
-                                        },),
-                            ),
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 0.0),
+                                  child: Transform.scale(scale: 1.40,
+                                          child: IconButton(
 
-                            ),
-                          flex:2,
-                          ),
-                         Padding(padding: const EdgeInsets.all(0.0),),
-                         Expanded(
-                            child: Transform.scale(scale: 1.5,
-                            child: IconButton(
-                              splashRadius: 0.1,
-                              splashColor:Colors.transparent ,
-                              iconSize: MediaQuery.of(context).size.width/75,
-                              icon: imageup,
-                              onPressed: (){
-                                SendDataSw(senddata: "720", CastType: "01");
-                              },
-                            ),
-                            ),
-                        ),
-                        Padding(padding: const EdgeInsets.all(0.0),),
-                        Expanded(
-                          child: Transform.scale(scale: 1.0,
-                            child: IconButton(
-                              splashRadius: 0.1,
-                              splashColor:Colors.transparent,
-                              iconSize: MediaQuery.of(context).size.width/100,
-                              icon: img_fspeed,
-                              onPressed: (){
+                                            iconSize: MediaQuery.of(context).size.width/10,
+                                            icon:fanimgchange?imagefanon:imagefanoff,
+                                            splashRadius: 0.1,
+                                            splashColor:Colors.transparent ,
+                                            onPressed: (){
+                                              SendDataSw(senddata: "700", CastType: "01");
+                                            },),
+                                ),
 
-                              },
-                            ),
-                          ),
-                        ),
-                        Padding(padding: const EdgeInsets.all(0.0),),
-                        Expanded(
-                            child: Transform.scale(scale: 1.5,
-                              child: IconButton(iconSize: MediaQuery.of(context).size.width/50,
-                                splashRadius: 0.1,
-                                splashColor:Colors.transparent ,
-
-                                icon: imagedown,
-                                onPressed:(){
-                                  SendDataSw(senddata: "721", CastType: "01");
-                                },
+                                ),
+                              flex:2,
                               ),
+                             Padding(padding: const EdgeInsets.all(0.0),),
+                             Expanded(
+                                child: Transform.scale(scale: 1.5,
+                                child: IconButton(
+                                  splashRadius: 0.1,
+                                  splashColor:Colors.transparent ,
+                                  iconSize: MediaQuery.of(context).size.width/75,
+                                  icon: imageup,
+                                  onPressed: (){
+                                    SendDataSw(senddata: "720", CastType: "01");
+                                  },
+                                ),
+                                ),
+                            ),
+                            Padding(padding: const EdgeInsets.all(0.0),),
+                            Expanded(
+                              child: Transform.scale(scale: 1.0,
+                                child: IconButton(
+                                  splashRadius: 0.1,
+                                  splashColor:Colors.transparent,
+                                  iconSize: MediaQuery.of(context).size.width/100,
+                                  icon: img_fspeed,
+                                  onPressed: (){
+
+                                  },
+                                ),
+                              ),
+                            ),
+                            Padding(padding: const EdgeInsets.all(0.0),),
+                            Expanded(
+                                child: Transform.scale(scale: 1.5,
+                                  child: IconButton(iconSize: MediaQuery.of(context).size.width/50,
+                                    splashRadius: 0.1,
+                                    splashColor:Colors.transparent ,
+
+                                    icon: imagedown,
+                                    onPressed:(){
+                                      SendDataSw(senddata: "721", CastType: "01");
+                                    },
+                                  ),
+                                )
                             )
-                        )
 
 
-                      ],
+                          ],
 
+                        ),
+                      ),
                     ),
+                    ])
                    ),
                 ],
 

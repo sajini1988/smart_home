@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/main1.dart';
@@ -33,6 +34,12 @@ class _CurtainlayoutState extends State<Curtainlayout>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
     print("enter cur init state");
     hnamec = houseName1;
     hnumc = houseNum1;
@@ -555,7 +562,6 @@ class _CurtainlayoutState extends State<Curtainlayout>{
       clipBehavior:Clip.antiAliasWithSaveLayer,
       insetPadding: EdgeInsets.all(25.0),
       shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
       title: Text(""),
       content: Container(
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/DownloadHome.dart' show Downloadhome;
 import 'package:smart_home/main.dart';
 import 'package:http/http.dart' as http;
@@ -18,7 +19,6 @@ class MyStatefulWidget extends StatefulWidget {
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
-
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   String lc;
@@ -58,6 +58,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   @override
   void initState() {
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
     hname = _globalService.hname;
     hnum = _globalService.hnum;
 
@@ -682,14 +688,32 @@ Future<ConfirmAction> _asyncConfirmDialog(BuildContext context) async {
             child: const Text('Home'),
             onPressed: () {
               Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => MyApp()));
+
+              Navigator.of(context, rootNavigator:
+              true).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+                  MyApp()), (route) => false);
+
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (BuildContext context) =>
+              //         MyApp()),
+              //         (Route<dynamic> route) => false
+              // );
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(builder: (context) => MyApp()));
             },
           ),
           TextButton(
             child: const Text('Yes'),
             onPressed: () {
               Navigator.pop(context);
+
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (BuildContext context) =>
+              //         Downloadhome(todo: ip_port)),
+              //         (Route<dynamic> route) => false
+              // );
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => Downloadhome(todo: ip_port)));
             },

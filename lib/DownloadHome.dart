@@ -10,10 +10,8 @@ import 'package:smart_home/LDatabaseModelClass.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/homepage.dart';
 import 'package:smart_home/main.dart';
-
 import 'package:encrypt/encrypt.dart';
 import 'package:path/path.dart';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -69,6 +67,12 @@ class _Downloadhome extends State<Downloadhome> {
 
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     _focus1.addListener(_onFocusChange);
     _focus2.addListener(_onFocusChange);
@@ -442,9 +446,8 @@ class _Downloadhome extends State<Downloadhome> {
               ok="false";
               socket.destroy();
               socketconnect=false;
+              timer.cancel();
               Navigator.of(this.context,rootNavigator: true).pop();
-
-              //close();
               showAlertDialogerrusr(this.context);
             }
           }
@@ -541,6 +544,15 @@ class _Downloadhome extends State<Downloadhome> {
   Future<void> callingmethoad() async {
 
     try {
+
+
+
+
+
+
+
+
+
 
       DBProvider.db.newClient();
       DBProvider.db.newClient1();

@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/RGB/RGBLayout.dart';
@@ -8,12 +9,10 @@ import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-
 class RGBIViewState extends StatefulWidget {
   @override
   _RGBIViewState createState() => _RGBIViewState();
 }
-
 class _RGBIViewState extends State<RGBIViewState> {
 
   GlobalService _globalService = GlobalService();
@@ -343,6 +342,7 @@ class _RGBIViewState extends State<RGBIViewState> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
 
+
                   Expanded(
                     child: IconButton(
                       iconSize: MediaQuery.of(context).size.width/10,
@@ -387,13 +387,21 @@ class _RGBIViewState extends State<RGBIViewState> {
               Container(
                 //color: Colors.cyan,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
 
-                    Flexible(
+                    Expanded(
+                      flex:1,
+                      child: Container(),
+                    ),
+
+                    Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
-                      child: IconButton(
+                     // fit: FlexFit.tight,
+
+                      child:Transform.scale(
+                      scale: 1.60,
+                      child:IconButton(
                         iconSize: MediaQuery
                             .of(context)
                             .size
@@ -412,10 +420,14 @@ class _RGBIViewState extends State<RGBIViewState> {
                         },
                       ),
 
-                    ),
-                    Flexible(
+                    ),),
+                    Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
+                     // fit: FlexFit.tight,
+
+                      child:Transform.scale(
+                          scale: 1.60,
+
                       child: IconButton(
                         iconSize: MediaQuery
                             .of(context)
@@ -436,11 +448,13 @@ class _RGBIViewState extends State<RGBIViewState> {
                         },
                       ),
 
-                    ),
+                    ),),
 
-                    Flexible(
+                    Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
+                     // fit: FlexFit.tight,
+                      child:Transform.scale(
+                        scale: 1.60,
                       child: IconButton(
                         iconSize: MediaQuery.of(context).size.width / 10,
                         icon: Image.asset('images/RGB/orange.png'),
@@ -458,11 +472,13 @@ class _RGBIViewState extends State<RGBIViewState> {
                         },
                       ),
 
-                    ),
+                    ),),
 
-                    Flexible(
+                    Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
+                     // fit: FlexFit.tight,
+                      child:Transform.scale(
+                        scale: 1.60,
                       child: IconButton(
                         iconSize: MediaQuery.of(context).size.width / 10,
                         icon: Image.asset('images/RGB/blue.png'),
@@ -478,11 +494,13 @@ class _RGBIViewState extends State<RGBIViewState> {
                           },
                       ),
 
-                    ),
+                    ),),
 
-                    Flexible(
+                    Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
+                     // fit: FlexFit.tight,
+                      child:Transform.scale(
+                        scale: 1.60,
                       child: IconButton(
                         iconSize: MediaQuery
                             .of(context)
@@ -503,11 +521,13 @@ class _RGBIViewState extends State<RGBIViewState> {
                         },
                       ),
 
-                    ),
+                    ),),
 
-                    Flexible(
+                    Expanded(
                       flex: 1,
-                      fit: FlexFit.tight,
+                      //fit: FlexFit.tight,
+                      child:Transform.scale(
+                        scale: 1.60,
                       child: IconButton(
                         iconSize: MediaQuery
                             .of(context)
@@ -529,6 +549,12 @@ class _RGBIViewState extends State<RGBIViewState> {
                           },
                       ),
 
+                    ),),
+
+
+                    Expanded(
+                      flex:1,
+                      child: Container(),
                     ),
 
 
@@ -679,7 +705,7 @@ class _RGBIViewState extends State<RGBIViewState> {
                 children: [
                   //SizedBox(height: 300),
                   Expanded(
-                    flex: 4,
+                    flex: 7,
                     child: Slider(
                       value: myValue.isNaN == true || myValue == null ? 0 : myValue.toDouble(),
                       onChanged: (value) {
@@ -709,12 +735,18 @@ class _RGBIViewState extends State<RGBIViewState> {
                   ),
 
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: Container(
                       width: 40,
                       height: 20,
                       color: currentColor,
                     )
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+
+                      )
                   )
                 ],
               ),

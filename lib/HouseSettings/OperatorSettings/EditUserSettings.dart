@@ -1,6 +1,7 @@
 import 'dart:async';
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -13,7 +14,6 @@ class Edituser extends StatefulWidget{
 
   Edituser({Key key,this.username}):super(key:key);
   final String username;
-
   @override
   _Edituser createState()=>_Edituser(username);
 }
@@ -61,6 +61,12 @@ class _Edituser extends State<Edituser> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     hnameuser=_globalService.hname;
     hnumuser=_globalService.hnum;

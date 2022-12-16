@@ -18,13 +18,18 @@ import 'package:smart_home/Moods/MoodS021.dart';
 import 'package:smart_home/Moods/MoodS030.dart';
 import 'package:smart_home/Moods/MoodS051.dart';
 import 'package:smart_home/Moods/MoodS080.dart';
+import 'package:smart_home/Moods/MoodS110.dart';
+import 'package:smart_home/Moods/MoodS120.dart';
+import 'package:smart_home/Moods/MoodS141.dart';
+import 'package:smart_home/Moods/MoodS160.dart';
+
 import 'package:smart_home/Moods/MoodCurtain.dart';
 import 'package:smart_home/Moods/MoodPrjSosh.dart';
 import 'package:smart_home/Moods/MoodDB.dart';
 import 'package:smart_home/Timer/TimerDB.dart';
 import 'package:flutter/services.dart';
 import 'package:focus_detector/focus_detector.dart';
-import 'package:wifi_iot/wifi_iot.dart';
+// import 'package:wifi_iot/wifi_iot.dart';
 import 'package:smart_home/Moods/MoodOn.dart';
 import 'package:smart_home/Moods/MoodRGB.dart';
 
@@ -39,7 +44,6 @@ void main(){
   );
   runApp(MyApp());//
 }
-
 
 class MyApp extends StatelessWidget {
 
@@ -146,6 +150,8 @@ class MyHomePageState extends State<MyHomePage> {
 
   List bothr=[];
 
+  int vl=0;
+
 
   // Image Imager1 = Image.asset("images/rooms/im_accounts1.png", fit: BoxFit.fill,);
   // Image Imager2 = Image.asset("images/rooms/im_bathroomm1.png", fit: BoxFit.fill,);
@@ -171,7 +177,8 @@ class MyHomePageState extends State<MyHomePage> {
             String _networkStatus2 = '<Subscription> :: ' + conn;
             print("network change $_networkStatus2");
             s.close("In main");
-            await Future.delayed(const Duration(milliseconds: 500));
+            s.initNetworkInfo();
+            await Future.delayed(const Duration(seconds: 2));
             s.checkindevice(name, lb);
 
         });
@@ -205,13 +212,15 @@ class MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
 
+    vl=1;
+
+    s.initNetworkInfo();
     subscribed=_globalService.subscription;
     print("name $name hnum $lb");
     if (name != null) {
       TimerDBProvider.tdbname = name;
       DBProvider.dbname = name;
-     // DBProvider.db.newClient();
-      function1();
+      function1("init");
     }
     else {
 
@@ -226,7 +235,7 @@ class MyHomePageState extends State<MyHomePage> {
           lb=value[0]["lb"];
           DBProvider.dbname = name;
           TimerDBProvider.tdbname = name;
-          function1();
+          function1("zero");
         }
         setState(() {
           name=name;
@@ -250,6 +259,7 @@ class MyHomePageState extends State<MyHomePage> {
       subscribed=_globalService.subscription;
       print("subsf $subscribed");
 
+      FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadWFailure');
       FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
       FNC.DartNotificationCenter.registerChannel(channel: 'AddUserNotification');
       FNC.DartNotificationCenter.registerChannel(channel: 'AddAdminNotification');
@@ -271,6 +281,7 @@ class MyHomePageState extends State<MyHomePage> {
       FNC.DartNotificationCenter.registerChannel(channel: 'GuestAddedSuccessfully');
       FNC.DartNotificationCenter.registerChannel(channel: 'AdminAddedSuccessfully');
       FNC.DartNotificationCenter.registerChannel(channel: 'UserWithRoomsAddedError');
+      FNC.DartNotificationCenter.registerChannel(channel: 'User_not_present_in_ServerDetails');
       FNC.DartNotificationCenter.registerChannel(channel: 'User_not_present_in_UserTable');
       FNC.DartNotificationCenter.registerChannel(channel: 'Error while updating to server Details');
       FNC.DartNotificationCenter.registerChannel(channel: 'Error while updating to user table');
@@ -314,13 +325,13 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
 
-  Future<int> signalFunc() async {
-
-    Future<int> i = WiFiForIoTPlugin.getCurrentSignalStrength();
-    return i;
-
-
-  }
+  // Future<int> signalFunc() async {
+  //
+  //   // Future<int> i = WiFiForIoTPlugin.getCurrentSignalStrength();
+  //   // return i;
+  //
+  //
+  // }
 
   void nwimage(String options){
 
@@ -339,9 +350,9 @@ class MyHomePageState extends State<MyHomePage> {
         imgn=imgn;
       });
 
-      signalFunc().then((int value) {
+      //signalFunc().then((int value) {
 
-        fluttertoast(value.toString());
+      //  fluttertoast(value.toString());
         // periodicTimer = Timer.periodic(
         //   const Duration(seconds: 1),
         //       (timer) {
@@ -349,13 +360,13 @@ class MyHomePageState extends State<MyHomePage> {
         //   },
         // );
 
-      });
+    //  });
 
     }
     else if (options==("RWi-Fi")) {
       imgn = 'remote01';
 
-      signalFunc().then((int value) {
+      //signalFunc().then((int value) {
 
        // fluttertoast(value.toString());
         // periodicTimer = Timer.periodic(
@@ -365,7 +376,7 @@ class MyHomePageState extends State<MyHomePage> {
         //   },
         // );
 
-      });
+     // });
       setState(() {
         imgn=imgn;
       });
@@ -439,15 +450,56 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context)=>FocusDetector(
 
+
+      onVisibilityLost: (){
+        print("vl");
+
+      },
+      onVisibilityGained: (){
+        print("vg");
+
+        WidgetsFlutterBinding.ensureInitialized();
+        SystemChrome.setEnabledSystemUIMode(
+          SystemUiMode.manual,
+          overlays: [SystemUiOverlay.bottom],
+        );
+
+        selectedindexgr=0;
+        selectedindexl=0;
+
+        if(vl == 1){
+
+          vl=0;
+        }
+        else{
+          function1("vl");
+        }
+
+      },
+
+      onForegroundGained: (){
+        print("fg");
+      },
+
+      onForegroundLost: (){
+        print("fl");
+      },
+
       onFocusLost: () {
         print("focus lost");
 
-     //   periodicTimer.cancel();
+
 
         FNC.DartNotificationCenter.unregisterChannel(channel: "networkconn");
         FNC.DartNotificationCenter.unregisterChannel(channel: "socketconn");
       },
       onFocusGained: () {
+
+        WidgetsFlutterBinding.ensureInitialized();
+        SystemChrome.setEnabledSystemUIMode(
+          SystemUiMode.manual,
+          overlays: [SystemUiOverlay.bottom],
+        );
         print("focus gained");
         print(s.socketconnected);
 
@@ -478,7 +530,7 @@ class MyHomePageState extends State<MyHomePage> {
         nwimage(s.networkconnected);
         swimage(s.socketconnected);
 
-        function1();
+
 
       },
       child: WillPopScope(
@@ -490,6 +542,7 @@ class MyHomePageState extends State<MyHomePage> {
 
         appBar: AppBar(
          // backgroundColor: Color.fromRGBO(66, 130, 208, 255),
+          toolbarHeight: 40.0,
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
           title: widget.hname != null ? Text(widget.hname) : Text(name),
           actions: <Widget>[
@@ -527,7 +580,7 @@ class MyHomePageState extends State<MyHomePage> {
                 child: Column(
                 children:[
 
-                  Image.asset("images/rooms/logo.png", fit: BoxFit.fill,height: 62.0),
+                  Image.asset("images/rooms/logo.png", fit: BoxFit.fill,height: 53),
 
                   Flexible(
                     child:Container(
@@ -646,17 +699,20 @@ class MyHomePageState extends State<MyHomePage> {
                       }
                       if (snapshot.data == null || snapshot.data.length == 0) {
                         print("NoDataFound");
-                        return Text('No Data Found');
+                        return Text('');
                       }
                       return CircularProgressIndicator();
-                    },
+                      },
+                    ),
+                    ),
                   ),
+                  ],
                 ),
-              ),],),),
+              ),
               Container(
-                width: 2.5,
+                width: 2.7,
                 height: double.maxFinite,
-                color: Colors.grey,
+                color:  Color.fromRGBO(211, 211, 211,1),
               ),
 
               //Gridview
@@ -670,7 +726,7 @@ class MyHomePageState extends State<MyHomePage> {
                         child: Column(
                         children: <Widget>[
                           Expanded(
-                          flex:2000,
+                          flex:2250,
                             child:Container(
                               child: FutureBuilder<List<Gridmodle>>(
                                 future: gridarray,
@@ -735,11 +791,11 @@ class MyHomePageState extends State<MyHomePage> {
                           Container(
                             width: MediaQuery.of(context).size.width * .70,
                             height: 2.5,
-                            color: Colors.grey,
+                            color: Color.fromRGBO(211, 211, 211,1),
                           ),
                           Expanded(
 
-                            flex: 5000,
+                            flex: 5500,
                             child:Container(
                               width: MediaQuery.of(context).size.width * .70,
                               color: Colors.white38,
@@ -752,10 +808,10 @@ class MyHomePageState extends State<MyHomePage> {
                           ),
 
                           Expanded(
-                            flex:550,
+                            flex:650,
                             child:Container(
                               width: MediaQuery.of(context).size.width * .70,
-                              color: Colors.black26,
+                              color: Color.fromRGBO(211, 211, 211,1),
                               child:Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
@@ -2003,15 +2059,15 @@ class MyHomePageState extends State<MyHomePage> {
           contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
           clipBehavior:Clip.antiAliasWithSaveLayer,
-          //insetPadding: EdgeInsets.all(5.0),
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          title: Text(""),
+
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/2.75,
             child:MoodOnPage(number: "0"),
           ),
-          //content: //MoodS010Page(number: "0"),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           actions: [],
         );
         showDialog(
@@ -2032,42 +2088,42 @@ class MyHomePageState extends State<MyHomePage> {
           contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
           clipBehavior:Clip.antiAliasWithSaveLayer,
-
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          title: Text(""),
+
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/1.75,
             child:MoodRGBPage(number: "0"),
           ),
-          //content: //MoodS010Page(number: "0"),
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.white,
           actions: [],
         );
         showDialog(
           // barrierColor: Colors.white.withOpacity(0),
-            barrierDismissible: false,
-            context: context, builder: (BuildContext context) {
-
-          return alert;
-        }
+              barrierDismissible: false,
+              context: context, builder: (BuildContext context) {
+              return alert;
+          }
         );
       }
-      else if (ddevmodel==("S010")) {
+      else if (ddevmodel==("S010") || ddevmodel == ("SLT1")) {
         AlertDialog alert = AlertDialog(
 
           elevation:0,
           contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
           clipBehavior:Clip.antiAliasWithSaveLayer,
-          //insetPadding: EdgeInsets.all(5.0),
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          title: Text(""),
+
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/2.75,
             child:MoodS010Page(number: "0"),
           ),
-          //content: //MoodS010Page(number: "0"),
-          backgroundColor: Colors.transparent,
+
+          backgroundColor: Colors.white,
           actions: [],
         );
         showDialog(
@@ -2085,23 +2141,16 @@ class MyHomePageState extends State<MyHomePage> {
           elevation: 0,
           contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
-          title:Text(""),
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/1.75,
             child:S051Page(number: "0"),
           ),
-
-          // content: S051Page(number: "0"),
-          backgroundColor: Colors.transparent,
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: <Widget>[
-          //     MoodS051()
-          //   ],
-          // ),
+          backgroundColor: Colors.white,
           actions: [],
         );
         showDialog(context: context, builder: (BuildContext context){
@@ -2114,29 +2163,19 @@ class MyHomePageState extends State<MyHomePage> {
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          // insetPadding: EdgeInsets.symmetric(
-          //   horizontal: 50.0,
-          //   vertical: 100.0,
-          // ),
-          title: Text(""),
-          //content: MoodS080Page(number: "0",),
           contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/1.75,
             child:MoodS080Page(number: "0"),
           ),
 
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: <Widget>[
-          //     MoodS051()
-          //   ],
-          // ),
           actions: [],
         );
         showDialog(context: context, builder: (BuildContext context){
@@ -2149,29 +2188,18 @@ class MyHomePageState extends State<MyHomePage> {
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          // insetPadding: EdgeInsets.symmetric(
-          //   horizontal: 50.0,
-          //   vertical: 100.0,
-          // ),
-          title: Text(""),
           titlePadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
-          // content: MoodS020Page(number: "0",),
-          backgroundColor: Colors.transparent,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/3,
             child:MoodS020Page(number: "0"),
           ),
-
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: <Widget>[
-          //     MoodS051()
-          //   ],
-          // ),
           actions: [],
         );
         showDialog(context: context, builder: (BuildContext context){
@@ -2185,30 +2213,18 @@ class MyHomePageState extends State<MyHomePage> {
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          // insetPadding: EdgeInsets.symmetric(
-          //   horizontal: 50.0,
-          //   vertical: 100.0,
-          // ),
-          title: Text(""),
-          contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
-          //content: MoodS021Page(number: "0",),
-
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/2.50,
             child:MoodS021Page(number: "0"),
           ),
-
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: <Widget>[
-          //     MoodS051()
-          //   ],
-          // ),
           actions: [],
         );
         showDialog(context: context, builder: (BuildContext context){
@@ -2222,29 +2238,18 @@ class MyHomePageState extends State<MyHomePage> {
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          // insetPadding: EdgeInsets.symmetric(
-          //   horizontal: 50.0,
-          //   vertical: 100.0,
-          //),
-          title: Text(""),
-          contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
-          // content: MoodS030Page(number: "0",),
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/2.75,
             child:MoodS030Page(number: "0"),
           ),
-
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: <Widget>[
-          //     MoodS051()
-          //   ],
-          // ),
           actions: [],
         );
         showDialog(context: context, builder: (BuildContext context){
@@ -2253,32 +2258,148 @@ class MyHomePageState extends State<MyHomePage> {
         );
 
       }
+      else if(ddevmodel==("S110")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/2.75,
+            child:MoodS110Page(number: "0"),
+          ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+      else if(ddevmodel==("S120")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*2.75,
+            child:MoodS120Page(number: "0"),
+          ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+
+      else if(ddevmodel==("S141")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*1.75,
+            child:S141Page(number: "0"),
+          ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+
+      else if(ddevmodel==("S160")){
+        AlertDialog alert = AlertDialog(
+
+          elevation: 0,
+          titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height*1.75,
+            child:MoodS160Page(number: "0"),
+          ),
+          actions: [],
+        );
+        showDialog(context: context, builder: (BuildContext context){
+          return alert;
+        }
+        );
+
+      }
+
+      // else if(ddevmodel==("SFN1")){
+      //   AlertDialog alert = AlertDialog(
+      //
+      //     elevation: 0,
+      //     // insetPadding: EdgeInsets.symmetric(
+      //     //   horizontal: 50.0,
+      //     //   vertical: 100.0,
+      //     //),
+      //     title: Text(""),
+      //     contentPadding: EdgeInsets.zero,
+      //     titlePadding: EdgeInsets.zero,
+      //     backgroundColor: Colors.transparent,
+      //     // content: MoodS030Page(number: "0",),
+      //     shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+      //
+      //     content: Container(
+      //       width: MediaQuery.of(context).size.width*0.75,
+      //       child(number: "0"),
+      //     ),
+      //     actions: [],
+      //   );
+      //   showDialog(context: context, builder: (BuildContext context){
+      //     return alert;
+      //   }
+      //   );
+      //
+      // }
       else if(ddevmodel==("CLS1")){
 
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          // insetPadding: EdgeInsets.symmetric(
-          //   horizontal: 50.0,
-          //   vertical: 100.0,
-          //),
-          title: Text(""),
           titlePadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/3,
             child:MoodCurtain(number: "0"),
           ),
 
-          //content: MoodCurtain(number: "0",),
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: <Widget>[
-          //     MoodS051()
-          //   ],
-          // ),
           actions: [],
         );
         showDialog(context: context, builder: (BuildContext context){
@@ -2292,13 +2413,15 @@ class MyHomePageState extends State<MyHomePage> {
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          title: Text(""),
-          //content: MoodCurtain(number: "0",),
-          contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/3,
             child:MoodCurtain(number: "0"),
           ),
           actions: [],
@@ -2312,27 +2435,17 @@ class MyHomePageState extends State<MyHomePage> {
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          // insetPadding: EdgeInsets.symmetric(
-          //   horizontal: 50.0,
-          //   vertical: 100.0,
-          //),
-          title: Text(""),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
-            child:MoodCurtain(number: "0"),
-          ),
-
-          // content: MoodCurtain(number: "0",),
           titlePadding: EdgeInsets.zero,
           contentPadding: EdgeInsets.zero,
-          // new Row(
-          //   mainAxisSize: MainAxisSize.min,
-          //   crossAxisAlignment: CrossAxisAlignment.start,
-          //   children: <Widget>[
-          //     MoodS051()
-          //   ],
-          // ),
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
+          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+          content: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/1.75,
+            child:MoodCurtain(number: "0"),
+          ),
 
           actions: [],
         );
@@ -2346,14 +2459,15 @@ class MyHomePageState extends State<MyHomePage> {
         AlertDialog alert = AlertDialog(
 
           elevation: 0,
-          title: Text(""),
-          //content: MoodCurtain(number: "0",),
-          contentPadding: EdgeInsets.zero,
           titlePadding: EdgeInsets.zero,
-          backgroundColor: Colors.transparent,
+          contentPadding: EdgeInsets.zero,
+          clipBehavior:Clip.antiAliasWithSaveLayer,
+          backgroundColor: Colors.white,
+          insetPadding: EdgeInsets.all(50.0),
           shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
           content: Container(
-            width: MediaQuery.of(context).size.width*0.75,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height/3,
             child:MoodProjSom(number: "0"),
           ),
           actions: [],
@@ -2896,9 +3010,10 @@ class MyHomePageState extends State<MyHomePage> {
         false;
   }
 
-  function1() async {
+  function1(String message) async {
 
 
+    fluttertoast(message);
     checkConnectivity2();
     print("switch board table");
     dbHelper = DBHelper();
@@ -3208,6 +3323,11 @@ class MyHomePageState extends State<MyHomePage> {
     Set<Gridmodle> set = new HashSet.from(addDataArray);
     addDataArray.clear();
     addDataArray.addAll(set);
+    print("Add $addDataArray");
+
+
+    final int index1 = addDataArray.indexWhere(((book) => book.name == 'Swb'));
+
     gridarray = getgridlist();
     c = addDataArray.first.name;
     getglist();

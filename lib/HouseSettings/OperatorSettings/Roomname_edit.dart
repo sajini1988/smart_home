@@ -13,7 +13,6 @@ class RoomNameEditPage extends StatefulWidget {
 
   RoomNameEditPage({Key key, this.title}) :super(key: key);
   final String title;
-
   @override
   _RoomNameEditPageState createState() => _RoomNameEditPageState();
 }
@@ -44,6 +43,13 @@ class _RoomNameEditPageState extends State<RoomNameEditPage>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: "networkconn");
     FNC.DartNotificationCenter.unregisterChannel(channel: "socketconn");

@@ -7,10 +7,10 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:flutter/foundation.dart' show TargetPlatform, debugDefaultTargetPlatformOverride, kIsWeb;
-import 'package:flutter/material.dart' show Colors, TargetPlatform;
 import 'package:flutter/services.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,6 +20,8 @@ import 'package:smart_home/LDatabase.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
+
+import 'LDatabaseModelClass.dart';
 
 void main() {
   print(Singleton().hashCode == Singleton().hashCode);
@@ -33,7 +35,6 @@ class Singleton {
   ConnectivityResult result;
   int maxsize,maxsizet;
   String serverssid;
-
   DBHelper dbHelper;
   Geolocator geolocator;
   bool socketconnected=false;
@@ -77,8 +78,8 @@ class Singleton {
 
   Future<void>checkindevice(String hname, String hnum) async{
 
-    initNetworkInfo();
-    Timer(Duration(seconds: 2
+    //initNetworkInfo();
+    Timer(Duration(seconds: 0
     ), () {
         checkforwificonnection(hname, hnum);
     });
@@ -87,6 +88,7 @@ class Singleton {
   Future<void> checkforwificonnection(String hname, String hnum) async {
 
     hnamef=hname;
+    serc1=hnum;
     String hname1 = hname;
     String hnum1= hnum;
     connectivity(hname1,hnum1);
@@ -887,13 +889,13 @@ class Singleton {
               else{
 
                 print(strl);
-                fluttertoast(strl);
+               // fluttertoast(strl);
                 FNC.DartNotificationCenter.post(channel: 'MasterNotification', options: strl);
               }
             }
             else if (decrypt=='*OK#\r\n') {
 
-              fluttertoast("*OK#");
+            //  fluttertoast("*OK#");
               socketconnected = true;
               socketregisterchannel();
               socketconnectchannel();
@@ -1087,12 +1089,17 @@ class Singleton {
 
             builder.add(data1);
             int wiredbytes=builder.length;
+
             if(maxsize.bitLength == 0){
 
             }
             else{
 
+              print("$wiredbytes,$maxsize");
+
               if (wiredbytes == maxsize) {
+
+                print("f $wiredbytes,$maxsize");
 
                 Uint8List dt = builder.toBytes();
 
@@ -1105,13 +1112,8 @@ class Singleton {
                 File(wiredpath).writeAsBytes(
                     buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
 
-                //socket.destroy();
-
-                // DBProvider.db.close();
-                DBProvider.dbname = hnamef;
-                //callingmethoad();
-
-                FNC.DartNotificationCenter.post(channel: "DownLoadW", options:"true");
+              //  DBProvider.dbname = hnamef;
+               callingMethod();
                 wireddb=false;
               }
             }
@@ -1204,6 +1206,75 @@ class Singleton {
 
     }
   }
+
+
+  Future<void> callingMethod() async {
+
+
+    DBProvider.db.close();
+
+    Timer(Duration(seconds: 3
+    ), () async {
+
+      DBProvider.dbname = hnamef;
+
+      DBProvider.db.newClient();
+      DBProvider.db.newClient1();
+      DBProvider.db.newClient2();
+      DBProvider.db.newClient3();
+
+
+      DBProvider.db.update(hnamef,serc1 );
+      DBProvider.db.updatemt(hnamef, serc1);
+      DBProvider.db.updatest(hnamef, serc1);
+      DBProvider.db.updatesd(hnamef, serc1);
+
+
+
+      List ut = await DBProvider.db.getServerDetailsDataWithHNumUType(hnamef, adminName);
+      if(ut.length==0){
+
+        FNC.DartNotificationCenter.post(channel: "DownLoadWFailure", options:"true");
+
+      }
+      else{
+
+        String uType = ut[0]['da'];
+
+        List res = await dbHelper.getStudents1(hnamef, serc1);
+
+        String hname = res[0]['name'];
+        String hnum = res[0]['lb'];
+        String ip = res[0]['lc'];
+        String uname = res[0]['ld'];
+        String uPass= res[0]['le'];
+        String auto = res[0]['lf'];
+        String lh = res[0]['lh'];
+        String port = res[0]['li'];
+
+        dbHelper.updatedb(Student(
+            name: hname,
+            lb: hnum,
+            lc: ip,
+            ld: uname,
+            le: uPass,
+            lf: auto,
+            lg: uType,
+            lh: lh,
+            li: port));
+
+        FNC.DartNotificationCenter.post(channel: "DownLoadW", options:"true");
+      }
+
+
+    }
+    );
+
+
+
+
+  }
+
   close(String message){
 
     print(message);
@@ -1225,16 +1296,16 @@ class Singleton {
 
   fluttertoast(String message){
 
-    // Fluttertoast.showToast(
-    //     msg: message,
-    //
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     gravity: ToastGravity.BOTTOM,
-    //     timeInSecForIosWeb: 1,
-    //     backgroundColor: Colors.grey,
-    //     textColor: Colors.white,
-    //     fontSize: 16.0
-    // );
+    Fluttertoast.showToast(
+        msg: message,
+
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.grey,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
 
   }
 

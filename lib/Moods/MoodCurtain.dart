@@ -3,6 +3,7 @@ import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Moods/MoodDB.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'MoodDBModelClass.dart';
+import 'package:smart_home/Moods/MoodList.dart';
 
 class MoodCurtain extends StatefulWidget{
 
@@ -12,7 +13,6 @@ class MoodCurtain extends StatefulWidget{
   _MyHomePageState createState()=>_MyHomePageState(number1: number);
 }
 class _MyHomePageState extends State<MoodCurtain> {
-
   _MyHomePageState({this.number1});
   final String number1;
 
@@ -302,38 +302,142 @@ class _MyHomePageState extends State<MoodCurtain> {
     return MaterialApp(
      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(devicenameset,style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal),
+        backgroundColor: Colors.transparent,
+        body: Align(
+          alignment: Alignment.center,
+          child: Container(
+            color: Colors.transparent,
+            child:ListView(
+              shrinkWrap:true,
+              children:<Widget>[
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
+                    Expanded(
+                        flex:10,
+                        child:Container(
+                          color: Colors.white,
+                          child:Padding(padding: const EdgeInsets.all(4.0),),
+                        )
+
                     ),
-                  )
-                  )
-                ],
-              ),
-              Padding(padding: const EdgeInsets.all(10.0)),
+                  ],
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: Container(
+                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+
+                              Expanded(
+                                flex:3,
+                                child: Container(
+                                  color: Colors.white,
+                                ),
+                              ),
+
+                              Expanded(
+                                  flex:4,
+                                  child:Container(
+                                    color: Colors.white,
+                                    child: Center(
+                                        child: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text(
+                                            "Mood $number",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle: FontStyle.normal
+                                            ),
+                                            maxLines: 2,
+                                          ),
+                                        )
+                                    ),
+                                  )
+                              ),
+                              Expanded(
+                                  flex:3,
+                                  child: Transform.scale(
+                                    scale: 0.9,
+                                    child: IconButton(
+                                        icon: Image.asset("images/Timer/timer_list.png"),
+                                        splashRadius: 0.1,
+                                        splashColor:Colors.transparent,
+                                        onPressed: () {
+                                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => MoodListPage()));
+                                        }
+                                    ),
+                                  )
+                              ),
+                            ],
+                          ),
+                        )
+                    ),
+                  ],
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex:10,
+                      child: Container(
+                        color: Colors.white,
+                        child: Center(
+                            child: FittedBox(
+                              fit: BoxFit.fitWidth,
+                              child:
+                              Text(
+                                "$devicenameset",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w600,
+                                    fontStyle: FontStyle.normal
+                                ),
+
+                                maxLines: 2,
+                              ),
+                            )
+
+                        ),
+                      ),
+                    )
+
+                  ],
+                ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child:Visibility(
+                    flex:10,
+                    child:Container(
+                      color: Colors.white,
+                      child:Visibility(
                         child: Text("Curtain")
+                      ),
                     ),
                   ),
-                ],
+                ]
               ),
-              Padding(padding: const EdgeInsets.all(10.0),
-                child: Row(
+              Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Transform.scale(
+                    Expanded(
+                    flex:10,
+                    child:Container(
+                    color:Colors.white,
+                    child:Row(
+                      mainAxisAlignment:MainAxisAlignment.spaceAround,
+                      children:[
+                      Transform.scale(
                       scale: 2.0,
                       child:Visibility(
                        // visible: bothopen,
@@ -409,28 +513,40 @@ class _MyHomePageState extends State<MoodCurtain> {
                           }
                         ),
                       ),
-                    ),
-                  ],
+                    ),])
+                    )
+                    )
+                  ]
                 ),
-              ),
-              Padding(padding: const EdgeInsets.all(10.0)),
-              Row(
+
+
+                Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Expanded(
-                    child:Visibility(
-                      visible: sheerLabelVisible,
+                    flex:10,
+                    child:Container(
+                      color:Colors.white,
+                      child: Visibility(
+                        visible: sheerLabelVisible,
                         child: Text("Sheer")
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
 
-              Padding(padding: const EdgeInsets.all(10.0),
-                child: Row(
+              Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Transform.scale(
+                    Expanded(
+                      flex:10,
+                      child:Container(
+                        color:Colors.white,
+                        child:Row(
+                          mainAxisAlignment:MainAxisAlignment.spaceAround,
+                          children:[
+                            Transform.scale(
                       scale: 2.0,
                       child:Visibility(
                         visible: sheerOpen,
@@ -505,85 +621,103 @@ class _MyHomePageState extends State<MoodCurtain> {
                   ],
                 ),
               ),
-              Padding(padding: const EdgeInsets.all(5.0),),
+              )]),
+
+
               Container(
                 height: 2,
                 color: Colors.black54,
               ),
-              Padding(padding: const EdgeInsets.all(5.0),),
-              Row(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
+                    Expanded(
+                        flex:10,
+                        child:Container(
+                          color: Colors.white,
+                          child:Padding(padding: const EdgeInsets.all(5.0),),
+                        )
 
+                    ),
+                  ],
+                ),
+
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    MaterialButton(
-                      padding: EdgeInsets.all(8.0),
-                      textColor: Colors.white,
-                      // splashColor: Colors.greenAccent,
-                      elevation: 8.0,
+                    Expanded(
+                      flex:10,
                       child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('images/Moods/save_button.png'),
-                              fit: BoxFit.cover),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text("CANCEL"),
+                        color: Colors.white,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+
+                            MaterialButton(
+                              padding: EdgeInsets.all(8.0),
+                              textColor: Colors.white,
+                              // splashColor: Colors.greenAccent,
+                              elevation: 8.0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/Moods/save_button.png'),
+                                      fit: BoxFit.fill),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Text("CANCEL"),
+                                ),
+                              ),
+                              // ),
+                              onPressed: () {
+
+                                Navigator.of(context,rootNavigator: true).pop();
+                                print('Tapped');
+                              },
+
+                            ),
+
+                            MaterialButton(
+                              padding: EdgeInsets.all(8.0),
+                              textColor: Colors.white,
+                              // splashColor: Colors.greenAccent,
+                              elevation: 8.0,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: AssetImage('images/Moods/save_button.png'),
+                                      fit: BoxFit.fill),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Center(child: Text("  SAVE  ")),
+                                ),
+                              ),
+                              // ),
+                              onPressed: () {
+
+                                Navigator.of(context,rootNavigator: true).pop();
+                                savecurtain();
+                                print('Tapped');
+                              },
+                            ),
+
+                          ],
                         ),
                       ),
-                      // ),
-                      onPressed: () {
-                        Navigator.of(context,rootNavigator: true).pop();
-                        print('Tapped');
-                      },
-                      //   color: Colors.blueAccent,
-                      //
-                      //   onPressed: () =>
-                      //   {
-                      //   },
-                      // child: Text(
-                      //       "Cancel", softWrap: false, maxLines: 1,),
-                    ),
+                    )
+                  ],
+                ),
 
-                    MaterialButton(
-                      padding: EdgeInsets.all(8.0),
-                      textColor: Colors.white,
-                      // splashColor: Colors.greenAccent,
-                      elevation: 8.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('images/Moods/save_button.png'),
-                              fit: BoxFit.cover),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Center(child: Text("  SAVE  ")),
-                        ),
-                      ),
-                      // ),
-                      onPressed: () {
 
-                        Navigator.of(context,rootNavigator: true).pop();
-                        savecurtain();
-                        print('Tapped');
-                      },
-                      //   color: Colors.blueAccent,
-                      //
-                      //   onPressed: () =>
-                      //   {
-                      //   },
-                      // child: Text(
-                      //       "Cancel", softWrap: false, maxLines: 1,),
-                    ),
-                  ]
-              ),
+
             ],
           ),
         ),
       ),
 
-    );
+      ));
   }
 
   savecurtain()async{

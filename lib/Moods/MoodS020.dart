@@ -415,7 +415,7 @@ class _MoodS020PageState extends State<MoodS020Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -446,7 +446,7 @@ class _MoodS020PageState extends State<MoodS020Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),

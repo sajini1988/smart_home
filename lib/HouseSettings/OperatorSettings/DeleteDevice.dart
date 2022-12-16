@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
@@ -15,7 +16,6 @@ class DeleteDevicePage extends StatefulWidget {
 
   DeleteDevicePage({Key key, this.title}) :super(key: key);
   final String title;
-
   @override
   _DeleteDevicePageState createState() => _DeleteDevicePageState();
 }
@@ -23,6 +23,8 @@ class DeleteDevicePage extends StatefulWidget {
 class _DeleteDevicePageState extends State<DeleteDevicePage>{
 
   var s=Singleton();
+
+
 
   GlobalService _globalService = GlobalService();
 
@@ -50,6 +52,13 @@ class _DeleteDevicePageState extends State<DeleteDevicePage>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
+
     hname=_globalService.hname;
     hnum=_globalService.hnum;
 

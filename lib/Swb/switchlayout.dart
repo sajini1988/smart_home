@@ -10,6 +10,13 @@ import 'package:smart_home/Swb/S010.dart';
 import 'package:smart_home/Swb/S020.dart';
 import 'package:smart_home/Swb/S021.dart';
 import 'package:smart_home/Swb/S030.dart';
+import 'package:smart_home/Swb/DFN1.dart';
+import 'package:smart_home/Swb/S042.dart';
+import 'package:smart_home/Swb/S110.dart';
+import 'package:smart_home/Swb/S120.dart';
+import 'package:smart_home/Swb/S141.dart';
+import 'package:smart_home/Swb/S160.dart';
+import 'package:smart_home/Swb/SFN1.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_home/GlobalService.dart';
@@ -226,7 +233,7 @@ class _SwitchlayoutState extends State<Switchlayout> {
         contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
         clipBehavior:Clip.antiAliasWithSaveLayer,
-        insetPadding: EdgeInsets.all(25.0),
+        insetPadding: EdgeInsets.all(30.0),
         shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
         title: Text(""),
@@ -273,6 +280,55 @@ class _SwitchlayoutState extends State<Switchlayout> {
         child: S051(),
       );
     }
+    else if(ddevmodel == 'S141') {
+      container1 = Container(
+        width:MediaQuery.of(context).size.width / 1.4,
+        color: Colors.white,
+        child: S141(),
+      );
+    }
+    else if(ddevmodel == 'S110') {
+      container1 = Container(
+        width:MediaQuery.of(context).size.width / 1.4,
+        color: Colors.white,
+        child: S110(),
+      );
+    }
+    else if(ddevmodel == 'S120') {
+      container1 = Container(
+        width:MediaQuery.of(context).size.width / 1.4,
+        color: Colors.white,
+        child: S120(),
+      );
+    }
+    else if(ddevmodel == 'S160') {
+      container1 = Container(
+        width:MediaQuery.of(context).size.width / 1.4,
+        color: Colors.white,
+        child: S160(),
+      );
+    }
+    else if(ddevmodel == 'SFN1') {
+      container1 = Container(
+        width:MediaQuery.of(context).size.width / 1.4,
+        color: Colors.white,
+        child: SFN1(),
+      );
+    }
+    else if(ddevmodel == 'S042') {
+      container1 = Container(
+        width:MediaQuery.of(context).size.width / 1.4,
+        color: Colors.white,
+        child: S042(),
+      );
+    }
+    else if(ddevmodel == 'DFN1') {
+      container1 = Container(
+        width:MediaQuery.of(context).size.width / 1.4,
+        color: Colors.white,
+        child: DFN1(),
+      );
+    }
     else if(ddevmodel == 'S080'){
       container1 = Container(
         width:MediaQuery.of(context).size.width / 1.4,
@@ -294,6 +350,7 @@ class _SwitchlayoutState extends State<Switchlayout> {
         child: S010(),
       );
     }
+
     else if(ddevmodel == 'S020'){
       container1 = Container(
         width:MediaQuery.of(context).size.width / 1.4,

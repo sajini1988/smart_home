@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Bell/bell.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -8,7 +9,6 @@ import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 
 class BellIViewState extends StatefulWidget {
-
   @override
   _BellIViewState createState() => _BellIViewState();
 
@@ -30,6 +30,12 @@ class _BellIViewState extends State<BellIViewState> {
   void initState() {
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     colorBoth=colorOff;
 

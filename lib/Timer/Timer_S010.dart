@@ -22,7 +22,6 @@ class _TimerS010PageState extends State<TimerS010Page> {
 
   GlobalService _globalService = GlobalService();
   Globaltimer _globaltimer = Globaltimer();
-
   String number="0";
 
   bool imgchange1=false;

@@ -1,5 +1,8 @@
 // ignore_for_file: unnecessary_statements, duplicate_ignore
+//import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/HouseSettings/OperatorSettings/GatewaySettings.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/Singleton.dart';
@@ -41,9 +44,6 @@ class _OperatorSettings extends State<OperatorSettings>{
 
   bool hideVup=false,deleteVRm=false,deleteVdv=false,deleteVHou=false,editVr=false;
 
-
-
-
   //Operator_Settings _site1=Operator_Settings.IPSettings;
 
   OperatorSett _site1=OperatorSett.empty;
@@ -69,17 +69,78 @@ class _OperatorSettings extends State<OperatorSettings>{
     // TODO: implement initState
     super.initState();
 
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
+
     colorBoth=colorOff;
     hname = _globalService.hname;
     hnum = _globalService.hnum;
 
+
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'DownLoadW');
+    FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadW');
+    FNC.DartNotificationCenter.subscribe(channel: 'DownLoadW', onNotification: (options) {
+
+      recWDownload();
+
+    },observer: null);
+
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'DownLoadWFailure');
+    FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadWFailure');
+    FNC.DartNotificationCenter.subscribe(channel: 'DownLoadWFailure', onNotification: (options) {
+
+      recFailure();
+
+    },observer: null);
+
     dbHelper = DBHelper();
     userAdminAccess();
 
+  }
 
+  recFailure(){
+    Navigator.of(context,rootNavigator: true).pop();
+    showAlertDialogUpdateStatus(context,"Wired Database Update Failure");
 
   }
 
+  recWDownload(){
+
+    Navigator.of(context,rootNavigator: true).pop();
+    showAlertDialogUpdateStatus(context,"Wired Database updated Successfully");
+
+  }
+
+  showAlertDialogUpdateStatus(BuildContext context,String message) {
+
+    // Create button
+    Widget yesButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        Navigator.of(context,rootNavigator: true).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text(message),
+      actions: [
+        yesButton
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
   userAdminAccess() async {
 
 
@@ -208,16 +269,11 @@ class _OperatorSettings extends State<OperatorSettings>{
        // clearRadio();
       },
     child: WillPopScope(onWillPop: () async {
-
-
-
-      // return Navigator.of(context).push(
-      //   MaterialPageRoute(builder: (context) => MyApp(name:hname,lb:hnum)),
-      // );
-      return Navigator.canPop(context);
+        return Navigator.canPop(context);
       },
         child:Scaffold(
           appBar: AppBar(
+            toolbarHeight: 40.0,
             backgroundColor: Color.fromRGBO(66, 130, 208, 1),
             title: Text("Operator Settings"),
             actions: <Widget>[
@@ -707,7 +763,22 @@ class _OperatorSettings extends State<OperatorSettings>{
   }
 
   updateHouse(){
+
     print("Update House");
+    if(s.socketconnected == true){
+
+      showDialog(
+          context: context,
+          barrierDismissible:false ,
+          builder: (BuildContext context) {
+            return Center(child: CircularProgressIndicator(),);
+          }
+      );
+      s.socket1('\$118&');
+    }
+    else{
+      fluttertoast("Connect to server");
+    }
   }
 
   deleteDevice(){

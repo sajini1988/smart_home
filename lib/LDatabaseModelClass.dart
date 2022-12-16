@@ -11,7 +11,6 @@ class Student {
   String lh;
   String li;
 
-
   Student({this.name,
       this.lb,
       this.lc,

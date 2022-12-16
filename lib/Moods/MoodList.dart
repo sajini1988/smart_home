@@ -2,6 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Moods/MoodDB.dart';
+import 'package:smart_home/Moods/MoodS110.dart';
+import 'package:smart_home/Moods/MoodS120.dart';
+import 'package:smart_home/Moods/MoodS141.dart';
+import 'package:smart_home/Moods/MoodS160.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,7 +20,8 @@ import 'package:smart_home/Moods/MoodS080.dart';
 import 'package:smart_home/Moods/MoodCurtain.dart';
 import 'package:smart_home/Moods/MoodPrjSosh.dart';
 import 'package:smart_home/Moods/MoodOn.dart';
-
+import 'package:smart_home/Moods/MoodRGB.dart';
+import 'package:smart_home/Timer/RGBTimer.dart';
 
 class MoodListPage extends StatefulWidget {
 
@@ -316,11 +321,25 @@ class _MoodListPageState extends State<MoodListPage>{
                     List<String> dd = data.split(';');
                     String dd0=dd[0];
 
+
                     List<String> dd1 = dd0.split(',');
-                    dds=dd1[0];
-                    dds1=dd1[1];
-                    dds2=dd1[2];
-                    dds3=dd1[3];
+
+                    if(dd1.length == 1){
+
+                      dds=dd1[0];
+                      dds1="0";
+                      dds2="0";
+                      dds3="0";
+
+                    }
+                    else{
+
+                      dds=dd1[0];
+                      dds1=dd1[1];
+                      dds2=dd1[2];
+                      dds3=dd1[3];
+                    }
+
 
 
                     if(dds=="104"){
@@ -338,6 +357,10 @@ class _MoodListPageState extends State<MoodListPage>{
                     else if (dds == "107"){
                       fdata ="Fade";
                       color=Colors.black;
+                    }
+                    else if(dds == "0"){
+                      fdata = "Off";
+                      color = Colors.black;
                     }
                     else{
                       fdata = "Color";
@@ -425,16 +448,24 @@ class _MoodListPageState extends State<MoodListPage>{
 
     _globalService.moodlistdnumset=devNumls;
 
-    if (ddevmodel==("S010")) {
+    if ((ddevmodel==("S010"))|| ddevmodel==("SLT1")) {
+
       AlertDialog alert = AlertDialog(
 
         elevation:0,
         contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
         clipBehavior:Clip.antiAliasWithSaveLayer,
-        title: Text(""),
-        content: MoodS010Page(number: "1"),
-        backgroundColor: Colors.transparent,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2.75,
+          child:MoodS010Page(number: "1"),
+        ),
+
+        backgroundColor: Colors.white,
         actions: [],
       );
       showDialog(
@@ -445,6 +476,7 @@ class _MoodListPageState extends State<MoodListPage>{
         return alert;
       }
       );
+
     }
     else if(ddevmodel==("S051")){
       AlertDialog alert = AlertDialog(
@@ -452,16 +484,16 @@ class _MoodListPageState extends State<MoodListPage>{
         elevation: 0,
         contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
-        title:Text(""),
-        content: S051Page(number: "1"),
-        backgroundColor: Colors.transparent,
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/1.75,
+          child:S051Page(number: "1"),
+        ),
+        backgroundColor: Colors.white,
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context){
@@ -469,27 +501,25 @@ class _MoodListPageState extends State<MoodListPage>{
       }
       );
 
+
     }
     else if(ddevmodel==("S080")){
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        // ),
-        title: Text(""),
-        content: MoodS080Page(number: "1",),
         contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/1.75,
+          child:MoodS080Page(number: "1"),
+        ),
+
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context){
@@ -502,22 +532,18 @@ class _MoodListPageState extends State<MoodListPage>{
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        // ),
-        title: Text(""),
         titlePadding: EdgeInsets.zero,
         contentPadding: EdgeInsets.zero,
-        content: MoodS020Page(number: "1",),
-        backgroundColor: Colors.transparent,
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/3,
+          child:MoodS020Page(number: "1"),
+        ),
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context){
@@ -531,22 +557,67 @@ class _MoodListPageState extends State<MoodListPage>{
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        // ),
-        title: Text(""),
-        contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
-        content: MoodS021Page(number: "1",),
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
+        contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2.50,
+          child:MoodS021Page(number: "1"),
+        ),
+        actions: [],
+      );
+      showDialog(context: context, builder: (BuildContext context){
+        return alert;
+      }
+      );
+    }
+
+    else if(ddevmodel==("S030")){
+      AlertDialog alert = AlertDialog(
+
+        elevation: 0,
+        titlePadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2.75,
+          child:MoodS030Page(number: "1"),
+        ),
+        actions: [],
+      );
+      showDialog(context: context, builder: (BuildContext context){
+        return alert;
+      }
+      );
+
+
+    }
+
+    else if(ddevmodel==("S110")){
+      AlertDialog alert = AlertDialog(
+
+        elevation: 0,
+        titlePadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2.75,
+          child:MoodS110Page(number: "1"),
+        ),
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context){
@@ -556,26 +627,73 @@ class _MoodListPageState extends State<MoodListPage>{
 
     }
 
-    else if(ddevmodel==("S030")){
+    else if(ddevmodel==("S120")){
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        //),
-        title: Text(""),
-        contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
-        content: MoodS030Page(number: "1",),
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
+        contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*2.75,
+          child:MoodS120Page(number: "1"),
+        ),
+        actions: [],
+      );
+      showDialog(context: context, builder: (BuildContext context){
+        return alert;
+      }
+      );
+
+
+    }
+
+    else if(ddevmodel==("S141")){
+      AlertDialog alert = AlertDialog(
+
+        elevation: 0,
+        titlePadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*1.75,
+          child:S141Page(number: "1"),
+        ),
+        actions: [],
+      );
+      showDialog(context: context, builder: (BuildContext context){
+        return alert;
+      }
+      );
+
+    }
+
+    else if(ddevmodel==("S160")){
+      AlertDialog alert = AlertDialog(
+
+        elevation: 0,
+        titlePadding: EdgeInsets.zero,
+        contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height*1.75,
+          child:MoodS160Page(number: "1"),
+        ),
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context){
@@ -589,21 +707,18 @@ class _MoodListPageState extends State<MoodListPage>{
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        //),
-        title: Text(""),
         titlePadding: EdgeInsets.zero,
         contentPadding: EdgeInsets.zero,
-        content: MoodCurtain(number: "1",),
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/3,
+          child:MoodCurtain(number: "1"),
+        ),
+
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context){
@@ -617,21 +732,17 @@ class _MoodListPageState extends State<MoodListPage>{
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        // insetPadding: EdgeInsets.symmetric(
-        //   horizontal: 50.0,
-        //   vertical: 100.0,
-        //),
-        title: Text(""),
-        content: MoodCurtain(number: "1",),
-        contentPadding: EdgeInsets.zero,
         titlePadding: EdgeInsets.zero,
-        // new Row(
-        //   mainAxisSize: MainAxisSize.min,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     MoodS051()
-        //   ],
-        // ),
+        contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/3,
+          child:MoodCurtain(number: "1"),
+        ),
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context){
@@ -643,10 +754,18 @@ class _MoodListPageState extends State<MoodListPage>{
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        title: Text(""),
-        content: MoodCurtain(number: "1",),
         titlePadding: EdgeInsets.zero,
         contentPadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/1.75,
+          child:MoodCurtain(number: "1"),
+        ),
+
         actions: [],
       );
       showDialog(context: context, builder: (BuildContext context) {
@@ -654,38 +773,83 @@ class _MoodListPageState extends State<MoodListPage>{
       }
       );
     }
+
     else if(ddevmodel =="PSC1" || ddevmodel=="SOSH" || ddevmodel == "SWG1" || ddevmodel == "SLG1") {
       AlertDialog alert = AlertDialog(
 
         elevation: 0,
-        title: Text(""),
-        content: MoodProjSom(number: "1",),
         titlePadding: EdgeInsets.zero,
         contentPadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        backgroundColor: Colors.white,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/3,
+          child:MoodProjSom(number: "1"),
+        ),
         actions: [],
       );
-      showDialog(context: context, builder: (BuildContext context) {
+      showDialog(context: context, builder: (BuildContext context){
         return alert;
       }
       );
     }
+    else if(ddevmodel =="RGB1"){
 
-    else if(ddevmodel =="ACR1" || ddevmodel == "GSR1" || ddevmodel == "GSK1" || ddevmodel == "SDG1" || ddevmodel == "PLC1") {
       AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        title: Text(""),
-        content: MoodOnPage(number: "1",),
-        titlePadding: EdgeInsets.zero,
+        elevation:0,
         contentPadding: EdgeInsets.zero,
-        backgroundColor: Colors.transparent,
+        titlePadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/1.75,
+          child:MoodRGBPage(number: "1"),
+        ),
+        backgroundColor: Colors.white,
         actions: [],
       );
-      showDialog(context: context, builder: (BuildContext context) {
+      showDialog(
+        // barrierColor: Colors.white.withOpacity(0),
+          barrierDismissible: false,
+          context: context, builder: (BuildContext context) {
         return alert;
       }
       );
+    }
+    else if(ddevmodel =="ACR1" || ddevmodel == "GSR1" || ddevmodel == "GSK1" || ddevmodel == "SDG1" || ddevmodel == "PLC1") {
+      AlertDialog alert = AlertDialog(
+
+        elevation:0,
+        contentPadding: EdgeInsets.zero,
+        titlePadding: EdgeInsets.zero,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(50.0),
+        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+
+        content: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height/2.75,
+          child:MoodOnPage(number: "1"),
+        ),
+        backgroundColor: Colors.white,
+        actions: [],
+      );
+      showDialog(
+        // barrierColor: Colors.white.withOpacity(0),
+          barrierDismissible: false,
+          context: context, builder: (BuildContext context) {
+
+        return alert;
+      }
+      );
+
     }
 
   }

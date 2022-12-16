@@ -1,5 +1,6 @@
 import'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/Bell/bellIView.dart';
@@ -32,6 +33,12 @@ class _BellLayoutState extends State<BellLayout>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
     print("enter bell init state");
     hnameB = houseName1;
     hnumB= houseNum1;
@@ -201,8 +208,7 @@ class _BellLayoutState extends State<BellLayout>{
       ),
       backgroundColor: Colors.white,
       actions: [
-
-      ],
+        ],
     );
 
     showDialog(context: context, builder: (BuildContext context){

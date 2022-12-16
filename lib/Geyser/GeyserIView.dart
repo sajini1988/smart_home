@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Geyser/Geyser.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -16,7 +17,6 @@ class GeyIViewState extends StatefulWidget {
 class _GeyIViewState extends State<GeyIViewState> {
 
   GlobalService _globalService = GlobalService();
-
   var s=Singleton();
 
   String hnameGy,hnumGy,rnumGy,dnumGy,rnameGy,groupIdGy,dtypeGy;
@@ -30,6 +30,12 @@ class _GeyIViewState extends State<GeyIViewState> {
   void initState() {
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     colorBoth=colorOff;
 

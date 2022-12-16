@@ -143,7 +143,7 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
     moodName = res[0]['stna'];
     ddevmodel = res[0]['dna'];
     dnum = res[0]['dno'];
-    onOffNum = res[0]['Onoff'];
+    onOffNum = res[0]['OnOff'];
     deviceData = res[0]['dd'];
     aData = res[0]['ea'];
     bData = res[0]['eb'];
@@ -156,15 +156,109 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
     iData = res[0]['ei'];
     jData = res[0]['ej'];
 
-    List<String> results = deviceData.split(':');
+
+    print("data $onOffNum");
+
+    List<String> results = deviceData.split(';');
     print(results);
 
     for (int i = 0; i < results.length; i++) {
       String s = results[i];
       print("ss $s");
 
+    }
+
+    if(onOffNum == "1"){
+      status = true;
+      rgbOnOff = "1";
+      rgbOnOffStatus(status);
+
+    }else{
+      status = false;
+      rgbOnOff = "0";
+      rgbOnOffStatus(status);
 
     }
+
+    if(onOffNum == '1'){
+
+      String firstElement = results[0];
+      rgbColorEffect=firstElement;
+      List<String>colorEffectsArray=firstElement.split(",");
+      if(colorEffectsArray[0] == '0'){
+         currentColor=Color.fromRGBO(int.parse(colorEffectsArray[1]), int.parse(colorEffectsArray[2]), int.parse(colorEffectsArray[3]), 10);
+      }
+      else if(colorEffectsArray[0] =="104") {
+
+        currentColor = Colors.transparent;
+
+        flashImgchange = true;
+        strobeImgchange = false;
+        fadeImgchange = false;
+        smoothImgchange = false;
+      }
+      else if(colorEffectsArray[0]=="105") {
+
+        currentColor = Colors.transparent;
+
+        flashImgchange = false;
+        strobeImgchange = true;
+        fadeImgchange = false;
+        smoothImgchange = false;
+
+      }
+      else if(colorEffectsArray[0] == "106") {
+
+
+        currentColor = Colors.transparent;
+
+        flashImgchange = false;
+        strobeImgchange = false;
+        fadeImgchange = false;
+        smoothImgchange = true;
+
+      }
+      else if(colorEffectsArray[0] =="107") {
+
+        currentColor = Colors.transparent;
+        flashImgchange = false;
+        strobeImgchange = false;
+        fadeImgchange= true;
+        smoothImgchange = false;
+
+      }
+
+      String secondElementB = results[1];
+      rgbBright=secondElementB;
+      List<String>brightnessArray=secondElementB.split(",");
+      String brightness = brightnessArray[0];
+      myValue = int.parse(brightness)-130;
+
+      String thirdElementSP = results[2];
+      rgbSpeed=thirdElementSP;
+      List<String>speedArray = thirdElementSP.split(",");
+      iSpeed = int.parse(speedArray[0]);
+
+      if (int.parse(speedArray[0]) > 120 && (int.parse(speedArray[0]) < 131)) {
+
+        iSpeed1 = iSpeed - 120;
+        print("isSpeed_value_is: $iSpeed1");
+      }
+    }
+
+    setState((){
+
+      currentColor=currentColor;
+      flashImgchange=flashImgchange;
+      strobeImgchange=strobeImgchange;
+      fadeImgchange=fadeImgchange;
+      smoothImgchange=smoothImgchange;
+      iSpeed1=iSpeed1;
+      iSpeed=iSpeed;
+      myValue=myValue;
+
+
+    });
   }
 
   @override
@@ -682,7 +776,7 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
 
                                 children: [
                                   Expanded(
-                                    flex: 4,
+                                    flex: 7,
                                     child: Slider(value: myValue.toDouble(),
 
 
@@ -714,11 +808,17 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
                                     ),
                                   ),
                                   Expanded(
-                                      flex: 1,
+                                      flex: 2,
                                       child: Container(
                                         width: 50,
                                         height: 20,
                                         color: currentColor,
+                                      )
+                                  ),
+                                  Expanded(
+                                      flex: 1,
+                                      child: Container(
+
                                       )
                                   )
                                 ],
@@ -925,7 +1025,7 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -947,7 +1047,7 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -1032,6 +1132,7 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
 
 
       if(rgbColorEffect == "0" || rgbSpeed == "0" || rgbBright == "0"){
+        print("$rgbColorEffect, $rgbSpeed, $rgbBright");
         fluttertoast("Select Required color or Special effects,Speed,Brightness");
       }
       else{

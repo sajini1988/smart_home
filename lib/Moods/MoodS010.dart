@@ -23,7 +23,6 @@ class _MoodS010PageState extends State<MoodS010Page> {
   String hname,hnum,rnum,rname,dnum,groupIdset,ddevmodel,modeltypeset,devicenameset="name",moodname;
   GlobalService _globalService = GlobalService();
   String number="0";
-
   String devicedata,state,onoffnum,aData,bData,cData,dData,eData,fData,gData,hData,iData,jData;
 
   String swValueS="";
@@ -377,7 +376,7 @@ class _MoodS010PageState extends State<MoodS010Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -399,7 +398,7 @@ class _MoodS010PageState extends State<MoodS010Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),

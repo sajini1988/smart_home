@@ -12,7 +12,6 @@ import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
 
 String hnamePlc,hnumPlc,rnumPlc,dnumPlc,rnamePlc,groupIdPlc,dtypePlc,firstPlc;
-
 class PlcLayout extends StatefulWidget {
   @override
   _PlcLayoutState createState() => _PlcLayoutState();

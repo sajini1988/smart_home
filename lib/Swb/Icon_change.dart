@@ -13,12 +13,12 @@ class IconchangePage extends StatefulWidget{
 
 class _IconChangePageState extends State<IconchangePage>{
 
-
   GlobalService _globalService = GlobalService();
   String hname,hnum,rnum,rname,dnum,devicemodel,devicemodelnum,devicename,deviceID,bulbnumber;
+
   List<String> images=["ac_off","aqua_off","bulb_off","cfl_off","cur_off","dimmer_off","dlock_off","eb_off","gey_off","lamp_off","nameboard_off","rgb_off","socket_off","speaker_off","tb_off","tv_off"];
   List<String> names = ["ac","auqa","bulb","cfl","curtain","dimmr","door","ebulb","geyser","bedlamp","disp","rgb","socket","speaker","tubelight","tv"];
-  List<String> imageshv;
+  List<String> imagesHv;
   String name;
   var details = new Map();
 
@@ -41,6 +41,8 @@ class _IconChangePageState extends State<IconchangePage>{
     setState(() {
       bulbnumber=bulbnumber;
     });
+
+
     swdetails();
   }
   swdetails() async{

@@ -7,7 +7,6 @@ import 'package:smart_home/Moods/MoodDBModelClass.dart';
 class MDBHelper{
 
   static Database _db;
-
   Future<Database> get db async {
     if (_db != null) {
       return _db;

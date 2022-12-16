@@ -19,7 +19,6 @@ class DBHelper {
     _db = await initDatabase();
     return _db;
   }
-
   initDatabase() async {
     io.Directory documentDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentDirectory.path, 'localdb.db');
@@ -60,6 +59,31 @@ class DBHelper {
     print(student.le);
     print(student.lf);
     print(student.lg);
+
+    return student;
+  }
+
+  Future<Student> updatedb(Student student) async {
+    var dbClient = await db;
+
+
+    String hname = student.name;
+    String hnum = student.lb;
+    String ip = student.lc;
+    String uname = student.ld;
+    String uPass= student.le;
+    String auto = student.lf;
+    String uType = student.lg;
+    String lh = student.lh;
+    String port = student.li;
+
+
+
+    var i = await dbClient.rawUpdate(
+        "UPDATE localdb SET name = ?, lb = ?, lc= ?, ld= ?, le = ?, lf = ?, lg=? , lh = ? , li = ? WHERE name = ? AND ld = ?",
+        ['$hname','$hnum','$ip','$uname','$uPass','$auto','$uType','$lh','$port','$hname','$uname']);
+
+    print(i);
 
     return student;
   }

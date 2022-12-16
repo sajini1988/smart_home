@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
@@ -18,7 +19,6 @@ class _MyHomePageState extends State<DoubleCurtain> {
   GlobalService _globalService = GlobalService();
 
   var s = Singleton();
-
   Image open=Image.asset('images/Curtain/open.png');
   Image open01=Image.asset('images/Curtain/open01.png');
 
@@ -55,6 +55,12 @@ class _MyHomePageState extends State<DoubleCurtain> {
     // TODO: implement initState
     super.initState();
 
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');

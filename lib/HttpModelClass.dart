@@ -5,4 +5,5 @@ class User {
   User.fromJson(Map<String, dynamic> data)
       : iP = data['IP'],
         pORT = data['PORT'];
+
 }

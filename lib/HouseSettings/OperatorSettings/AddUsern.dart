@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -24,7 +25,6 @@ class _AddUserPageState extends State<AddUserPage> {
   Image image2;
   Image image3;
 
-
   GlobalService _globalService = GlobalService();
   GlobalKey<FormState> _key1 = new GlobalKey();
   var usernamecontroller = TextEditingController();
@@ -37,6 +37,12 @@ class _AddUserPageState extends State<AddUserPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     image1=off;
     image2=off;

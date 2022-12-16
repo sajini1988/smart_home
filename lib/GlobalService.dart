@@ -4,7 +4,6 @@ class GlobalService {
 
   // passes the instantiation to the _instance object
   factory GlobalService() => _instance;
-
   //initialize variables in here
   GlobalService._internal() {
     _subscription=false;

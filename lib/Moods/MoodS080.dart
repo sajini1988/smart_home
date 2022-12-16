@@ -23,7 +23,6 @@ class _MoodS080PageState extends State<MoodS080Page> {
   String hname,hnum,rnum,rname,dnum,groupIdset,ddevmodel,modeltypeset,devicenameset="name",moodName;
   String number="0";
 
-
   String fanv="No";
 
   String deviceData,state,onOffNum,aData,bData,cData,dData,eData,fData,gData,hData,iData,jData;
@@ -699,7 +698,7 @@ class _MoodS080PageState extends State<MoodS080Page> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage('images/Moods/save_button.png'),
-                                      fit: BoxFit.cover),
+                                      fit: BoxFit.fill),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),
@@ -723,7 +722,7 @@ class _MoodS080PageState extends State<MoodS080Page> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage('images/Moods/save_button.png'),
-                                      fit: BoxFit.cover),
+                                      fit: BoxFit.fill),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),

@@ -15,7 +15,6 @@ class DeviceSetting extends StatelessWidget {
     );
   }
 }
-
 class MyApp extends StatefulWidget {
   MyApp({Key key}) : super(key: key);
 

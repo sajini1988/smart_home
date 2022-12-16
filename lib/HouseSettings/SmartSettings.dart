@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:focus_detector/focus_detector.dart';
 
 class SmartSettings extends StatefulWidget{
   SmartSettings({Key key, todo,}): super(key:key);
-
   @override
   _SmartSettings createState() => _SmartSettings();
 }
@@ -22,6 +22,12 @@ class _SmartSettings extends State<SmartSettings>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     hname = _globalService.hname;
     hnum = _globalService.hnum;
@@ -43,20 +49,20 @@ class _SmartSettings extends State<SmartSettings>{
       s.checkindevice(hname, hnum);
     }
 
-    if (s.networkconnected.contains("Mobile")) {
+    if (s.networkconnected==("Mobile")) {
       print("Mobile");
       imgn = "3g";
 
     }
-    else if (s.networkconnected.contains("LWi-Fi")) {
+    else if (s.networkconnected==("LWi-Fi")) {
       imgn = 'local_sig';
 
     }
-    else if (s.networkconnected.contains("RWi-Fi")) {
+    else if (s.networkconnected==("RWi-Fi")) {
       imgn = 'remote01';
 
     }
-    else if (s.networkconnected.contains("No_Net")) {
+    else if (s.networkconnected==("No_Net")) {
       imgn = 'nonet';
 
     }
@@ -65,9 +71,6 @@ class _SmartSettings extends State<SmartSettings>{
       imgs=imgs;
       imgn=imgn;
     });
-
-
-
   }
 
   @override
@@ -99,6 +102,7 @@ class _SmartSettings extends State<SmartSettings>{
         return Navigator.canPop(context);
         },child:Scaffold(
           appBar: AppBar(
+            toolbarHeight: 40.0,
             backgroundColor: Color.fromRGBO(66, 130, 208, 1),
             title: Text("Smart Settings"),
             actions: <Widget>[

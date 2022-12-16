@@ -1,5 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
@@ -13,7 +14,6 @@ class DeleteRoomPage extends StatefulWidget {
 
   DeleteRoomPage({Key key, this.title}) :super(key: key);
   final String title;
-
   @override
   _DeleteRoomPageState createState() => _DeleteRoomPageState();
 }
@@ -40,6 +40,12 @@ class _DeleteRoomPageState extends State<DeleteRoomPage>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'DeleteRoom');
     FNC.DartNotificationCenter.registerChannel(channel: 'DeleteRoom');

@@ -13,7 +13,6 @@ void showDialogBoxDeleteuser(BuildContext context) async {
   String password;
   String userSelected;
   String usertypeSelected;
-
   FNC.DartNotificationCenter.unregisterChannel(channel: 'DeleteUserNotification');
   FNC.DartNotificationCenter.registerChannel(channel: 'DeleteUserNotification');
   FNC.DartNotificationCenter.subscribe(channel: 'DeleteUserNotification', onNotification: (options) async {

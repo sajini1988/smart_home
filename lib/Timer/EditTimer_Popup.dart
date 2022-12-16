@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/Singleton.dart';
@@ -9,6 +10,7 @@ import 'package:smart_home/Timer/DoubleCurtainTimer.dart';
 import 'package:smart_home/Timer/GlobalEditTimerListdata.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_home/Timer/TimerFan.dart';
+import 'package:smart_home/Timer/RGBTimer.dart';
 
 class EditTimerPage extends StatefulWidget{
   @override
@@ -18,7 +20,6 @@ class EditTimerPage extends StatefulWidget{
 class _EditTimerPageState extends State<EditTimerPage> {
 
   var s = Singleton();
-
   GlobalEdittimer _globalServiceEditTimer = GlobalEdittimer();
 
   Image sunsatimg = Image.asset('images/Timer/sun_sat.png');
@@ -75,9 +76,21 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
   DateTime newDateTime;
 
+  Color colorOn=Colors.black,colorOff= Color.fromRGBO(211, 211, 211, 0.9);
+  Color colorBoth1,colorBoth2,colorBoth3;
+  Color colorNumberCyc,colorNumberDate;
+
   @override
   void initState() {
     super.initState();
+
+    colorBoth1=colorOff;
+    colorBoth2=colorOff;
+    colorBoth3=colorOff;
+
+    colorNumberCyc=colorOff;
+    colorNumberDate=colorOff;
+
 
     type = _globalServiceEditTimer.operatedType;
     modeltype = _globalServiceEditTimer.devicetype;
@@ -161,14 +174,23 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
       if(type=="Days"){
 
+        colorBoth1=colorOn;
+        colorBoth2=colorOff;
+        colorBoth3=colorOff;
+
+        colorNumberCyc=colorOff;
+        colorNumberDate=colorOff;
+
         typeset=typesend="rep";
         _repvisible=true;
         _reppatternvisible=true;
-        _cycvisible=false;
-        _datevisible=false;
+        _cycvisible=true;
+        _datevisible=true;
         rep=true;
         repd=false;
         cyc=false;
+
+
 
         List<String> daySplitValues = days.split(",");
         String mv = daySplitValues[0];
@@ -253,6 +275,15 @@ class _EditTimerPageState extends State<EditTimerPage> {
       }
       else if(type == "Date"){
 
+
+        colorBoth1=colorOff;
+        colorBoth2=colorOff;
+        colorBoth3=colorOn;
+
+        colorNumberCyc=colorOff;
+        colorNumberDate=colorOn;
+
+
         typeset=typesend="repd";
         sunday=monday=tuesday=wednesday=thursday=friday=saturday=sunday=false;
         mon=tue=wed=thur=frid=sat=sun=0;
@@ -264,9 +295,9 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
         newDateTime=DateTime(year,month,dates);
 
-        _repvisible=false;
+        _repvisible=true;
         _reppatternvisible=true;
-        _cycvisible=false;
+        _cycvisible=true;
         _datevisible=true;
         rep=false;
         repd=true;
@@ -283,11 +314,19 @@ class _EditTimerPageState extends State<EditTimerPage> {
       }
       else if(type == "Cyclic"){
 
+
+        colorNumberCyc=Colors.blue;
+        colorNumberDate=colorOff;
+
+        colorBoth1=colorOff;
+        colorBoth2=colorOn;
+        colorBoth3=colorOff;
+
         typeset=typesend="cyc";
-        _repvisible=false;
+        _repvisible=true;
         _reppatternvisible=false;
         _cycvisible=true;
-        _datevisible=false;
+        _datevisible=true;
         rep=false;
         repd=false;
         cyc=true;
@@ -329,7 +368,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
             color: Colors.white,
             child:Column(
                 mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                //crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     flex:1,
@@ -424,17 +463,38 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                               ),
                                               actions: [],
                                             );
+                                              showDialog(context: context, builder: (BuildContext context) {
+                                                return alert;
+                                              }
+                                            );
+                                          }
+                                          else if(modeltype == "RGB1"){
+                                            AlertDialog alert = AlertDialog(
+
+                                              elevation: 0,
+                                              //insetPadding: EdgeInsets.zero,
+                                              // contentPadding: EdgeInsets.zero,
+                                              //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                              contentPadding: EdgeInsets.zero,
+                                              titlePadding: EdgeInsets.zero,
+                                              backgroundColor: Colors.transparent,
+
+                                              title: Text(""),
+                                              content: Container(
+                                                width: MediaQuery.of(context).size.width*0.75,
+                                                child: RGBTimerPage(number: "1"),
+                                              ),
+                                              actions: [],
+                                            );
                                             showDialog(context: context, builder: (BuildContext context) {
                                               return alert;
                                             }
-                                          );
-
+                                            );
 
                                           }
 
-
-
-                                }
+                                        }
                                       ),
                                     ),
                                   ),
@@ -466,14 +526,14 @@ class _EditTimerPageState extends State<EditTimerPage> {
                   Expanded(
                     flex:1,
                     child: Container(
-                      color: Colors.grey,
+                      color: Colors.white,
                       child:Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                           Expanded(
                           flex:1,
                           child:Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Expanded(
                                 flex:5,
@@ -491,7 +551,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                   ),
 
                   Expanded(
-                    flex:2,
+                    flex:1,
                     child: Container(
                       color: Colors.white,
                       child:Column(
@@ -504,7 +564,12 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                 children: [
 
                                   Expanded(
-                                    flex:2,
+                                      flex:1,
+                                      child:Container()
+                                  ),
+
+                                  Expanded(
+                                    flex:1,
                                     child: NumberPicker(
                                       value: _currentvalue1,
                                       minValue: 00,
@@ -539,9 +604,13 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
                                     ),
                                   ),
+                                  Expanded(
+                                      flex:1,
+                                      child:Container()
+                                  ),
 
                                   Expanded(
-                                    flex:2,
+                                    flex:1,
                                     child: NumberPicker(
                                       value: _currentvalue3,
                                       minValue: 00,
@@ -579,6 +648,10 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       onChanged: (value) => setState(() => _currentvalue4 = value),
                                     ),
                                   ),
+                                  Expanded(
+                                      flex:1,
+                                      child:Container()
+                                  ),
 
                                 ],
                               )
@@ -601,6 +674,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
 
+                                    Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
                                     Expanded(
                                       flex:1,
                                       child: Transform.scale(scale: 1.5,
@@ -624,14 +698,21 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                               typesend="rep";
                                             }
 
+                                            colorBoth1=colorOn;
+                                            colorBoth2=colorOff;
+                                            colorBoth3=colorOff;
+
+                                            colorNumberCyc=colorOff;
+                                            colorNumberDate=colorOff;
+
                                             if(rep == true){
                                               // rep=false;
 
                                               cyc=false;
                                               repd=false;
                                               _repvisible=true;
-                                              _cycvisible=false;
-                                              _datevisible=false;
+                                              _cycvisible=true;
+                                              _datevisible=true;
                                               _reppatternvisible=true;
                                             }
                                             else if(rep == false){
@@ -641,8 +722,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                               cyc=false;
                                               repd=false;
                                               _repvisible=true;
-                                              _cycvisible=false;
-                                              _datevisible=false;
+                                              _cycvisible=true;
+                                              _datevisible=true;
                                               _reppatternvisible=true;
                                             }
                                             setState(() {
@@ -661,7 +742,9 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     ),
                                     Expanded(
                                       flex:9,
-                                      child: Text("REPEAT ON DAYS"),
+                                      child: Text("REPEAT ON DAYS",style: TextStyle(
+                                        color: colorBoth1
+                                      ),),
                                     ),
                                   ],
                                 )
@@ -673,9 +756,13 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
+
+                                      Expanded(
+                                        child: Container(),
+                                      ),
                                       Expanded(
                                         // flex:1,
-                                        child: Transform.scale(scale: 1.5,
+                                        child: Transform.scale(scale: 1.25,
                                           child: IconButton(
                                             //iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 5.0,
@@ -700,7 +787,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         // flex:1,
-                                          child: Transform.scale(scale:1.5,
+                                          child: Transform.scale(scale:1.25,
                                             child:IconButton(
                                               // iconSize: MediaQuery.of(context).size.width/10,
                                               splashRadius: 1.0,
@@ -723,7 +810,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         // flex:1,
-                                          child: Transform.scale(scale:1.5,
+                                          child: Transform.scale(scale:1.25,
                                             child: IconButton(
                                               // iconSize: MediaQuery.of(context).size.width/10,
                                               splashRadius: 1.0,
@@ -749,7 +836,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:
                                           IconButton(
                                             //iconSize: MediaQuery.of(context).size.width/10,
@@ -773,7 +860,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         // flex:1,
-                                          child: Transform.scale(scale: 1.5,
+                                          child: Transform.scale(scale: 1.25,
                                             child:
                                             IconButton(
                                               // iconSize: MediaQuery.of(context).size.width/10,
@@ -797,7 +884,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         // flex:1,
-                                          child: Transform.scale(scale:1.5,
+                                          child: Transform.scale(scale:1.25,
                                             child:IconButton(
                                               // iconSize: MediaQuery.of(context).size.width/10,
                                               splashRadius: 1.0,
@@ -822,7 +909,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:
                                           IconButton(
                                             // iconSize: MediaQuery.of(context).size.width/10,
@@ -844,7 +931,11 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                             },
                                           ),
                                         ),
-                                      )
+
+                                      ),
+                                      Expanded(
+                                        child: Container(),
+                                      ),
                                     ],
                                   )
                               ),
@@ -869,6 +960,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
 
+                                      Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
+
                                       Expanded(
                                         flex:1,
                                         child: Transform.scale(scale:1.5,
@@ -882,6 +975,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
                                               type="Cyclic";
                                               typeselec="cyc";
+                                              monday=tuesday=thursday=wednesday=thursday=friday=saturday=sunday=false;
 
                                               if(typeset=="cyc" && typeselec == "cyc"){
                                                 typesend="cyc";
@@ -893,13 +987,20 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                                 typesend="rep_cyc";
                                               }
 
+                                              colorBoth1=colorOff;
+                                              colorBoth2=colorOn;
+                                              colorBoth3=colorOff;
+
+                                              colorNumberCyc=Colors.blue;
+                                              colorNumberDate=colorOff;
+
                                               if(cyc == true){
                                                 // cyc=false;
                                                 rep=false;
                                                 repd=false;
                                                 _cycvisible=true;
-                                                _repvisible=false;
-                                                _datevisible=false;
+                                                _repvisible=true;
+                                                _datevisible=true;
                                                 _reppatternvisible=false;
                                               }
                                               else if(cyc == false){
@@ -908,8 +1009,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                                 rep=false;
                                                 repd=false;
                                                 _cycvisible=true;
-                                                _repvisible=false;
-                                                _datevisible=false;
+                                                _repvisible=true;
+                                                _datevisible=true;
                                                 _reppatternvisible=false;
                                               }
                                               setState(() {
@@ -927,8 +1028,9 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         flex:9,
-                                        child: Text("CYCLIC"),
-                                      ),
+                                        child: Text("CYCLIC",style: TextStyle(
+                                            color: colorBoth2),
+                                      )),
 
                                     ]
                                 ),
@@ -940,9 +1042,15 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     child:Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
+
                                           Expanded(
                                             flex:2,
-                                            child: Text("ON TIME"),
+                                            child: Container(),
+                                          ),
+                                          Expanded(
+                                            flex:2,
+                                            child: Center(child: Text("ON TIME",style: TextStyle(
+                                                color: colorBoth2))),
                                           ),
                                           Expanded(
                                             flex:2,
@@ -953,8 +1061,11 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                               maxValue: 60,
                                               step: 2,
                                               zeroPad: false,
+                                              textStyle: TextStyle(
+                                                color: colorBoth2
+                                              ),
                                               selectedTextStyle:TextStyle(
-                                                color: Colors.blue,
+                                                color: colorNumberCyc,
                                                 fontWeight: FontWeight.bold,
                                                 //fontSize: 5.0,
                                                 fontStyle: FontStyle.normal,
@@ -965,7 +1076,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                           ),
                                           Expanded(
                                             flex:2,
-                                            child: Text("OFF TIME"),
+                                            child: Center(child: Text("OFF TIME",style: TextStyle(
+                                                color: colorBoth2))),
                                           ),
                                           Expanded(
                                             flex:2,
@@ -976,8 +1088,12 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                               maxValue: 60,
                                               step: 2,
                                               zeroPad: false,
+
+                                              textStyle: TextStyle(
+                                                  color: colorBoth2
+                                              ),
                                               selectedTextStyle:TextStyle(
-                                                color: Colors.blue,
+                                                color: colorNumberCyc,
                                                 fontWeight: FontWeight.bold,
                                                 //fontSize: 5.0,
                                                 fontStyle: FontStyle.normal,
@@ -1008,6 +1124,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
 
+                                      Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
+
                                       Expanded(
                                         flex:1,
                                         child: Transform.scale(scale:1.5,
@@ -1019,6 +1137,15 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                             icon:repd?radio1:radio,
                                             onPressed: (){
 
+                                              colorBoth1=colorOff;
+                                              colorBoth2=colorOff;
+                                              colorBoth3=colorOn;
+
+                                              colorNumberCyc=colorOff;
+                                              colorNumberDate=colorOn;
+
+
+                                              monday=tuesday=wednesday=thursday=friday=saturday=sunday=false;
                                               type="Date";
                                               typeselec="repd";
                                               newDateTime=DateTime.now();
@@ -1039,8 +1166,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                                 rep=false;
                                                 cyc=false;
                                                 _datevisible=true;
-                                                _cycvisible=false;
-                                                _repvisible=false;
+                                                _cycvisible=true;
+                                                _repvisible=true;
                                                 _reppatternvisible=true;
                                               }
                                               else{
@@ -1049,8 +1176,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                                 cyc=false;
                                                 rep=false;
                                                 _datevisible=true;
-                                                _cycvisible=false;
-                                                _repvisible=false;
+                                                _cycvisible=true;
+                                                _repvisible=true;
                                                 _reppatternvisible=true;
                                               }
                                               setState(() {
@@ -1068,7 +1195,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       ),
                                       Expanded(
                                         flex:9,
-                                        child: Text("SELECTED DATE"),
+                                        child: Text("SELECTED DATE",style: TextStyle(
+                                            color: colorBoth3)),
                                       ),
                                     ]
                                 ),
@@ -1081,24 +1209,66 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     child:Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
+
                                           Expanded(
-                                              flex:10,
-                                              child:DefaultTextStyle.merge(
-                                                style:TextStyle(fontSize: 5),
+                                            flex:1,
+                                            child: Container(),
+                                          ),
+                                          Expanded(
+                                              flex:8,
+                                              child:CupertinoTheme(
+                                                data: CupertinoThemeData(
+                                                  brightness: Brightness.light,
+                                                  textTheme: CupertinoTextThemeData(
+
+
+                                                    dateTimePickerTextStyle: TextStyle(
+                                                      fontSize: 16,
+                                                      color: colorNumberDate
+                                                    ),
+                                                    //primaryColor: Colors.blue
+                                                    // pickerTextStyle: TextStyle(
+                                                    //   color: Colors.blue,
+                                                    // ),
+                                                  ),
+                                                ),
                                                 child: CupertinoDatePicker(
-                                                    mode:CupertinoDatePickerMode.date,
-                                                    initialDateTime: newDateTime,
-                                                    onDateTimeChanged: (val) {
-                                                      _chosenDateTime = val;
-                                                      String string = dateFormat.format(_chosenDateTime);
-                                                      print(string);
-                                                      List lis = string.split(" ");
-                                                      date = lis[0];
-                                                      setState(() {
-                                                        date=date;
-                                                      });
-                                                    }),
+                                                  mode:CupertinoDatePickerMode.date,
+                                                  initialDateTime: newDateTime,
+                                                  onDateTimeChanged: (val) {
+                                                    _chosenDateTime = val;
+                                                            String string = dateFormat.format(_chosenDateTime);
+                                                            print(string);
+                                                            List lis = string.split(" ");
+                                                            date = lis[0];
+                                                            setState(() {
+                                                              date=date;
+                                                            });
+
+                                                  },
+                                                ),
                                               )
+                                              // child:DefaultTextStyle.merge(
+                                              //   style:TextStyle(fontSize: 5,color: colorBoth3),
+                                              //   child: CupertinoDatePicker(
+                                              //
+                                              //       mode:CupertinoDatePickerMode.date,
+                                              //       initialDateTime: newDateTime,
+                                              //       onDateTimeChanged: (val) {
+                                              //         _chosenDateTime = val;
+                                              //         String string = dateFormat.format(_chosenDateTime);
+                                              //         print(string);
+                                              //         List lis = string.split(" ");
+                                              //         date = lis[0];
+                                              //         setState(() {
+                                              //           date=date;
+                                              //         });
+                                              //       }),
+                                              // )
+                                          ),
+                                          Expanded(
+                                            flex:1,
+                                            child: Container(),
                                           ),
                                         ]
                                     ),
@@ -1169,7 +1339,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage('images/Moods/save_button.png'),
-                                          fit: BoxFit.cover),
+                                          fit: BoxFit.fill),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
@@ -1192,11 +1362,11 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage('images/Moods/save_button.png'),
-                                          fit: BoxFit.cover),
+                                          fit: BoxFit.fill),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: Text("SAVE"),
+                                      child: Text("UPDATE "),
                                     ),
                                   ),
                                   // ),

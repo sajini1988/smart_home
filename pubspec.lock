@@ -581,13 +581,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
-  wifi_iot:
-    dependency: "direct main"
-    description:
-      name: wifi_iot
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.18"
   win32:
     dependency: transitive
     description:

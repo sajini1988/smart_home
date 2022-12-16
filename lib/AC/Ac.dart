@@ -1,5 +1,6 @@
 import'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/AC/AcIView.dart';
@@ -11,7 +12,6 @@ import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
 
 String hnameac,hnumac,rnumac,dnumac,rnameac,groupIdac,dtypeac,firstac;
-
 class Aclayout extends StatefulWidget {
   @override
   _AclayoutState createState() => _AclayoutState();
@@ -31,6 +31,13 @@ class _AclayoutState extends State<Aclayout>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
+
     print("enter ac init state");
     hnameac = houseName1;
     hnumac = houseNum1;

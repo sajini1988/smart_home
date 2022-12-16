@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/LDatabaseModelClass.dart';
 import 'package:smart_home/Singleton.dart';
@@ -12,10 +13,8 @@ import 'package:smart_home/HouseSettings/OperatorSettings/UserSettings.dart';
 import 'package:smart_home/HouseSettings/OperatorSettings/OperatorSettings.dart';
 import 'package:smart_home/Timer/TimerDB.dart';
 
-
 class SideDrawer extends StatefulWidget {
   const SideDrawer({Key key}) : super(key: key);
-
   @override
   _SideDrawerState createState() => _SideDrawerState();
 
@@ -46,6 +45,12 @@ class _SideDrawerState extends State<SideDrawer> {
 
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     hname = _globalService.hname;
     hnum = _globalService.hnum;
@@ -528,6 +533,33 @@ class _SideDrawerState extends State<SideDrawer> {
           dbHelper.delete(user);
           refreshStudentList1();
           Navigator.of(context,rootNavigator: true).pop();
+          dispose1();
+
+
+          String nameH,lbH;
+
+          function().then((List value) {
+
+            if(value.length <= 0){
+              nameH="Download House";
+            }
+            else{
+              nameH=value[0]["name"];
+              lbH=value[0]["lb"];
+
+            }
+            print("name $nameH hnum $lbH");
+          });
+
+
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (BuildContext context) =>
+                  MyApp(name: nameH, lb: lbH)),
+                  (Route<dynamic> route) => false
+          );
+
+
 
 
         },
@@ -559,9 +591,17 @@ class _SideDrawerState extends State<SideDrawer> {
       );
     }
 
+  Future<List> function() async {
 
+    List res = await dbHelper.getall();
+    print(res);
+    return res;
 
   }
+
+
+}
+
 
   // SingleChildScrollView generateList(List<Student> students) {
   //   return SingleChildScrollView(

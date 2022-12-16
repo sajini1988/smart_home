@@ -1,14 +1,22 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:smart_home/Timer/TimerFan.dart';
+import 'package:smart_home/Timer/Timer_DFN1.dart';
+import 'package:smart_home/Timer/Timer_S042.dart';
 import 'package:smart_home/Timer/Timer_S051.dart';
 import 'package:smart_home/Timer/Timer_S010.dart';
 import 'package:smart_home/Timer/Timer_S020.dart';
 import 'package:smart_home/Timer/Timer_S021.dart';
 import 'package:smart_home/Timer/Timer_S030.dart';
 import 'package:smart_home/Timer/Timer_S080.dart';
+import 'package:smart_home/Timer/Timer_S110.dart';
+import 'package:smart_home/Timer/Timer_S120.dart';
+import 'package:smart_home/Timer/Timer_S141.dart';
+import 'package:smart_home/Timer/Timer_S160.dart';
 import 'package:week_of_year/week_of_year.dart';
 import 'package:smart_home/Globaltimerdata.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,11 +98,22 @@ class _TimerpageState extends State<Timerpage>{
   String datec,Date;
   DateFormat dateFormat;
 
+  Color colorOn=Colors.black,colorOff= Color.fromRGBO(211, 211, 211, 0.9);
+  Color colorBoth1,colorBoth2,colorBoth3;
+  Color colorNumberCyc,colorNumberDate;
+
   @override
   void initState() {
 
     // TODO: implement initState
     super.initState();
+
+    colorBoth1=colorOn;
+    colorBoth2=colorOff;
+    colorBoth3=colorOff;
+
+    colorNumberCyc=colorOff;
+    colorNumberDate=colorOff;
 
     dateFormat = DateFormat("yyyy-M-d");
 
@@ -259,9 +278,6 @@ class _TimerpageState extends State<Timerpage>{
       
     }
 
-
-    
-
   }
 
   @override
@@ -343,7 +359,7 @@ class _TimerpageState extends State<Timerpage>{
                                                   }
                                                   );
                                               }
-                                              else if(devicemodel=="S010"){
+                                              else if(devicemodel=="S010" || devicemodel == "SLT1"){
                                                 AlertDialog alert = AlertDialog(
                                                   elevation: 0,
                                                   //insetPadding: EdgeInsets.zero,
@@ -545,6 +561,189 @@ class _TimerpageState extends State<Timerpage>{
                                                 }
                                                 );
                                               }
+
+                                                else if(devicemodel == "DFN1"){
+
+                                                  AlertDialog alert = AlertDialog(
+
+                                                    elevation: 0,
+                                                    //insetPadding: EdgeInsets.zero,
+                                                    // contentPadding: EdgeInsets.zero,
+                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                                    contentPadding: EdgeInsets.zero,
+                                                    titlePadding: EdgeInsets.zero,
+                                                    backgroundColor: Colors.transparent,
+
+                                                    title: Text(""),
+                                                    // content: TimerPIRPage(number: "0",),
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width*0.75,
+                                                      child: TimerDFanPage(number: "0",),
+                                                    ),
+                                                    actions: [],
+                                                  );
+                                                  showDialog(context: context, builder: (BuildContext context) {
+                                                    return alert;
+                                                  }
+                                                  );
+                                                }
+                                                else if(devicemodel == "S042"){
+
+                                                  AlertDialog alert = AlertDialog(
+
+                                                    elevation: 0,
+                                                    //insetPadding: EdgeInsets.zero,
+                                                    // contentPadding: EdgeInsets.zero,
+                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                                    contentPadding: EdgeInsets.zero,
+                                                    titlePadding: EdgeInsets.zero,
+                                                    backgroundColor: Colors.transparent,
+
+                                                    title: Text(""),
+                                                    // content: TimerPIRPage(number: "0",),
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width*0.75,
+                                                      child: TimerS042Page(number: "0",),
+                                                    ),
+                                                    actions: [],
+                                                  );
+                                                  showDialog(context: context, builder: (BuildContext context) {
+                                                    return alert;
+                                                  }
+                                                  );
+                                                }
+                                                else if(devicemodel == "S110"){
+
+                                                  AlertDialog alert = AlertDialog(
+
+                                                    elevation: 0,
+                                                    //insetPadding: EdgeInsets.zero,
+                                                    // contentPadding: EdgeInsets.zero,
+                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                                    contentPadding: EdgeInsets.zero,
+                                                    titlePadding: EdgeInsets.zero,
+                                                    backgroundColor: Colors.transparent,
+
+                                                    title: Text(""),
+                                                    // content: TimerPIRPage(number: "0",),
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width*0.75,
+                                                      child: TimerS110Page(number: "0",),
+                                                    ),
+                                                    actions: [],
+                                                  );
+                                                  showDialog(context: context, builder: (BuildContext context) {
+                                                    return alert;
+                                                  }
+                                                  );
+                                                }
+                                                else if(devicemodel == "S120"){
+
+                                                  AlertDialog alert = AlertDialog(
+
+                                                    elevation: 0,
+                                                    //insetPadding: EdgeInsets.zero,
+                                                    // contentPadding: EdgeInsets.zero,
+                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                                    contentPadding: EdgeInsets.zero,
+                                                    titlePadding: EdgeInsets.zero,
+                                                    backgroundColor: Colors.transparent,
+
+                                                    title: Text(""),
+                                                    // content: TimerPIRPage(number: "0",),
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width*0.75,
+                                                      child: TimerS120Page(number: "0",),
+                                                    ),
+                                                    actions: [],
+                                                  );
+                                                  showDialog(context: context, builder: (BuildContext context) {
+                                                    return alert;
+                                                  }
+                                                  );
+                                                }
+                                                else if(devicemodel == "S141"){
+
+                                                  AlertDialog alert = AlertDialog(
+
+                                                    elevation: 0,
+                                                    //insetPadding: EdgeInsets.zero,
+                                                    // contentPadding: EdgeInsets.zero,
+                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                                    contentPadding: EdgeInsets.zero,
+                                                    titlePadding: EdgeInsets.zero,
+                                                    backgroundColor: Colors.transparent,
+
+                                                    title: Text(""),
+                                                    // content: TimerPIRPage(number: "0",),
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width*0.75,
+                                                      child: S141TimerPage(number: "0",),
+                                                    ),
+                                                    actions: [],
+                                                  );
+                                                  showDialog(context: context, builder: (BuildContext context) {
+                                                    return alert;
+                                                  }
+                                                  );
+                                                }
+                                                else if(devicemodel == "S160"){
+
+                                                  AlertDialog alert = AlertDialog(
+
+                                                    elevation: 0,
+                                                    //insetPadding: EdgeInsets.zero,
+                                                    // contentPadding: EdgeInsets.zero,
+                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                                    contentPadding: EdgeInsets.zero,
+                                                    titlePadding: EdgeInsets.zero,
+                                                    backgroundColor: Colors.transparent,
+
+                                                    title: Text(""),
+                                                    // content: TimerPIRPage(number: "0",),
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width*0.75,
+                                                      child: TimerS160Page(number: "0",),
+                                                    ),
+                                                    actions: [],
+                                                  );
+                                                  showDialog(context: context, builder: (BuildContext context) {
+                                                    return alert;
+                                                  }
+                                                  );
+                                                }
+                                                else if(devicemodel == "SFN1"){
+
+                                                  AlertDialog alert = AlertDialog(
+
+                                                    elevation: 0,
+                                                    //insetPadding: EdgeInsets.zero,
+                                                    // contentPadding: EdgeInsets.zero,
+                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
+
+                                                    contentPadding: EdgeInsets.zero,
+                                                    titlePadding: EdgeInsets.zero,
+                                                    backgroundColor: Colors.transparent,
+
+                                                    title: Text(""),
+                                                    // content: TimerPIRPage(number: "0",),
+                                                    content: Container(
+                                                      width: MediaQuery.of(context).size.width*0.75,
+                                                      child: TimerFanPage(number: "0",),
+                                                    ),
+                                                    actions: [],
+                                                  );
+                                                  showDialog(context: context, builder: (BuildContext context) {
+                                                    return alert;
+                                                  }
+                                                  );
+                                                }
                                               }
                                             ),
                                           )
@@ -578,6 +777,7 @@ class _TimerpageState extends State<Timerpage>{
                                               splashColor:Colors.transparent,
                                               onPressed: () {
                                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => TimerList()));
+
                                               }
                                           ),
                                         )
@@ -593,18 +793,17 @@ class _TimerpageState extends State<Timerpage>{
                         ),
                       ),
 
-                     // Expanded(child: SizedBox.shrink()),
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                      child:
                       Expanded(
                         flex:1,
-                        child: Row(
+                        child:Padding(
+                          padding:EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Expanded(
                               flex:5,
-                              child: Center(child: Text("FROM")),
+                              child: Center(
+                                  child: Text("FROM")),
                             ),
                             Expanded(
                               flex:5,
@@ -613,8 +812,7 @@ class _TimerpageState extends State<Timerpage>{
                           ],
                         ),
 
-                      ),
-                  ),
+                      ),),
 
 
 
@@ -654,14 +852,14 @@ class _TimerpageState extends State<Timerpage>{
                                       Expanded(
                                         flex:1,
                                         child: NumberPicker(
-                                        //  itemCount: 2,
+                                          itemCount: 4,
                                           value: _currentvalue1,
                                           minValue: 00,
                                           maxValue: 23,
                                           zeroPad: true,
                                           onChanged: (value) => setState(() => _currentvalue1 = value),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -677,13 +875,14 @@ class _TimerpageState extends State<Timerpage>{
                                       Expanded(
                                         flex:1,
                                         child: NumberPicker(
+                                          itemCount: 4,
                                           value: _currentvalue2,
                                           minValue: 00,
                                           maxValue: 59,
                                           zeroPad: true,
                                           onChanged: (value) => setState(() => _currentvalue2 = value),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -701,12 +900,13 @@ class _TimerpageState extends State<Timerpage>{
                                         flex:1,
                                         child: NumberPicker(
                                           value: _currentvalue3,
+                                          itemCount: 4,
                                           minValue: 00,
                                           maxValue: 24,
                                           zeroPad: true,
                                           onChanged: (value) => setState(() => _currentvalue3 = value),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: Color.fromRGBO( 66,130, 208,1),
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -722,13 +922,14 @@ class _TimerpageState extends State<Timerpage>{
                                         flex:1,
                                         child: NumberPicker(
                                           value: _currentvalue4,
+                                          itemCount: 4,
                                           minValue: 00,
                                           maxValue: 59,
                                           zeroPad: true,
                                           infiniteLoop: false,
                                           haptics: false,
                                           selectedTextStyle:TextStyle(
-                                              color: Colors.blue,
+                                              color: Color.fromRGBO( 66,130, 208,1),
                                               fontWeight: FontWeight.bold,
                                               //fontSize: 5.0,
                                               fontStyle: FontStyle.normal,
@@ -748,8 +949,6 @@ class _TimerpageState extends State<Timerpage>{
                         ),
                       ),
 
-                      SizedBox(height: 1),
-
                       Expanded(
                         flex:1,
                         child:Container(
@@ -763,10 +962,11 @@ class _TimerpageState extends State<Timerpage>{
                                   child:Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
+                                      Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
 
                                       Expanded(
                                         flex:1,
-                                        child: Transform.scale(scale: 1.5,
+                                        child: Transform.scale(scale: 1.30,
                                           child: IconButton(
                                             //iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 5.0,
@@ -795,6 +995,14 @@ class _TimerpageState extends State<Timerpage>{
                                                 dateVisible=true;
                                                 repPatternVisible=true;
                                               }
+
+                                              colorBoth1=colorOn;
+                                              colorBoth2=colorOff;
+                                              colorBoth3=colorOff;
+
+                                              colorNumberCyc=colorOff;
+                                              colorNumberDate=colorOff;
+
                                               setState(() {
                                                 rep=rep;
                                                 cyc=cyc;
@@ -811,7 +1019,9 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                         flex:9,
-                                        child: Text("  REPEAT ON DAYS  "),
+                                        child: Text("  REPEAT ON DAYS  ",style: TextStyle(
+                                          color: colorBoth1
+                                        ),),
                                       ),
                                     ],
                                   )
@@ -828,7 +1038,7 @@ class _TimerpageState extends State<Timerpage>{
                                         ),
                                         Expanded(
                                          // flex:1,
-                                          child: Transform.scale(scale: 1.5,
+                                          child: Transform.scale(scale: 1.25,
                                               child: IconButton(
                                                 //iconSize: MediaQuery.of(context).size.width/10,
                                                 splashRadius: 5.0,
@@ -853,7 +1063,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 1.0,
@@ -876,7 +1086,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                          child: IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 1.0,
@@ -902,7 +1112,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                          child:
                                           IconButton(
                                             //iconSize: MediaQuery.of(context).size.width/10,
@@ -926,7 +1136,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale: 1.5,
+                                        child: Transform.scale(scale: 1.25,
                                           child:
                                           IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
@@ -950,7 +1160,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:IconButton(
                                            // iconSize: MediaQuery.of(context).size.width/10,
                                             splashRadius: 1.0,
@@ -975,7 +1185,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                        // flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.25,
                                           child:
                                           IconButton(
                                             // iconSize: MediaQuery.of(context).size.width/10,
@@ -1024,10 +1234,11 @@ class _TimerpageState extends State<Timerpage>{
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
 
+                                    Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
 
                                     Expanded(
                                       flex:1,
-                                      child: Transform.scale(scale:1.5,
+                                      child: Transform.scale(scale:1.30,
                                         child:
                                         IconButton(
                                           // iconSize: MediaQuery.of(context).size.width/10,
@@ -1035,6 +1246,16 @@ class _TimerpageState extends State<Timerpage>{
                                           splashColor:Colors.blue,
                                           icon:cyc?radio1:radio,
                                           onPressed: (){
+
+                                            monday=tuesday=thursday=wednesday=thursday=friday=saturday=sunday=false;
+
+                                            colorBoth1=colorOff;
+                                            colorBoth2=colorOn;
+                                            colorBoth3=colorOff;
+
+                                            colorNumberCyc=Colors.blue;
+                                            colorNumberDate=colorOff;
+
 
                                             if(cyc == true){
                                              // cyc=false;
@@ -1073,7 +1294,7 @@ class _TimerpageState extends State<Timerpage>{
                                     ),
                                     Expanded(
                                       flex:9,
-                                      child: Text("  CYCLIC  "),
+                                      child: Text("  CYCLIC  ",style: TextStyle(color: colorBoth2),),
                                     ),
 
                                   ]
@@ -1092,7 +1313,7 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                         flex:2,
-                                        child: Center(child: Text("ON TIME")),
+                                        child: Center(child: Text("ON TIME",style: TextStyle(color: colorBoth2),)),
                                       ),
                                       Expanded(
                                         flex:2,
@@ -1103,8 +1324,11 @@ class _TimerpageState extends State<Timerpage>{
                                           maxValue: 60,
                                           step: 2,
                                           zeroPad: false,
+                                          textStyle: TextStyle(
+                                              color: colorBoth2
+                                          ),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: colorNumberCyc,
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -1115,7 +1339,8 @@ class _TimerpageState extends State<Timerpage>{
                                       ),
                                       Expanded(
                                         flex:2,
-                                        child: Center(child: Text("OFF TIME")),
+                                        child: Center(child: Text("OFF TIME",style: TextStyle(
+                                          color: colorBoth2),)),
                                       ),
                                       Expanded(
                                         flex:2,
@@ -1126,8 +1351,12 @@ class _TimerpageState extends State<Timerpage>{
                                           maxValue: 60,
                                           step: 2,
                                           zeroPad: false,
+
+                                          textStyle: TextStyle(
+                                              color: colorBoth2
+                                          ),
                                           selectedTextStyle:TextStyle(
-                                            color: Colors.blue,
+                                            color: colorNumberCyc,
                                             fontWeight: FontWeight.bold,
                                             //fontSize: 5.0,
                                             fontStyle: FontStyle.normal,
@@ -1162,9 +1391,11 @@ class _TimerpageState extends State<Timerpage>{
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
 
+                                          Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
+
                                           Expanded(
                                             flex:1,
-                                            child: Transform.scale(scale:1.5,
+                                            child: Transform.scale(scale:1.30,
                                               child:
                                               IconButton(
                                                 // iconSize: MediaQuery.of(context).size.width/10,
@@ -1172,6 +1403,15 @@ class _TimerpageState extends State<Timerpage>{
                                                 splashColor:Colors.blue,
                                                 icon:repd?radio1:radio,
                                                 onPressed: (){
+
+                                                  colorBoth1=colorOff;
+                                                  colorBoth2=colorOff;
+                                                  colorBoth3=colorOn;
+
+                                                  colorNumberCyc=colorOff;
+                                                  colorNumberDate=colorOn;
+
+                                                  monday=tuesday=wednesday=thursday=friday=saturday=sunday=false;
 
                                                   if(repd == true){
                                                    // repd=false;
@@ -1211,7 +1451,9 @@ class _TimerpageState extends State<Timerpage>{
                                           ),
                                           Expanded(
                                             flex:9,
-                                            child: Text("  SELECTED DATE  "),
+                                            child: Text("  SELECTED DATE  ",style: TextStyle(
+                                              color: colorBoth3
+                                            ),),
                                           ),
                                         ]
                                     ),
@@ -1230,22 +1472,55 @@ class _TimerpageState extends State<Timerpage>{
                                           ),
                                           Expanded(
                                             flex:8,
-                                            child:DefaultTextStyle.merge(
-                                              style:TextStyle(fontSize: 5),
-                                              child: CupertinoDatePicker(
+
+                                              child:CupertinoTheme(
+                                                data: CupertinoThemeData(
+                                                  brightness: Brightness.light,
+                                                  textTheme: CupertinoTextThemeData(
+
+
+                                                    dateTimePickerTextStyle: TextStyle(
+                                                        fontSize: 16,
+                                                        color: colorNumberDate
+                                                    ),
+                                                    //primaryColor: Colors.blue
+                                                    // pickerTextStyle: TextStyle(
+                                                    //   color: Colors.blue,
+                                                    // ),
+                                                  ),
+                                                ),
+                                                child: CupertinoDatePicker(
                                                   mode:CupertinoDatePickerMode.date,
                                                   initialDateTime: DateTime.now(),
                                                   onDateTimeChanged: (val) {
                                                     _chosenDateTime = val;
                                                     String string = dateFormat.format(_chosenDateTime);
-                                                    print(_chosenDateTime);
+                                                    print(string);
                                                     List lis = string.split(" ");
                                                     Date = lis[0];
                                                     setState(() {
-                                                        Date=Date;
+                                                      Date=Date;
                                                     });
-                                                  }),
-                                            )
+
+                                                  },
+                                                ),
+                                              )
+                                            // child:DefaultTextStyle.merge(
+                                            //   style:TextStyle(fontSize: 5),
+                                            //   child: CupertinoDatePicker(
+                                            //       mode:CupertinoDatePickerMode.date,
+                                            //       initialDateTime: DateTime.now(),
+                                            //       onDateTimeChanged: (val) {
+                                            //         _chosenDateTime = val;
+                                            //         String string = dateFormat.format(_chosenDateTime);
+                                            //         print(_chosenDateTime);
+                                            //         List lis = string.split(" ");
+                                            //         Date = lis[0];
+                                            //         setState(() {
+                                            //             Date=Date;
+                                            //         });
+                                            //       }),
+                                            // )
                                           ),
                                           Expanded(
                                             flex:1,
@@ -1315,7 +1590,7 @@ class _TimerpageState extends State<Timerpage>{
                                       children: [
 
                                         MaterialButton(
-                                          padding: EdgeInsets.all(8.0),
+                                          padding: EdgeInsets.all(5.0),
                                           textColor: Colors.white,
                                           // splashColor: Colors.greenAccent,
                                           elevation: 8.0,
@@ -1323,7 +1598,7 @@ class _TimerpageState extends State<Timerpage>{
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   image: AssetImage('images/Moods/save_button.png'),
-                                                  fit: BoxFit.cover),
+                                                  fit: BoxFit.fill),
                                             ),
                                             child: Padding(
                                               padding: const EdgeInsets.all(10.0),
@@ -1338,7 +1613,7 @@ class _TimerpageState extends State<Timerpage>{
                                           },
                                         ),
                                         MaterialButton(
-                                          padding: EdgeInsets.all(14.0),
+                                          padding: EdgeInsets.all(8.0),
                                           textColor: Colors.white,
                                           // splashColor: Colors.greenAccent,
                                           elevation: 8.0,
@@ -1346,11 +1621,11 @@ class _TimerpageState extends State<Timerpage>{
                                             decoration: BoxDecoration(
                                               image: DecorationImage(
                                                   image: AssetImage('images/Moods/save_button.png'),
-                                                  fit: BoxFit.cover),
+                                                  fit: BoxFit.fill),
                                             ),
                                             child: Padding(
-                                              padding: const EdgeInsets.all(10.0),
-                                              child: Center(child: Text("SAVE")),
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Center(child: Text("SET TIMER")),
                                             ),
                                           ),
                                           // ),
@@ -1442,6 +1717,7 @@ class _TimerpageState extends State<Timerpage>{
 
                                                           if(s.socketconnected==true){
                                                             s.socket1(senddata);
+                                                            Navigator.pop(context);
                                                           }
                                                           else {
                                                             fluttertoast("Not connected");
@@ -1461,6 +1737,7 @@ class _TimerpageState extends State<Timerpage>{
 
                                                           if(s.socketconnected==true) {
                                                             s.socket1(senddata);
+                                                            Navigator.pop(context);
                                                           }
                                                           else {
                                                             fluttertoast("Not connected");
@@ -1479,6 +1756,7 @@ class _TimerpageState extends State<Timerpage>{
 
                                                           if(s.socketconnected==true){
                                                             s.socket1(senddata);
+                                                            Navigator.pop(context);
                                                           }
                                                           else {
                                                             fluttertoast("Not connected");
@@ -1487,8 +1765,8 @@ class _TimerpageState extends State<Timerpage>{
                                                       await Future.delayed(const Duration(seconds: 2));
                                                     }
                                                   }
-
                                                 }
+                                                Navigator.pop(context,true);
                                               }
                                             },
                                         ),

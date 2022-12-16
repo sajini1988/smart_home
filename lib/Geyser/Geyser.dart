@@ -1,5 +1,6 @@
 import'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/Geyser/GeyserIView.dart';
@@ -32,6 +33,12 @@ class _GeylayoutState extends State<Geylayout>{
     // TODO: implement initState
     super.initState();
     print("enter gey init state");
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
     hnameG = houseName1;
     hnumG = houseNum1;
     rnumG = roomNum1;
@@ -195,8 +202,7 @@ class _GeylayoutState extends State<Geylayout>{
       ),
       backgroundColor: Colors.white,
       actions: [
-
-      ],
+        ],
     );
 
     showDialog(context: context, builder: (BuildContext context){

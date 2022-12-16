@@ -1,6 +1,7 @@
 import 'dart:async';
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:smart_home/LDatabase.dart';
@@ -10,7 +11,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class UserSettings extends StatefulWidget{
   UserSettings({Key key, todo,}): super(key:key);
-
   @override
   _UserSettings createState() => _UserSettings();
 }
@@ -47,22 +47,31 @@ class _UserSettings extends State<UserSettings>{
     // TODO: implement initState
     super.initState();
 
-    dbHelper = DBHelper();
-
-    FNC.DartNotificationCenter.unregisterChannel(channel: "DownLoadW");
-    // FNC.DartNotificationCenter.unregisterChannel(channel: "DownLoadWLS");
-
-    // FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadWLS');
-    FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadW');
-    FNC.DartNotificationCenter.subscribe(channel: 'DownLoadW', onNotification: (options) {
-        downloadsuccessfull(options);
-      },observer: null,
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
     );
 
-    // FNC.DartNotificationCenter.subscribe(channel: 'DownLoadWLS', onNotification: (options) {
-    //
-    //   },
-    // );
+    dbHelper = DBHelper();
+
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'DownLoadW');
+    FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadW');
+    FNC.DartNotificationCenter.subscribe(channel: 'DownLoadW', onNotification: (options) {
+
+      recWDownload();
+
+    },observer: null);
+
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'DownLoadWFailure');
+    FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadWFailure');
+    FNC.DartNotificationCenter.subscribe(channel: 'DownLoadWFailure', onNotification: (options) {
+
+      recFailure();
+
+    },observer: null);
+
+
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'SuperAdminPasswordNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'SuperAdminPasswordNotification');
@@ -106,6 +115,47 @@ class _UserSettings extends State<UserSettings>{
     dnum = _globalService.dnum;
     details();
     socketsend();
+  }
+
+  recFailure(){
+    Navigator.of(context,rootNavigator: true).pop();
+    showAlertDialogUpdateStatus(context,"Wired Database Update Failure");
+
+  }
+
+  recWDownload(){
+
+    Navigator.of(context,rootNavigator: true).pop();
+    showAlertDialogUpdateStatus(context,"Wired Database updated Successfully");
+
+  }
+
+  showAlertDialogUpdateStatus(BuildContext context,String message) {
+
+    // Create button
+    Widget yesButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        Navigator.of(context,rootNavigator: true).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text(message),
+      actions: [
+        yesButton
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   _saAdminPassNotification()async{
@@ -235,12 +285,13 @@ class _UserSettings extends State<UserSettings>{
       return Navigator.canPop(context);
       }, child:Scaffold(
         appBar: AppBar(
+          toolbarHeight: 40.0,
           title: Text("User Settings"),
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
+
           actions: <Widget>[
           IconButton(
-            icon: Image.asset('images/$imgs.png',
-                fit: BoxFit.cover),
+            icon: Image.asset('images/$imgs.png', fit: BoxFit.cover),
             onPressed: () {
               s.checkindevice(hname, hnum);
             },
@@ -333,7 +384,7 @@ class _UserSettings extends State<UserSettings>{
                                   _key.currentState.save();
 
                                   if(oldpassword.compareTo(newpassword)==0){
-                                    showAlertDialogsamepass(context,"New Password is the same as old Password. Change New Password");
+                                    showAlertDialogSamePass(context,"New Password is the same as old Password. Change New Password");
                                   }
                                   else {
 
@@ -487,26 +538,23 @@ class _UserSettings extends State<UserSettings>{
                       // iconSize: MediaQuery.of(context).size.width/75,
                       icon: Image.asset("images/usersettings/download_updates.png"),
                       onPressed: (){
-                        
-                        // String sendc = "\$118&";
-                        // if(s.socketconnected==true){
-                        //     s.socket1(sendc);
-                        //
-                        //     showDialog(
-                        //       context: context,
-                        //       barrierDismissible:false ,
-                        //       builder: (BuildContext context) {
-                        //         return Center(child: CircularProgressIndicator(),);
-                        //       }
-                        //     );
-                        //
-                        //     timer = new Timer(new Duration(seconds: 5), () {
-                        //       closefunction();
-                        //     });
-                        //   }
-                        //   else{
-                        //
-                        //   }
+
+                        print("Update House");
+
+                        if(s.socketconnected == true){
+
+                          showDialog(
+                              context: context,
+                              barrierDismissible:false ,
+                              builder: (BuildContext context) {
+                                return Center(child: CircularProgressIndicator(),);
+                              }
+                          );
+                          s.socket1('\$118&');
+                        }
+                        else{
+                          fluttertoast("Connect to server");
+                        }
                         },
                     ),
                   ),
@@ -538,21 +586,10 @@ class _UserSettings extends State<UserSettings>{
 
   }
 
-  closefunction(){
 
-    Navigator.of(context).pop();
-    print("failure while downloading");
 
-  }
-  downloadsuccessfull(String download){
-    timer.cancel();
-    if(download == "true"){
 
-    }
-    print("successfull while downloading");
-  }
-
-  showAlertDialogsamepass(BuildContext context,String message) {
+  showAlertDialogSamePass(BuildContext context,String message) {
 
     // Create button
     Widget okButton = TextButton(

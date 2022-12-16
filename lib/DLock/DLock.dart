@@ -1,5 +1,6 @@
 import'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/DLock/DLockView.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -33,6 +34,12 @@ class _LockLayoutState extends State<LockLayout>{
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     hnameL = houseName1;
     hnumL = houseNum1;
@@ -193,7 +200,6 @@ class _LockLayoutState extends State<LockLayout>{
 
       title: Text(""),
       content: Container(
-
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
         child:Timerpage(),

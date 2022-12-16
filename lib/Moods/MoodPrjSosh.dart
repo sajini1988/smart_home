@@ -13,7 +13,6 @@ class MoodProjSom extends StatefulWidget{
   _MyHomePageState createState()=>_MyHomePageState(number1: number);
 }
 class _MyHomePageState extends State<MoodProjSom> {
-
   _MyHomePageState({this.number1});
   final String number1;
 
