@@ -452,8 +452,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                     return Center(child: CircularProgressIndicator(),);
                                   });
 
-
-                              RemoteConnection();
+                              remoteConnection();
                               Timer(Duration(seconds: 3), () {
 
                                 Navigator.of(context,rootNavigator: true).pop();
@@ -501,7 +500,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                                   "I am Manual  IP:PORT going to download home page $ip_port");
                             }
                             else {
-                              buildShowEIP_PDialog(context);
+                              buildshowEIP_PDialog(context);
                             }
                           }
                     },
@@ -509,14 +508,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                   ),
                 ),
               ],
-          ),
-        ],),
             ),
-
-        );
+          ],
+        ),
+      ),
+    );
 
   }
-  RemoteConnection()async{
+  remoteConnection()async{
 
     String get = urlcontroller.text+use_idcontroller.text;
     var url = get;
@@ -598,7 +597,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
 
 
-  buildShowEIP_PDialog(BuildContext context) {
+  buildshowEIP_PDialog(BuildContext context) {
     return showDialog<ConfirmAction1>(
       context: context,
       barrierDismissible: false, // user must tap button for close dialog!
@@ -638,16 +637,13 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               onPressed: () {
                 Navigator.pop(context);
                // Navigator.pop(context);
-
               },
             )
           ],
         );
       },
     );
-
   }
-
   buildShowEUIDDialog(BuildContext context) {
     return showDialog<ConfirmAction1>(
       context: context,
@@ -661,10 +657,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             TextButton(
               child: const Text('OK'),
               onPressed: () {
-
-                Navigator.pop(context);
-
-              },
+                  Navigator.pop(context);
+                },
             )
           ],
         );
