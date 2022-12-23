@@ -1,6 +1,8 @@
 // ignore_for_file: unnecessary_statements, duplicate_ignore
 //import 'dart:async';
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_home/HouseSettings/OperatorSettings/GatewaySettings.dart';
@@ -64,6 +66,8 @@ class _OperatorSettings extends State<OperatorSettings>{
   Color colorOn=Colors.black,colorOff= Color.fromRGBO(211, 211, 211, 0.7);
   Color colorBoth;
 
+  Timer timer1;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -85,6 +89,17 @@ class _OperatorSettings extends State<OperatorSettings>{
     FNC.DartNotificationCenter.subscribe(channel: 'DownLoadW', onNotification: (options) {
 
       recWDownload();
+      timer1.cancel();
+
+    },observer: null);
+
+
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'DownLoadWLS');
+    FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadWLS');
+    FNC.DartNotificationCenter.subscribe(channel: 'DownLoadWLS', onNotification: (options) {
+
+      recWLSDownload();
+      timer1.cancel();
 
     },observer: null);
 
@@ -93,6 +108,7 @@ class _OperatorSettings extends State<OperatorSettings>{
     FNC.DartNotificationCenter.subscribe(channel: 'DownLoadWFailure', onNotification: (options) {
 
       recFailure();
+      timer1.cancel();
 
     },observer: null);
 
@@ -103,18 +119,85 @@ class _OperatorSettings extends State<OperatorSettings>{
 
   recFailure(){
     Navigator.of(context,rootNavigator: true).pop();
-    showAlertDialogUpdateStatus(context,"Wired Database Update Failure");
+    showAlertDialogUpdateFailure(context,"Update Failure");
+
+  }
+
+  recWLSDownload(){
+
+    Navigator.of(context,rootNavigator: true).pop();
+    showAlertDialogUpdateFailure(context,"Wireless Settings Downloaded Successfully.");
 
   }
 
   recWDownload(){
 
     Navigator.of(context,rootNavigator: true).pop();
-    showAlertDialogUpdateStatus(context,"Wired Database updated Successfully");
+    showAlertDialogUpdateStatus(context,"Wired updated Successfully. Do you want to Download Wireless Settings");
+
+  }
+
+  showIndicator(){
+
+    showDialog(
+        context: context,
+        barrierDismissible:false ,
+        builder: (BuildContext context) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+    );
+
+    timer1 = Timer(Duration(seconds: 10), () {
+      showAlertDialogUpdateFailure(context, "UpdateFailed");
+    });
 
   }
 
   showAlertDialogUpdateStatus(BuildContext context,String message) {
+
+    // Create button
+    Widget yesButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        Navigator.of(context,rootNavigator: true).pop();
+
+        updateWireless();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text(message),
+      actions: [
+        yesButton
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  updateWireless(){
+
+    if(s.socketconnected == true){
+
+      showIndicator();
+      Timer(Duration(seconds: 2), () {
+        s.socket1('\$121&');
+      });
+    }
+    else{
+      fluttertoast("Socket Not Connected");
+    }
+  }
+
+  showAlertDialogUpdateFailure(BuildContext context,String message) {
 
     // Create button
     Widget yesButton = TextButton(
@@ -767,13 +850,7 @@ class _OperatorSettings extends State<OperatorSettings>{
     print("Update House");
     if(s.socketconnected == true){
 
-      showDialog(
-          context: context,
-          barrierDismissible:false ,
-          builder: (BuildContext context) {
-            return Center(child: CircularProgressIndicator(),);
-          }
-      );
+      showIndicator();
       s.socket1('\$118&');
     }
     else{

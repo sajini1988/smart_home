@@ -33,7 +33,7 @@ class Singleton {
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
   final Connectivity _connectivity = Connectivity();
   ConnectivityResult result;
-  int maxsize,maxsizet;
+  int maxsize,maxsizet,maxsizeWl;
   String serverssid;
   DBHelper dbHelper;
   Geolocator geolocator;
@@ -47,6 +47,7 @@ class Singleton {
 
   bool wireddb=false;
   bool timerdb=false;
+  bool wirelessDb=false;
 
   Position position;
   
@@ -56,6 +57,7 @@ class Singleton {
 
   BytesBuilder builder;
   BytesBuilder timerbuilder;
+  BytesBuilder wrBuilder;
 
   String hnamef;
   String serc1;
@@ -839,6 +841,14 @@ class Singleton {
               wireddb=true;
               builder = new BytesBuilder(copy: false);
             }
+
+            else if (decrypt.startsWith('\$') && decrypt.endsWith(':')) {
+              String strl = decrypt.substring(1, (decrypt.length) - 1);
+              maxsizeWl = int.parse(strl);
+              wirelessDb=true;
+              wrBuilder=new BytesBuilder(copy: false);
+
+            }
             else if(decrypt.startsWith('\$') && decrypt.endsWith('|')){
 
               String strl = decrypt.substring(1, (decrypt.length) - 1);
@@ -1088,18 +1098,18 @@ class Singleton {
           else if(wireddb==true){
 
             builder.add(data1);
-            int wiredbytes=builder.length;
+            int wiredBytes=builder.length;
 
             if(maxsize.bitLength == 0){
 
             }
             else{
 
-              print("$wiredbytes,$maxsize");
+              print("$wiredBytes,$maxsize");
 
-              if (wiredbytes == maxsize) {
+              if (wiredBytes == maxsize) {
 
-                print("f $wiredbytes,$maxsize");
+                print("f $wiredBytes,$maxsize");
 
                 Uint8List dt = builder.toBytes();
 
@@ -1115,6 +1125,43 @@ class Singleton {
               //  DBProvider.dbname = hnamef;
                callingMethod();
                 wireddb=false;
+              }
+            }
+          }
+
+          else if(wirelessDb==true){
+
+            print("ieless");
+            wrBuilder.add(data1);
+            int wirelessBytes=wrBuilder.length;
+
+            if(maxsizeWl.bitLength == 0){
+
+            }
+            else{
+
+              print("$wirelessBytes,$maxsizeWl");
+
+              if (wirelessBytes == maxsizeWl) {
+
+                print("f $wirelessBytes,$maxsizeWl");
+
+                Uint8List dt = wrBuilder.toBytes();
+
+                Directory documentsDirectory = await getApplicationDocumentsDirectory();
+                String wirelessPath = join(documentsDirectory.path, hnamef+ ".WLS_db");
+                print("Pathwireless: $wirelessPath");
+
+                ByteData data = dt.buffer.asByteData(0, dt.buffer.lengthInBytes);
+                final buffer = data.buffer;
+                File(wirelessPath).writeAsBytes(
+                    buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+
+                //  DBProvider.dbname = hnamef;
+
+                wirelessDb=false;
+
+                FNC.DartNotificationCenter.post(channel: "DownLoadWLS", options:"true");
               }
             }
           }

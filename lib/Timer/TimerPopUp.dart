@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
@@ -1737,7 +1736,7 @@ class _TimerpageState extends State<Timerpage>{
 
                                                           if(s.socketconnected==true) {
                                                             s.socket1(senddata);
-                                                            Navigator.pop(context);
+
                                                           }
                                                           else {
                                                             fluttertoast("Not connected");
@@ -1756,17 +1755,18 @@ class _TimerpageState extends State<Timerpage>{
 
                                                           if(s.socketconnected==true){
                                                             s.socket1(senddata);
-                                                            Navigator.pop(context);
+
                                                           }
                                                           else {
                                                             fluttertoast("Not connected");
                                                           }
                                                       }
-                                                      await Future.delayed(const Duration(seconds: 2));
+                                                      await Future.delayed(const Duration(seconds: 1));
                                                     }
+                                                    Navigator.pop(context,true);
                                                   }
                                                 }
-                                                Navigator.pop(context,true);
+
                                               }
                                             },
                                         ),

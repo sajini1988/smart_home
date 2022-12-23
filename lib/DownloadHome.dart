@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -9,11 +10,12 @@ import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/LDatabaseModelClass.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/homepage.dart';
-import 'package:smart_home/main.dart';
+
 import 'package:encrypt/encrypt.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smart_home/main.dart';
 
 class Downloadhome extends StatefulWidget {
   Downloadhome({Key key, todo,}) : super(key: key);
@@ -34,12 +36,20 @@ class _Downloadhome extends State<Downloadhome> {
   Future<List<Student>> students;
   String ok="false";
 
+  bool wireddb=false;
+  bool wirelessDb=false;
 
   bool socketconnect= false;
+
   int maxsize;
+  int maxsizeWl;
+
   int roomv = 0;
   int ddcou,dc;
+
   BytesBuilder builder = new BytesBuilder(copy: false);
+  BytesBuilder wirelessBuilder = new BytesBuilder(copy: false);
+
   Socket socket;
   String serverip,serverport;
   int sp, serverportaddress;
@@ -56,6 +66,7 @@ class _Downloadhome extends State<Downloadhome> {
   FocusNode _focus3 = new FocusNode();
 
   Timer timer;
+  Timer timer1;
 
   void _onFocusChange(){
     SystemChrome.setEnabledSystemUIMode
@@ -116,6 +127,7 @@ class _Downloadhome extends State<Downloadhome> {
       },
       child: Scaffold(
           appBar: AppBar(
+              toolbarHeight: 40.0,
               backgroundColor: Color.fromRGBO(66, 130, 208, 1),
               title: Text("Download Home")
           ),
@@ -245,6 +257,9 @@ class _Downloadhome extends State<Downloadhome> {
                                     showAlertDialog(context);
                                     Timer(Duration(seconds: 5), () {
 
+                                      print("enter prime");
+
+                                      print(ok);
 
                                       if(ok=="*OK#"){
                                         print("enter here");
@@ -309,6 +324,46 @@ class _Downloadhome extends State<Downloadhome> {
     });
 
   }
+
+
+  //wireless
+  showAlertDialogW(BuildContext context)  {
+    AlertDialog alert=AlertDialog(
+      title: Text("Downloading WirelessDatabase From Server"),
+      content:
+      new Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+              child: SizedBox(width:  MediaQuery.of(context).size.width - 50,
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 20),
+                  width: 300,
+                  height: 20,
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      child:LinearProgressIndicator()
+
+                  ),
+                ),
+              )
+          ),
+          //),
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
+    );
+
+    timer1 = Timer(Duration(seconds: 10), () {
+      showAlertDialogerr(this.context);
+    });
+
+  }
+
 
 
   String _validateUserName(String value) {
@@ -428,21 +483,41 @@ class _Downloadhome extends State<Downloadhome> {
               String strl = decrypt.substring(1, (decrypt.length) - 1);
               maxsize = int.parse(strl);
               print("maxsize:$maxsize");
-              Fluttertoast.showToast(
-                  msg: decrypt,
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.grey,
-                  textColor: Colors.white,
-                  fontSize: 16.0
-              );
+              wireddb=true;
+              builder=new BytesBuilder(copy: false);
+              // Fluttertoast.showToast(
+              //     msg: decrypt,
+              //     toastLength: Toast.LENGTH_SHORT,
+              //     gravity: ToastGravity.BOTTOM,
+              //     timeInSecForIosWeb: 1,
+              //     backgroundColor: Colors.grey,
+              //     textColor: Colors.white,
+              //     fontSize: 16.0
+              // );
+            }
+
+            else if (decrypt.startsWith('\$') && decrypt.endsWith(':')) {
+              String strl = decrypt.substring(1, (decrypt.length) - 1);
+              maxsizeWl = int.parse(strl);
+              print("maxsize:$maxsize");
+              wirelessDb=true;
+              wirelessBuilder=new BytesBuilder(copy: false);
+              // Fluttertoast.showToast(
+              //     msg: decrypt,
+              //     toastLength: Toast.LENGTH_SHORT,
+              //     gravity: ToastGravity.BOTTOM,
+              //     timeInSecForIosWeb: 1,
+              //     backgroundColor: Colors.grey,
+              //     textColor: Colors.white,
+              //     fontSize: 16.0
+              // );
             }
             else if (decrypt.contains("*OK#")) {
+              print("enter ok#");
               socketconnect = true;
               ok="*OK#";
             }
-            else if (decrypt.contains('*ERRUSER#')) {
+            else if (decrypt==('*ERRUSER#')) {
               ok="false";
               socket.destroy();
               socketconnect=false;
@@ -451,10 +526,11 @@ class _Downloadhome extends State<Downloadhome> {
               showAlertDialogerrusr(this.context);
             }
           }
-          else {
+          else if(wireddb == true) {
             builder.add(data1);
-            bytes = builder.length;
-            print("bytes :$bytes");
+            int wBytes = builder.length;
+
+            print("bytes :$wBytes");
             print("max_size: $maxsize");
 
 
@@ -462,7 +538,7 @@ class _Downloadhome extends State<Downloadhome> {
               print("try downloading again");
             }
             else {
-              if (bytes >= maxsize) {
+              if (wBytes == maxsize) {
                 print(download.text);
 
                 Uint8List dt = builder.toBytes();
@@ -472,7 +548,43 @@ class _Downloadhome extends State<Downloadhome> {
                 print("Path: $path");
 
                 ByteData data = dt.buffer.asByteData(
-                    0, dt.buffer.lengthInBytes);
+                    0, dt.buffer
+                    .lengthInBytes);
+                final buffer = data.buffer;
+                File(path).writeAsBytes(
+                    buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+
+               // socket.destroy();
+              //  close();
+
+                DBProvider.db.close();
+                DBProvider.dbname = download.text;
+                callingmethoad();
+                wireddb=false;
+              }
+            }
+          }
+          else if(wirelessDb == true) {
+            wirelessBuilder.add(data1);
+            int wlBytes = wirelessBuilder.length;
+
+            print("bytes :$wlBytes");
+            print("max_size: $maxsizeWl");
+
+            if (maxsizeWl.bitLength == 0) {
+              print("try downloading again");
+            }
+            else {
+              if (wlBytes == maxsizeWl) {
+                print(download.text);
+
+                Uint8List dt = builder.toBytes();
+
+                Directory documentsDirectory = await getApplicationDocumentsDirectory();
+                path = join(documentsDirectory.path, download.text + ".WLS_db");
+                print("Path: $path");
+
+                ByteData data = dt.buffer.asByteData(0, dt.buffer.lengthInBytes);
                 final buffer = data.buffer;
                 File(path).writeAsBytes(
                     buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
@@ -482,7 +594,12 @@ class _Downloadhome extends State<Downloadhome> {
 
                 DBProvider.db.close();
                 DBProvider.dbname = download.text;
-                callingmethoad();
+
+                wirelessDb=false;
+
+                timer1.cancel();
+                showAlertDialogSuccessWireless(this.context);
+
               }
             }
           }
@@ -544,14 +661,6 @@ class _Downloadhome extends State<Downloadhome> {
   Future<void> callingmethoad() async {
 
     try {
-
-
-
-
-
-
-
-
 
 
       DBProvider.db.newClient();
@@ -626,7 +735,60 @@ class _Downloadhome extends State<Downloadhome> {
 
     AlertDialog alert = AlertDialog(
       title: Text("Download Completed"),
-      content: Text("Wired Setting Downloaded Successfully. Do you want to operate Devices?? "),
+      content: Text("Wired Downloaded Successful. Do you want to download Wireless Settings?? "),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+
+            // Navigator.of(context1).pop();
+            if (Platform.isAndroid) {
+              SystemNavigator.pop();
+            } else if (Platform.isIOS) {
+              exit(0);
+            }
+          },
+          child: Text("Exit"),
+        ),
+
+
+        TextButton(
+          onPressed: () {
+
+            Navigator.pop(context1);
+            showAlertDialogW(context1);
+            Timer(Duration(seconds: 2), () {
+              socket1('\$121&');
+            });
+
+            // Navigator.pushAndRemoveUntil(
+            //     context1,
+            //     MaterialPageRoute(builder: (BuildContext context) => MyApp(name: hname, lb: serC1)),
+            //         (Route<dynamic> route) => false
+            // );
+            // Navigator.of(context1).push(
+            //     MaterialPageRoute(builder: (context) => MyApp(name: hname, lb: serC1)));
+
+          },
+          child: Text("Yes"),
+        ),
+      ],
+    );
+
+
+    // show the dialog
+    showDialog(
+      context: context1,
+      builder: (BuildContext context1) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialogSuccessWireless(BuildContext context1) {
+
+    AlertDialog alert = AlertDialog(
+      title: Text("Download Completed"),
+      content: Text("Wireless Settings Downloaded Successfully. Do you want to operate Devices?? "),
       actions: <Widget>[
         TextButton(
           onPressed: () {
@@ -737,13 +899,21 @@ class _Downloadhome extends State<Downloadhome> {
 
     AlertDialog alert = AlertDialog(
       title: Text("Hello!"),
-      content: Text("House not downloaded successfully.Do you want to go back and try downloading Again"),
+      content: Text("House not downloaded successfully.Go back and try downloading Again"),
       actions: <Widget>[
         TextButton(
           onPressed: () {
 
             Navigator.pop(this.context);
             Navigator.pop(this.context);
+            if(socketconnect == true){
+              socket.destroy();
+              close();
+            }
+            else{
+              close();
+
+            }
             //Navigator.canPop(this.context);
            // Navigator.of(this.context,rootNavigator: true).pop();
             // Navigator.of(context1).pop();

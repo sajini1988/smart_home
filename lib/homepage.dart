@@ -81,6 +81,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       },
       child: Scaffold(
         appBar: AppBar(
+            toolbarHeight: 40.0,
             backgroundColor: Color.fromRGBO(66, 130, 208, 1),
             title: Text("Download Home")
         ),

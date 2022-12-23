@@ -19,7 +19,8 @@ class _UserSettings extends State<UserSettings>{
 
   List result;
 
-  Timer timer;
+  Timer timer1;
+  Timer timer2;
 
   var s=Singleton();
   GlobalService _globalService = GlobalService();
@@ -60,6 +61,16 @@ class _UserSettings extends State<UserSettings>{
     FNC.DartNotificationCenter.subscribe(channel: 'DownLoadW', onNotification: (options) {
 
       recWDownload();
+      timer1.cancel();
+
+    },observer: null);
+
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'DownLoadWLS');
+    FNC.DartNotificationCenter.registerChannel(channel: 'DownLoadWLS');
+    FNC.DartNotificationCenter.subscribe(channel: 'DownLoadWLS', onNotification: (options) {
+
+      recWLSDownload();
+      timer1.cancel();
 
     },observer: null);
 
@@ -68,6 +79,7 @@ class _UserSettings extends State<UserSettings>{
     FNC.DartNotificationCenter.subscribe(channel: 'DownLoadWFailure', onNotification: (options) {
 
       recFailure();
+      timer1.cancel();
 
     },observer: null);
 
@@ -117,20 +129,27 @@ class _UserSettings extends State<UserSettings>{
     socketsend();
   }
 
+  recWLSDownload(){
+
+    Navigator.of(context,rootNavigator: true).pop();
+    showAlertDialogUpdateFailure(context,"Wireless Settings updated Successfully.");
+
+  }
+
   recFailure(){
     Navigator.of(context,rootNavigator: true).pop();
-    showAlertDialogUpdateStatus(context,"Wired Database Update Failure");
+    showAlertDialogUpdateFailure(context,"Update Failure");
 
   }
 
   recWDownload(){
 
     Navigator.of(context,rootNavigator: true).pop();
-    showAlertDialogUpdateStatus(context,"Wired Database updated Successfully");
+    showAlertDialogUpdateStatus(context,"Wired updated Successfully. Downloading Wireless Settings");
 
   }
 
-  showAlertDialogUpdateStatus(BuildContext context,String message) {
+  showAlertDialogUpdateFailure(BuildContext context,String message) {
 
     // Create button
     Widget yesButton = TextButton(
@@ -157,6 +176,68 @@ class _UserSettings extends State<UserSettings>{
       },
     );
   }
+
+  showAlertDialogUpdateStatus(BuildContext context,String message) {
+
+    // Create button
+    Widget yesButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        Navigator.of(context,rootNavigator: true).pop();
+        updateWireless();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert"),
+      content: Text(message),
+      actions: [
+        yesButton
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showIndicator(){
+
+    showDialog(
+        context: context,
+        barrierDismissible:false ,
+        builder: (BuildContext context) {
+          return Center(child: CircularProgressIndicator(),);
+        }
+    );
+
+    timer1 = Timer(Duration(seconds: 10), () {
+      showAlertDialogUpdateFailure(context, "UpdateFailed");
+    });
+
+  }
+
+  updateWireless(){
+
+    if(s.socketconnected == true){
+
+
+      showIndicator();
+      Timer(Duration(seconds: 2), () {
+        s.socket1('\$121&');
+      });
+
+    }
+    else{
+      fluttertoast("Socket Not Connected");
+    }
+  }
+
 
   _saAdminPassNotification()async{
     print("successfully updated super admin password");
@@ -543,13 +624,7 @@ class _UserSettings extends State<UserSettings>{
 
                         if(s.socketconnected == true){
 
-                          showDialog(
-                              context: context,
-                              barrierDismissible:false ,
-                              builder: (BuildContext context) {
-                                return Center(child: CircularProgressIndicator(),);
-                              }
-                          );
+                          showIndicator();
                           s.socket1('\$118&');
                         }
                         else{
