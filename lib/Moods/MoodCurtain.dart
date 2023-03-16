@@ -182,6 +182,7 @@ class _MyHomePageState extends State<MoodCurtain> {
           gEdata: "Null",
           hEdata: "Null",
           iEdata: "Null",
+
           jEdata: "Null"));
     }
 
@@ -295,20 +296,38 @@ class _MyHomePageState extends State<MoodCurtain> {
       devicenameset=_cData;
     });
 
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-     debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Align(
-          alignment: Alignment.center,
-          child: Container(
-            color: Colors.transparent,
-            child:ListView(
-              shrinkWrap:true,
+    return Dialog(
+     // debugShowCheckedModeBanner: false,
+     //  home: Scaffold(
+     //    backgroundColor: Colors.transparent,
+     //    body: Align(
+     //      alignment: Alignment.center,
+     //      child: Container(
+     //        color: Colors.transparent,
+
+      elevation: 0,
+      clipBehavior:Clip.antiAliasWithSaveLayer,
+      insetPadding: EdgeInsets.all(70.0),
+      backgroundColor: Color(0xffffffff),
+      shape: RoundedRectangleBorder(
+        //borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(25.0),
+          bottomLeft: Radius.circular(25.0),
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+
+
+        ),
+
+      ),
+            child:Column(
+              mainAxisSize: MainAxisSize.min,
               children:<Widget>[
 
                 Row(
@@ -547,14 +566,14 @@ class _MyHomePageState extends State<MoodCurtain> {
                           mainAxisAlignment:MainAxisAlignment.spaceAround,
                           children:[
                             Transform.scale(
-                      scale: 2.0,
-                      child:Visibility(
-                        visible: sheerOpen,
-                        child: IconButton(
-                            iconSize: MediaQuery.of(context).size.width/10,
-                            icon: sheerchangeopen?open01:open,
-                            splashRadius: 0.1,
-                            splashColor:Colors.transparent ,
+                              scale: 2.0,
+                              child:Visibility(
+                                visible: sheerOpen,
+                                child: IconButton(
+                                iconSize: MediaQuery.of(context).size.width/10,
+                                    icon: sheerchangeopen?open01:open,
+                                    splashRadius: 0.1,
+                                    splashColor:Colors.transparent ,
                             onPressed: () {
 
                               if(sheerchangeopen==true){
@@ -709,15 +728,12 @@ class _MyHomePageState extends State<MoodCurtain> {
                     )
                   ],
                 ),
-
-
-
-            ],
+              ],
           ),
-        ),
-      ),
-
-      ));
+        );
+      // ),
+      //
+      // ));
   }
 
   savecurtain()async{

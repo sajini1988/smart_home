@@ -76,7 +76,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
   DateTime newDateTime;
 
-  Color colorOn=Colors.black,colorOff= Color.fromRGBO(211, 211, 211, 0.9);
+  Color colorOn=Colors.black54,colorOff= Color.fromRGBO(211, 211, 211, 0.9);
   Color colorBoth1,colorBoth2,colorBoth3;
   Color colorNumberCyc,colorNumberDate;
 
@@ -345,8 +345,10 @@ class _EditTimerPageState extends State<EditTimerPage> {
         List<String> totimesplit = _cycofftime.split(":");
         String endtime= totimesplit[1];
 
-        _currentvalue1 = int.parse(sttime);
-        _currentvalue2 = int.parse(endtime);
+        _currentvalue5 = int.parse(sttime);
+        _currentvalue6= int.parse(endtime);
+
+        print("$_cycontime,$_cycofftime,$_currentvalue1,$_currentvalue2");
 
       }
 
@@ -355,27 +357,45 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner:false,
-      home: Scaffold(
-        body:Center(
-          child:Container(
-            width: MediaQuery.of(context).size.width,
-            color: Colors.white,
+    return Dialog(
+
+        elevation: 0,
+
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(30.0),
+        backgroundColor: Color(0xffffffff),
+        shape: RoundedRectangleBorder(
+          //borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(25.0),
+            bottomLeft: Radius.circular(25.0),
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+
+
+          ),
+
+        ),
+      // debugShowCheckedModeBanner:false,
+      // home: Scaffold(
+      //   body:Center(
+      //     child:Container(
+      //       width: MediaQuery.of(context).size.width,
+      //       color: Colors.white,
             child:Column(
-                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                mainAxisAlignment:MainAxisAlignment.start,
                 //crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+
+                  Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/50),),
                   Expanded(
                     flex:1,
                     child: Container(
                       color: Colors.white,
                         child:Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
                               flex:2,
@@ -387,7 +407,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                   Expanded(
                                     flex:1,
                                     child: Transform.scale(
-                                      scale: 1.5,
+                                      scale: 1.75,
                                       child: IconButton(
                                         icon:Image.asset("images/Timer/set_operation.png"),
                                         splashColor: Colors.transparent,
@@ -395,101 +415,135 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                         onPressed: (){
                                           if(modeltype == "WPS1" || modeltype == "WPD1"){
 
-                                            AlertDialog alert = AlertDialog(
+                                            // AlertDialog alert = AlertDialog(
+                                            //
+                                            //   elevation: 0,
+                                            //   //insetPadding: EdgeInsets.zero,
+                                            //   // contentPadding: EdgeInsets.zero,
+                                            //   //clipBehavior: Clip.antiAliasWithSaveLayer,
+                                            //
+                                            //   contentPadding: EdgeInsets.zero,
+                                            //   titlePadding: EdgeInsets.zero,
+                                            //   backgroundColor: Colors.transparent,
+                                            //
+                                            //   title: Text(""),
+                                            //   content: Container(
+                                            //     width: MediaQuery.of(context).size.width*0.75,
+                                            //     child: TimerPIRPage(number: "1"),
+                                            //   ),
+                                            //   actions: [],
+                                            // );
+                                            // showDialog(context: context, builder: (BuildContext context) {
+                                            //   return alert;
+                                            // }
+                                            // );
 
-                                              elevation: 0,
-                                              //insetPadding: EdgeInsets.zero,
-                                              // contentPadding: EdgeInsets.zero,
-                                              //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                              contentPadding: EdgeInsets.zero,
-                                              titlePadding: EdgeInsets.zero,
-                                              backgroundColor: Colors.transparent,
-
-                                              title: Text(""),
-                                              content: Container(
-                                                width: MediaQuery.of(context).size.width*0.75,
-                                                child: TimerPIRPage(number: "1"),
-                                              ),
-                                              actions: [],
+                                            showDialog(
+                                              barrierColor: Colors.black26,
+                                              context: context,
+                                              builder: (context) {
+                                                return TimerPIRPage(number: "1");
+                                              },
                                             );
-                                            showDialog(context: context, builder: (BuildContext context) {
-                                              return alert;
-                                            }
-                                            );
+
+
                                           }
                                           else if (((modeltype == "S051") && (switchno == "98")) || ((modeltype == "S051") && (switchno == "98"))) {
 
-                                            AlertDialog alert = AlertDialog(
+                                            // AlertDialog alert = AlertDialog(
+                                            //
+                                            //   elevation: 0,
+                                            //   //insetPadding: EdgeInsets.zero,
+                                            //   // contentPadding: EdgeInsets.zero,
+                                            //   //clipBehavior: Clip.antiAliasWithSaveLayer,
+                                            //
+                                            //   contentPadding: EdgeInsets.zero,
+                                            //   titlePadding: EdgeInsets.zero,
+                                            //   backgroundColor: Colors.transparent,
+                                            //
+                                            //   title: Text(""),
+                                            //   content: Container(
+                                            //       width: MediaQuery.of(context).size.width*0.75,
+                                            //       child: TimerFanPage(number: "1"),
+                                            //     ),
+                                            //   actions: [],
+                                            // );
+                                            // showDialog(context: context, builder: (BuildContext context) {
+                                            //   return alert;
+                                            // }
+                                            // );
 
-                                              elevation: 0,
-                                              //insetPadding: EdgeInsets.zero,
-                                              // contentPadding: EdgeInsets.zero,
-                                              //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                              contentPadding: EdgeInsets.zero,
-                                              titlePadding: EdgeInsets.zero,
-                                              backgroundColor: Colors.transparent,
-
-                                              title: Text(""),
-                                              content: Container(
-                                                  width: MediaQuery.of(context).size.width*0.75,
-                                                  child: TimerFanPage(number: "1"),
-                                                ),
-                                              actions: [],
-                                            );
-                                            showDialog(context: context, builder: (BuildContext context) {
-                                              return alert;
-                                            }
+                                            showDialog(
+                                              barrierColor: Colors.black26,
+                                              context: context,
+                                              builder: (context) {
+                                                return TimerFanPage(number: "1",);
+                                              },
                                             );
                                           }
                                           else if((modeltype == "CLNR") || (modeltype == "CLNRSH")){
 
-                                            AlertDialog alert = AlertDialog(
+                                            // AlertDialog alert = AlertDialog(
+                                            //
+                                            //   elevation: 0,
+                                            //   //insetPadding: EdgeInsets.zero,
+                                            //   // contentPadding: EdgeInsets.zero,
+                                            //   //clipBehavior: Clip.antiAliasWithSaveLayer,
+                                            //
+                                            //   contentPadding: EdgeInsets.zero,
+                                            //   titlePadding: EdgeInsets.zero,
+                                            //   backgroundColor: Colors.transparent,
+                                            //
+                                            //   title: Text(""),
+                                            //   content: Container(
+                                            //     width: MediaQuery.of(context).size.width*0.75,
+                                            //     child: TimerCurtainPage(number: "1"),
+                                            //   ),
+                                            //   actions: [],
+                                            // );
+                                            //   showDialog(context: context, builder: (BuildContext context) {
+                                            //     return alert;
+                                            //   }
+                                            // );
 
-                                              elevation: 0,
-                                              //insetPadding: EdgeInsets.zero,
-                                              // contentPadding: EdgeInsets.zero,
-                                              //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                              contentPadding: EdgeInsets.zero,
-                                              titlePadding: EdgeInsets.zero,
-                                              backgroundColor: Colors.transparent,
-
-                                              title: Text(""),
-                                              content: Container(
-                                                width: MediaQuery.of(context).size.width*0.75,
-                                                child: TimerCurtainPage(number: "1"),
-                                              ),
-                                              actions: [],
-                                            );
-                                              showDialog(context: context, builder: (BuildContext context) {
-                                                return alert;
-                                              }
+                                            showDialog(
+                                              barrierColor: Colors.black26,
+                                              context: context,
+                                              builder: (context) {
+                                                return TimerCurtainPage(number: "1",);
+                                              },
                                             );
                                           }
                                           else if(modeltype == "RGB1"){
-                                            AlertDialog alert = AlertDialog(
+                                            // AlertDialog alert = AlertDialog(
+                                            //
+                                            //   elevation: 0,
+                                            //   //insetPadding: EdgeInsets.zero,
+                                            //   // contentPadding: EdgeInsets.zero,
+                                            //   //clipBehavior: Clip.antiAliasWithSaveLayer,
+                                            //
+                                            //   contentPadding: EdgeInsets.zero,
+                                            //   titlePadding: EdgeInsets.zero,
+                                            //   backgroundColor: Colors.transparent,
+                                            //
+                                            //   title: Text(""),
+                                            //   content: Container(
+                                            //     width: MediaQuery.of(context).size.width*0.75,
+                                            //     child: RGBTimerPage(number: "1"),
+                                            //   ),
+                                            //   actions: [],
+                                            // );
+                                            // showDialog(context: context, builder: (BuildContext context) {
+                                            //   return alert;
+                                            // }
+                                            // );
 
-                                              elevation: 0,
-                                              //insetPadding: EdgeInsets.zero,
-                                              // contentPadding: EdgeInsets.zero,
-                                              //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                              contentPadding: EdgeInsets.zero,
-                                              titlePadding: EdgeInsets.zero,
-                                              backgroundColor: Colors.transparent,
-
-                                              title: Text(""),
-                                              content: Container(
-                                                width: MediaQuery.of(context).size.width*0.75,
-                                                child: RGBTimerPage(number: "1"),
-                                              ),
-                                              actions: [],
-                                            );
-                                            showDialog(context: context, builder: (BuildContext context) {
-                                              return alert;
-                                            }
+                                            showDialog(
+                                              barrierColor: Colors.black26,
+                                              context: context,
+                                              builder: (context) {
+                                                return RGBTimerPage(number: "1",);
+                                              },
                                             );
 
                                           }
@@ -509,7 +563,9 @@ class _EditTimerPageState extends State<EditTimerPage> {
                           Expanded(
                           flex:6,
                             child: Container(
-                              child: Center(child: Text("TIMER")),
+                              child: Center(child: Text("TIMER",style: TextStyle(
+                                decoration: TextDecoration.underline,fontSize: 14.0
+                              ),)),
                           ),
                         ),
                           Expanded(
@@ -524,38 +580,33 @@ class _EditTimerPageState extends State<EditTimerPage> {
                  // Spacer(),
 
                   Expanded(
-                    flex:1,
-                    child: Container(
-                      color: Colors.white,
-                      child:Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
+                    flex:0,
+                    child:Padding(
+                      padding:EdgeInsets.fromLTRB(10, 5, 10, 8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
                           Expanded(
-                          flex:1,
-                          child:Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                flex:5,
-                                child:Center(child: Text("FROM")),
-                              ),
-                              Expanded(
-                                flex:5,
-                                child: Center(child: Text("TO")),
-                              ),
-                            ],
-                          )
-                          ),],
+                            flex:5,
+                            child: Center(
+                                child: Text("FROM")),
+                          ),
+                          Expanded(
+                            flex:5,
+                            child: Center(child: Text("TO")),
+                          ),
+                        ],
                       ),
+
                     ),
                   ),
 
                   Expanded(
-                    flex:1,
+                    flex:0,
                     child: Container(
                       color: Colors.white,
-                      child:Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      child:Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                               flex:1,
@@ -571,14 +622,33 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                   Expanded(
                                     flex:1,
                                     child: NumberPicker(
+                                      itemCount: 3,
                                       value: _currentvalue1,
                                       minValue: 00,
                                       maxValue: 23,
                                       zeroPad: true,
+                                      step: 1,
+                                      infiniteLoop: true,
+                                      itemHeight: 22,
+                                      itemWidth: 100,
+                                      axis: Axis.vertical,
+                                      haptics: false,
+
+                                      textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                      decoration: BoxDecoration(
+                                        //borderRadius: BorderRadius.circular(16),
+                                        //border: Border.all(color: Colors.black26),
+                                        border: Border(
+                                            top:BorderSide(color: Colors.grey,width: 1),
+                                            bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                        ),
+
+                                      ),
                                       onChanged: (value) =>setState(() => _currentvalue1 = value),
                                       selectedTextStyle: TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromRGBO( 66,130, 208,1),
+                                        fontSize: 13,fontWeight: FontWeight.w500,
                                         fontStyle: FontStyle.normal,
                                       ),
                                     ),
@@ -588,17 +658,32 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       child:Center(child: Text(":"))
                                   ),
                                   Expanded(
-                                    flex:2,
+                                    flex:1,
                                     child: NumberPicker(
                                       value: _currentvalue2,
+                                      itemCount: 3,
                                       minValue: 00,
                                       maxValue: 59,
                                       zeroPad: true,
+                                      step: 1,
+                                      infiniteLoop: true,
+                                      itemHeight: 22,
+                                      itemWidth: 100,
+                                      axis: Axis.vertical,
+                                      haptics: false,
+                                      textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                      decoration: BoxDecoration(
+                                        //borderRadius: BorderRadius.circular(16),
+                                        //border: Border.all(color: Colors.black26),
+                                        border: Border(
+                                            top:BorderSide(color: Colors.grey,width: 1),
+                                            bottom: BorderSide(color: Colors.grey,width: 1)
+                                        ),
+                                      ),
                                       onChanged: (value) => setState(() => _currentvalue2 = value),
                                       selectedTextStyle:TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                        //fontSize: 5.0,
+                                        color: Color.fromRGBO( 66,130, 208,1),
+                                        fontSize: 13,fontWeight: FontWeight.w500,
                                         fontStyle: FontStyle.normal,
                                       ),
 
@@ -613,14 +698,32 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     flex:1,
                                     child: NumberPicker(
                                       value: _currentvalue3,
+                                      itemCount: 3,
                                       minValue: 00,
                                       maxValue: 24,
                                       zeroPad: true,
+                                      step: 1,
+                                      infiniteLoop: true,
+                                      itemHeight: 22,
+                                      itemWidth: 100,
+                                      axis: Axis.vertical,
+                                      haptics: false,
+                                      textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                      decoration: BoxDecoration(
+                                        //borderRadius: BorderRadius.circular(16),
+                                        //border: Border.all(color: Colors.black26),
+                                        border: Border(
+                                            top:BorderSide(color: Colors.grey,width: 1),
+                                            bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                        ),
+
+                                      ),
+
                                       onChanged: (value) => setState(() => _currentvalue3 = value),
                                       selectedTextStyle:TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                        //fontSize: 5.0,
+                                        color: Color.fromRGBO( 66,130, 208,1),
+                                        fontSize: 13,fontWeight: FontWeight.w500,
                                         fontStyle: FontStyle.normal,
                                       ),
 
@@ -631,18 +734,34 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                       child:Center(child: Text(":"))
                                   ),
                                   Expanded(
-                                    flex:2,
+                                    flex:1,
                                     child: NumberPicker(
                                       value: _currentvalue4,
                                       minValue: 00,
                                       maxValue: 59,
                                       zeroPad: true,
-                                      infiniteLoop: false,
+                                      itemCount: 3,
+                                      step: 1,
+                                      infiniteLoop: true,
                                       haptics: false,
+                                      axis: Axis.vertical,
+                                      itemWidth: 100,
+                                      itemHeight: 22,
+                                      textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                      decoration: BoxDecoration(
+                                        //borderRadius: BorderRadius.circular(16),
+                                        //border: Border.all(color: Colors.black26),
+                                        border: Border(
+                                            top:BorderSide(color: Colors.grey,width: 1),
+                                            bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                        ),
+
+                                      ),
+
                                       selectedTextStyle:TextStyle(
-                                        color: Colors.blue,
-                                        fontWeight: FontWeight.bold,
-                                        //fontSize: 5.0,
+                                        color: Color.fromRGBO( 66,130, 208,1),
+                                        fontSize: 13,fontWeight: FontWeight.w500,
                                         fontStyle: FontStyle.normal,
                                       ),
                                       onChanged: (value) => setState(() => _currentvalue4 = value),
@@ -660,6 +779,8 @@ class _EditTimerPageState extends State<EditTimerPage> {
                       ),
                     ),
                   ),
+
+                 // Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/60),),
                   Expanded(
                       flex:1,
                       child:Container(
@@ -677,7 +798,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                     Padding(padding: const EdgeInsets.fromLTRB(10,0,0,0),),
                                     Expanded(
                                       flex:1,
-                                      child: Transform.scale(scale: 1.5,
+                                      child: Transform.scale(scale: 1.30,
                                         child: IconButton(
                                           //iconSize: MediaQuery.of(context).size.width/10,
                                           splashRadius: 5.0,
@@ -964,7 +1085,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
                                       Expanded(
                                         flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.30,
                                           child:
                                           IconButton(
                                             // iconSize: MediaQuery.of(context).size.width/10,
@@ -1053,7 +1174,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                                 color: colorBoth2))),
                                           ),
                                           Expanded(
-                                            flex:2,
+                                            flex:1,
                                             child: NumberPicker(
                                               itemCount: 3,
                                               value: _currentvalue5,
@@ -1061,18 +1182,37 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                               maxValue: 60,
                                               step: 2,
                                               zeroPad: false,
+                                              infiniteLoop: true,
+                                              itemHeight: 25,
+                                              itemWidth: 100,
                                               textStyle: TextStyle(
-                                                color: colorBoth2
+                                                color: colorBoth2,fontSize: 13,fontWeight: FontWeight.w500,
                                               ),
+
                                               selectedTextStyle:TextStyle(
                                                 color: colorNumberCyc,
-                                                fontWeight: FontWeight.bold,
-                                                //fontSize: 5.0,
+                                                fontSize: 13,fontWeight: FontWeight.w500,
                                                 fontStyle: FontStyle.normal,
+                                              ),
+
+                                              decoration: BoxDecoration(
+                                                //borderRadius: BorderRadius.circular(16),
+                                                //border: Border.all(color: Colors.black26),
+                                                border: Border(
+                                                    top:BorderSide(color: Colors.grey,width: 1),
+                                                    bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                                ),
+
                                               ),
                                               onChanged: (value) => setState(() => _currentvalue5 = value),
 
                                             ),
+                                          ),
+
+                                          Expanded(
+                                            flex:1,
+                                            child: Container(),
                                           ),
                                           Expanded(
                                             flex:2,
@@ -1080,7 +1220,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                                 color: colorBoth2))),
                                           ),
                                           Expanded(
-                                            flex:2,
+                                            flex:1,
                                             child: NumberPicker(
                                               value: _currentvalue6,
                                               itemCount: 3,
@@ -1088,20 +1228,40 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                               maxValue: 60,
                                               step: 2,
                                               zeroPad: false,
+                                              infiniteLoop: true,
+                                              itemHeight: 25,
+                                              itemWidth: 100,
 
                                               textStyle: TextStyle(
-                                                  color: colorBoth2
+                                                  color: colorBoth2,
+                                                fontSize: 13,fontWeight: FontWeight.w500,
                                               ),
                                               selectedTextStyle:TextStyle(
                                                 color: colorNumberCyc,
-                                                fontWeight: FontWeight.bold,
-                                                //fontSize: 5.0,
+                                                fontSize: 13,fontWeight: FontWeight.w500,
                                                 fontStyle: FontStyle.normal,
+                                              ),
+
+                                              decoration: BoxDecoration(
+                                                //borderRadius: BorderRadius.circular(16),
+                                                //border: Border.all(color: Colors.black26),
+                                                border: Border(
+                                                    top:BorderSide(color: Colors.grey,width: 1),
+                                                    bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                                ),
+
                                               ),
                                               onChanged: (value) => setState(() => _currentvalue6 = value),
 
                                             ),
                                           ),
+
+
+                                          Expanded(
+                                            flex:2,
+                                            child: Container(),
+                                          )
                                         ]
                                     ),
                                   )
@@ -1128,7 +1288,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
                                       Expanded(
                                         flex:1,
-                                        child: Transform.scale(scale:1.5,
+                                        child: Transform.scale(scale:1.30,
                                           child:
                                           IconButton(
                                             // iconSize: MediaQuery.of(context).size.width/10,
@@ -1331,7 +1491,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children:[
                                 MaterialButton(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(5.0),
                                   textColor: Colors.white,
                                   // splashColor: Colors.greenAccent,
                                   elevation: 8.0,
@@ -1354,7 +1514,7 @@ class _EditTimerPageState extends State<EditTimerPage> {
                                   },
                                 ),
                                 MaterialButton(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(5.0),
                                   textColor: Colors.white,
                                   // splashColor: Colors.greenAccent,
                                   elevation: 8.0,
@@ -1549,19 +1709,19 @@ class _EditTimerPageState extends State<EditTimerPage> {
 
                               ]
                             )
-                          )
+                          ),
+                          Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/30),)
                         ]
                       )
                     )
                   )
                 ]
             )
+      );
 
-          ),
-
-        )
-      )
-    );
+    //     )
+    //   )
+    // );
   }
 
   fluttertoast(String message){

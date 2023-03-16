@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
@@ -29,13 +30,21 @@ class _SlideIViewState extends State<SwingIView> {
   bool closeChange = false;
   bool stopChange = false;
 
-  String devicename = "name";
+  String devicename = "";
   String hnameSwGl,hnumSwGl,rnumSwGl,dnumSwGl,rnameSwGl,groupIdSwGl;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
+
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.subscribe(channel: 'MasterNotification', onNotification: (options) {
@@ -167,22 +176,20 @@ class _SlideIViewState extends State<SwingIView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
-                  Center(child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child:
-                    Text(
-                      devicename,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal
+                  Expanded(
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal
+                        ),
                       ),
-
-                      maxLines: 2,
-
-                    ),)
+                    ),
                   ),
-
                 ],
               ),
               Padding(

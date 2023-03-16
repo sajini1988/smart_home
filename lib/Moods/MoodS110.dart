@@ -171,17 +171,32 @@ class _MoodS110PageState extends State<MoodS110Page> {
   Widget build(BuildContext context) {
     // TODO: implement build
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Align(
-          alignment: Alignment.center,
-          child:Container(
-            color: Colors.transparent,
-            width: MediaQuery.of(context).size.width/1.4,
-            child: ListView(
-              shrinkWrap: true,
+     return Dialog(
+
+       elevation: 0,
+       clipBehavior:Clip.antiAliasWithSaveLayer,
+       insetPadding: EdgeInsets.all(70.0),
+       backgroundColor: Color(0xffffffff),
+       shape: RoundedRectangleBorder(
+         //borderRadius: BorderRadius.circular(15.0),
+         borderRadius: BorderRadius.only(
+           bottomRight: Radius.circular(25.0),
+           bottomLeft: Radius.circular(25.0),
+           topLeft: Radius.circular(25.0),
+           topRight: Radius.circular(25.0),
+         ),
+
+       ),
+    //   debugShowCheckedModeBanner: false,
+    //   home: Scaffold(
+    //     backgroundColor: Colors.transparent,
+    //     body: Align(
+    //       alignment: Alignment.center,
+    //       child:Container(
+    //         color: Colors.transparent,
+    //         width: MediaQuery.of(context).size.width/1.4,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -493,10 +508,7 @@ class _MoodS110PageState extends State<MoodS110Page> {
               ],
             ),
 
-          ),
-        ),
-      ),
-    );
+     );
 
   }
   savefan()async{

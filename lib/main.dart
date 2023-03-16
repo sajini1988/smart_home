@@ -134,6 +134,10 @@ class MyHomePageState extends State<MyHomePage> {
   bool lock = false;
   bool somphy = false;
   bool rgb = false;
+  bool dmr = false;
+  bool dmrG = false;
+  bool dmrM = false;
+  bool fm = false;
 
 
   String c="null";
@@ -296,6 +300,13 @@ class MyHomePageState extends State<MyHomePage> {
       FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch21");
       FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch10");
       FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch80");
+
+      //socket
+
+      FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch141");
+      FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch16");
+      FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch12");
+      FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch11");
 
       //gateway
 
@@ -1543,6 +1554,108 @@ class MyHomePageState extends State<MyHomePage> {
 
 
         }
+
+        List res20 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "FMD1", username);
+        for(int i=0;i<res20.length;i++) {
+          String deviceData = res20[i]['dd'];
+          String sdgDvnum = res20[i]['dno'];
+          String sdgYes = res20[i]['ea'];
+
+          if (sdgYes==("Yes")) {
+            print("SLG1 $res20");
+
+            List<String> dvnum = sdgDvnum.split(',');
+            List<String> data = deviceData.split(',');
+
+            String dvnumSdg = dvnum[0];
+            String dataSdg= data[0];
+
+            String spnkData = dvnumSdg + ',' + dataSdg;
+
+            Timer(Duration(seconds: f
+            ), () {
+              curtain(spnkData);
+              f += 0;
+            });
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+
+        List res21 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S141", username);
+        for(int i=0;i<res21.length;i++){
+
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S141 $res21");
+
+          String deviceData = res21[i]['dd'];
+          String _s141dvnum = res21[i]['dno'];
+
+          String _s141Yes = res21[i]['ea'];
+
+          if(_s141Yes.contains("Yes")){
+            switchboard(_s141dvnum, deviceData);
+            timerSwitch("s141");
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res22 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S160", username);
+        for(int i=0;i<res22.length;i++){
+
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S160 $res22");
+
+          String deviceData = res22[i]['dd'];
+          String _s160dvnum = res22[i]['dno'];
+          String _s160Yes = res22[i]['ea'];
+
+          if(_s160Yes.contains("Yes")){
+            switchboard(_s160dvnum, deviceData);
+            timerSwitch("s160");
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res23 = await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S120", username);
+        for(int i=0;i<res23.length;i++){
+
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S160 $res23");
+
+          String deviceData = res23[i]['dd'];
+          String _s120dvnum = res23[i]['dno'];
+          String _s120Yes = res23[i]['ea'];
+
+          if(_s120Yes.contains("Yes")){
+            switchboard(_s120dvnum, deviceData);
+            timerSwitch("s120");
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
+        List res24= await mdb.getFromUserDataHNumDNameWithDevice(hname,hnum, rnum, number, "S110", username);
+        for(int i=0;i<res24.length;i++){
+
+          b1=b2=b3=b4=b5=b6=b7=b8=b9=b10=b11=b12=fan1="No";
+          print("S110 $res24");
+
+          String deviceData = res24[i]['dd'];
+          String _s110dvnum = res24[i]['dno'];
+          String _s110Yes = res24[i]['ea'];
+
+          if(_s110Yes.contains("Yes")){
+            switchboard(_s110dvnum, deviceData);
+            timerSwitch("s110");
+
+            await Future.delayed(const Duration(milliseconds: 500));
+          }
+        }
+
         Navigator.of(context,rootNavigator: true).pop();
       }
 
@@ -2051,307 +2164,168 @@ class MyHomePageState extends State<MyHomePage> {
     else if(userAdmin == "U" || userAdmin == "SA" || userAdmin == "A"){
 
 
-      if(ddevmodel == ("SDG1") || ddevmodel == ("GSR1") || ddevmodel == ("ACR1") || ddevmodel == ("GSK1") || ddevmodel == ("PLC1")){
+      if(ddevmodel == ("SDG1") || ddevmodel == ("GSR1") || ddevmodel == ("ACR1") || ddevmodel == ("GSK1") || ddevmodel == ("PLC1") || ddevmodel == ("FMD1")){
 
-        AlertDialog alert = AlertDialog(
-
-          elevation:0,
-          contentPadding: EdgeInsets.zero,
-          titlePadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/2.75,
-            child:MoodOnPage(number: "0"),
-          ),
-          backgroundColor: Colors.white,
-          actions: [],
-        );
         showDialog(
-          // barrierColor: Colors.white.withOpacity(0),
-            barrierDismissible: false,
-            context: context, builder: (BuildContext context) {
-
-          return alert;
-        }
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodOnPage(
+                number: "0"
+            );
+          },
         );
-
       }
 
       else if (ddevmodel==("RGB1")) {
-        AlertDialog alert = AlertDialog(
 
-          elevation:0,
-          contentPadding: EdgeInsets.zero,
-          titlePadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/1.75,
-            child:MoodRGBPage(number: "0"),
-          ),
-          backgroundColor: Colors.white,
-          actions: [],
-        );
         showDialog(
-          // barrierColor: Colors.white.withOpacity(0),
-              barrierDismissible: false,
-              context: context, builder: (BuildContext context) {
-              return alert;
-          }
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodRGBPage(
+                number: "0"
+            );
+          },
         );
+
       }
       else if (ddevmodel==("S010") || ddevmodel == ("SLT1")) {
-        AlertDialog alert = AlertDialog(
 
-          elevation:0,
-          contentPadding: EdgeInsets.zero,
-          titlePadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/2.75,
-            child:MoodS010Page(number: "0"),
-          ),
-
-          backgroundColor: Colors.white,
-          actions: [],
-        );
         showDialog(
-          // barrierColor: Colors.white.withOpacity(0),
-            barrierDismissible: false,
-            context: context, builder: (BuildContext context) {
-
-          return alert;
-        }
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS010Page(
+                number: "0"
+            );
+          },
         );
+
+
       }
       else if(ddevmodel==("S051")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          contentPadding: EdgeInsets.zero,
-          titlePadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/1.75,
-            child:S051Page(number: "0"),
-          ),
-          backgroundColor: Colors.white,
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return S051Page(
+                number: "0"
+            );
+          },
         );
 
       }
       else if(ddevmodel==("S080")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          contentPadding: EdgeInsets.zero,
-          titlePadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/1.75,
-            child:MoodS080Page(number: "0"),
-          ),
-
-          actions: [],
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS080Page(
+                number: "0"
+            );
+          },
         );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
-        );
-
       }
       else if(ddevmodel==("S020")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/3,
-            child:MoodS020Page(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS020Page(
+                number: "0"
+            );
+          },
         );
 
       }
 
       else if(ddevmodel==("S021")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/2.50,
-            child:MoodS021Page(number: "0"),
-          ),
-          actions: [],
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS021Page(
+                number: "0"
+            );
+          },
         );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
-        );
+
 
       }
 
       else if(ddevmodel==("S030")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS030Page(
+                number: "0"
+            );
+          },
+        );
 
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/2.75,
-            child:MoodS030Page(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
-        );
 
       }
       else if(ddevmodel==("S110")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/2.75,
-            child:MoodS110Page(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS110Page(
+                number: "0"
+            );
+          },
         );
 
       }
       else if(ddevmodel==("S120")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS120Page(
+                number: "0"
+            );
+          },
+        );
 
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*2.75,
-            child:MoodS120Page(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
-        );
 
       }
 
       else if(ddevmodel==("S141")){
-        AlertDialog alert = AlertDialog(
 
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*1.75,
-            child:S141Page(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return S141Page(
+                number: "0"
+            );
+          },
         );
 
       }
 
       else if(ddevmodel==("S160")){
-        AlertDialog alert = AlertDialog(
-
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*1.75,
-            child:MoodS160Page(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodS160Page(
+                number: "0"
+            );
+          },
         );
 
       }
@@ -2385,96 +2359,49 @@ class MyHomePageState extends State<MyHomePage> {
       // }
       else if(ddevmodel==("CLS1")){
 
-        AlertDialog alert = AlertDialog(
-
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/3,
-            child:MoodCurtain(number: "0"),
-          ),
-
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodCurtain(
+                number: "0"
+            );
+          },
         );
 
       }
       else if(ddevmodel==("CRS1")){
 
-        AlertDialog alert = AlertDialog(
-
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/3,
-            child:MoodCurtain(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodCurtain(
+                number: "0"
+            );
+          },
         );
       }
       else if(ddevmodel==("CLNR")) {
-        AlertDialog alert = AlertDialog(
-
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/1.75,
-            child:MoodCurtain(number: "0"),
-          ),
-
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context) {
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodCurtain(number: "0"
+            );
+          },
         );
       }
       else if(ddevmodel =="PSC1" || ddevmodel=="SOSH" || ddevmodel == "SWG1" || ddevmodel == 'SLG1'){
 
-        AlertDialog alert = AlertDialog(
-
-          elevation: 0,
-          titlePadding: EdgeInsets.zero,
-          contentPadding: EdgeInsets.zero,
-          clipBehavior:Clip.antiAliasWithSaveLayer,
-          backgroundColor: Colors.white,
-          insetPadding: EdgeInsets.all(50.0),
-          shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-          content: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height/3,
-            child:MoodProjSom(number: "0"),
-          ),
-          actions: [],
-        );
-        showDialog(context: context, builder: (BuildContext context){
-          return alert;
-        }
+        showDialog(
+          barrierColor: Colors.black26,
+          context: context,
+          builder: (context) {
+            return MoodProjSom(
+                number: "0"
+            );
+          },
         );
 
       }
@@ -2911,6 +2838,55 @@ class MyHomePageState extends State<MyHomePage> {
       );
 
     }
+
+    else if(fm){
+
+      print("enter fm layout");
+      roomName=roomnametest;
+      roomNo=roommnumtest.toString();
+      houseNum=lb;
+      houseName=name;
+      groupId="000";
+      deviceType="0000";
+      deviceNum="0000";
+      gType="1";
+      dType="1";
+      device="FM1";
+      first=first;
+
+      container1= Container(
+        width:MediaQuery.of(context).size.width/1.4,
+        margin: margin,
+        color: Colors.white,
+        child: new MainlayoutPage(),
+        //child: MainlayoutPage(s:"swb1",Roomname: roomnametest,Roomno: roommnumtest.toString(),Housenum:lb, Housename: name, GroupID:"000", DeviceType:"0000",deviceNum:"0000",GType:"1",DType:"1")
+      );
+
+    }
+    else if(dmrG){
+
+      print("enter dmrG layout");
+      roomName=roomnametest;
+      roomNo=roommnumtest.toString();
+      houseNum=lb;
+      houseName=name;
+      groupId="000";
+      deviceType="0000";
+      deviceNum="0000";
+      gType="1";
+      dType="1";
+      device="dMRG";
+      first=first;
+
+      container1= Container(
+        width:MediaQuery.of(context).size.width/1.4,
+        margin: margin,
+        color: Colors.white,
+        child: new MainlayoutPage(),
+        //child: MainlayoutPage(s:"swb1",Roomname: roomnametest,Roomno: roommnumtest.toString(),Housenum:lb, Housename: name, GroupID:"000", DeviceType:"0000",deviceNum:"0000",GType:"1",DType:"1")
+      );
+
+    }
     else {
 
       print("empty");
@@ -3013,7 +2989,7 @@ class MyHomePageState extends State<MyHomePage> {
   function1(String message) async {
 
 
-    fluttertoast(message);
+  //  fluttertoast(message);
     checkConnectivity2();
     print("switch board table");
     dbHelper = DBHelper();
@@ -3366,6 +3342,10 @@ class MyHomePageState extends State<MyHomePage> {
       somphy=false;
       lock=false;
       rgb=false;
+      fm=false;
+      dmr=false;
+      dmrM=false;
+      dmrG=false;
     });
   }
 
@@ -3440,6 +3420,10 @@ class MyHomePageState extends State<MyHomePage> {
               lock=false;
               pscL=false;
               rgb=false;
+              dmr=false;
+              dmrG=false;
+              dmrM=false;
+              fm=false;
 
             });
           }
@@ -3464,6 +3448,10 @@ class MyHomePageState extends State<MyHomePage> {
               lock=false;
               pscL=false;
               rgb=false;
+              fm=false;
+              dmr=false;
+              dmrG=false;
+              dmrM=false;
             });
           }
         }
@@ -3489,6 +3477,10 @@ class MyHomePageState extends State<MyHomePage> {
             lock=false;
             pscL=false;
             rgb=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
+            fm=false;
           });
         }
         else if(c[1] == "d"){
@@ -3511,6 +3503,10 @@ class MyHomePageState extends State<MyHomePage> {
             lock=false;
             pscL=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrM=false;
+            dmrG=false;
           });
         }
         else if(c[1] == "l"){
@@ -3533,6 +3529,10 @@ class MyHomePageState extends State<MyHomePage> {
             lock=false;
             pscL=false;
             rgb=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
+            fm=false;
           });
         }
         else{
@@ -3555,6 +3555,10 @@ class MyHomePageState extends State<MyHomePage> {
             lock=false;
             pscL=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
 
           });
         }
@@ -3588,6 +3592,10 @@ class MyHomePageState extends State<MyHomePage> {
             lock=true;
             pscL=false;
             rgb=false;
+            dmr=false;
+            dmrM=false;
+            dmrG=false;
+            fm=false;
           });
         }
         else{
@@ -3609,6 +3617,11 @@ class MyHomePageState extends State<MyHomePage> {
             lock=false;
             pscL=false;
             rgb=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
+            fm=false;
+
           });
         }
 
@@ -3639,6 +3652,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
           });
         }
         else if(c[1] == 'l'){
@@ -3660,6 +3677,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrM=false;
+            dmrG=false;
           });
         }
 
@@ -3687,6 +3708,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
           });
 
         }
@@ -3710,6 +3735,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
 
           });
 
@@ -3744,6 +3773,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
+            fm=false;
 
           });
 
@@ -3769,6 +3802,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
+            fm=false;
           });
 
         }
@@ -3793,6 +3830,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
           });
 
         }
@@ -3821,6 +3862,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
           });
         }
       }
@@ -3851,6 +3896,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=false;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
           });
 
         }
@@ -3875,6 +3924,11 @@ class MyHomePageState extends State<MyHomePage> {
           gey=false;
           lock=false;
           rgb=false;
+          dmr=false;
+          dmrG=false;
+          dmrM=false;
+          fm=true;
+
 
         });
       }
@@ -3897,10 +3951,192 @@ class MyHomePageState extends State<MyHomePage> {
           gey=false;
           lock=false;
           rgb=false;
+          dmr=false;
+          dmrG=false;
+          dmrM=false;
+          fm=true;
         });
       }
     }
   }
+
+
+  Future<void>dimmerClassDivideHNum(String lb, String name, int roomNum, String roomname)async{
+
+    print("enter dimmerClass");
+    List groupArray=[];
+    List inDevArray=[];
+    List groupIDList=[];
+    List data = await DBProvider.db.DataFromMTRNumAndHNum(roomNum, lb, name);
+    int cou = data.length;
+
+    if(cou !=0){
+
+      for(int i=0;i<cou;i++){
+        String feature = data[i]['e'];
+        String deviceNo = data[i]['d'].toString();
+        print(feature);
+        if(feature == 'DMR1'){
+          List resultRgb =  await DBProvider.db.DataFromMTRNumAndHNumGroupId(roomNum, lb, name, feature,deviceNo);
+          groupIDList.add(resultRgb[0]['ea']);
+        }
+      }
+    }
+
+
+    groupIDList = groupIDList.toSet().toList();
+    int gid = groupIDList.length;
+
+    print("Group Id is $groupIDList");
+
+    for(int i=0;i<gid;i++){
+
+      if(groupIDList[i] == "000"){
+        inDevArray.add(groupIDList[i]);
+
+      }
+      if(groupIDList[i]!="000"){
+        groupArray.add(groupIDList[i]);
+      }
+    }
+
+    if(inDevArray.length == 0){
+
+      if(groupArray.length == 0){
+
+      }
+      else{
+        if(groupArray.length == 1){
+
+          setState(() {
+            pir=false;
+            swb=false;
+            cur=false;
+            gsk=false;
+            sdg=false;
+            psc=false;
+            pscL=false;
+            slide=false;
+            swng=false;
+            somphy=false;
+            alxa=false;
+            mir=false;
+            bell=false;
+            ac=false;
+            gey=false;
+            lock=false;
+            rgb=false;
+            dmr=false;
+            dmrG=true;
+            dmrM=false;
+            fm=false;
+          });
+
+        }
+        else{
+
+          print("master layout and individual class");
+
+          setState(() {
+            pir=false;
+            swb=false;
+            cur=false;
+            gsk=false;
+            sdg=false;
+            psc=false;
+            pscL=false;
+            slide=false;
+            swng=false;
+            somphy=false;
+            alxa=false;
+            mir=false;
+            bell=false;
+            ac=false;
+            gey=false;
+            lock=false;
+            rgb=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=true;
+            fm=false;
+          });
+
+        }
+
+      }
+
+    }
+    else{
+
+      if(groupArray.length == 0){
+
+        if(inDevArray.length == 1){
+
+          print("enter dmr layout");
+
+          setState(() {
+            pir=false;
+            swb=false;
+            cur=false;
+            gsk=false;
+            sdg=false;
+            psc=false;
+            pscL=false;
+            slide=false;
+            swng=false;
+            somphy=false;
+            alxa=false;
+            mir=false;
+            bell=false;
+            ac=false;
+            gey=false;
+            lock=false;
+            rgb=false;
+            dmr=true;
+            dmrG=false;
+            dmrM=false;
+            fm=false;
+          });
+
+        }
+        else{
+
+          print("enter dmr layout");
+
+          setState(() {
+            pir=false;
+            swb=false;
+            cur=false;
+            gsk=false;
+            sdg=false;
+            psc=false;
+            pscL=false;
+            slide=false;
+            swng=false;
+            somphy=false;
+            alxa=false;
+            mir=false;
+            bell=false;
+            ac=false;
+            gey=false;
+            lock=false;
+            rgb=false;
+            dmr=true;
+            dmrG=false;
+            dmrM=false;
+            fm=false;
+          });
+
+
+        }
+      }
+      else{
+
+
+      }
+    }
+  }
+
 
 
   Future<void>rgbClassDivideHNum(String lb, String name, int roomNum, String roomname)async{
@@ -3988,12 +4224,16 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=true;
+            fm=false;
+            dmr=false;
+            dmrG=false;
+            dmrM=false;
           });
 
         }
         else{
 
-          print("enter pirlayout");
+          print("enter rgbLayout");
 
           setState(() {
             pir=false;
@@ -4013,6 +4253,10 @@ class MyHomePageState extends State<MyHomePage> {
             gey=false;
             lock=false;
             rgb=true;
+            fm=false;
+            dmrG=false;
+            dmrM=false;
+            dmr=false;
           });
 
 
@@ -4116,6 +4360,11 @@ class MyHomePageState extends State<MyHomePage> {
             ac=false;
             gey=false;
             lock=false;
+            rgb=false;
+            fm=false;
+            dmrG=false;
+            dmrM=false;
+            dmr=false;
           });
 
         }
@@ -4140,6 +4389,11 @@ class MyHomePageState extends State<MyHomePage> {
             ac=false;
             gey=false;
             lock=false;
+            rgb=false;
+            fm=false;
+            dmrG=false;
+            dmrM=false;
+            dmr=false;
           });
 
 
@@ -4236,6 +4490,11 @@ class MyHomePageState extends State<MyHomePage> {
             ac=false;
             gey=false;
             lock=false;
+            rgb=false;
+            fm=false;
+            dmrG=false;
+            dmrM=false;
+            dmr=false;
 
           });
 
@@ -4261,6 +4520,11 @@ class MyHomePageState extends State<MyHomePage> {
             ac=false;
             gey=false;
             lock=false;
+            rgb=false;
+            fm=false;
+            dmrG=false;
+            dmrM=false;
+            dmr=false;
 
           });
 
@@ -4379,6 +4643,11 @@ class MyHomePageState extends State<MyHomePage> {
             ac=false;
             gey=false;
             lock=false;
+            rgb=false;
+            fm=false;
+            dmrG=false;
+            dmrM=false;
+            dmr=false;
 
           });
         }
@@ -4401,6 +4670,11 @@ class MyHomePageState extends State<MyHomePage> {
             ac=false;
             gey=false;
             lock=false;
+            rgb=false;
+            fm=false;
+            dmrG=false;
+            dmrM=false;
+            dmr=false;
           });
         }
       }

@@ -71,16 +71,27 @@ class _TimerS010PageState extends State<TimerS010Page> {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Align(
-          alignment: Alignment.center,
-          child:Container(
-            color: Colors.transparent,
-            child: ListView(
-              shrinkWrap: true,
+    return Dialog(
+
+        elevation: 0,
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(70.0),
+        backgroundColor: Color(0xffffffff),
+        shape: RoundedRectangleBorder(
+          //borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(25.0),
+            bottomLeft: Radius.circular(25.0),
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+
+
+          ),
+
+        ),
+
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children:<Widget> [
 
                 Row(
@@ -220,7 +231,7 @@ class _TimerS010PageState extends State<TimerS010Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -244,7 +255,7 @@ class _TimerS010PageState extends State<TimerS010Page> {
                                   decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image: AssetImage('images/Moods/save_button.png'),
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.fill),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(10.0),
@@ -275,11 +286,8 @@ class _TimerS010PageState extends State<TimerS010Page> {
                     ]
                 ),
               ],
-            ),
-          ),
-        ),
-      ),
-    );
+            ));
+
   }
 
   //return type String with function

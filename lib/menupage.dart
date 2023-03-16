@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:smart_home/HouseSettings/AboutUs.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/LDatabaseModelClass.dart';
 import 'package:smart_home/Singleton.dart';
@@ -511,7 +512,7 @@ class _SideDrawerState extends State<SideDrawer> {
           }
           else if (user==("About Us")) {
             if(userAdmin == "SA" || userAdmin == "A"){
-
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUs()));
             }
             else{
               fluttertoast("Access Denied");

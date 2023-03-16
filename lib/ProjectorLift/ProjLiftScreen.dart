@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ProjectorLift/ProjLiftLayout.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -19,7 +20,7 @@ class _PLCPageState extends State<PLCPage> {
   var s=Singleton();
 
   String hnamepsc1,hnumpsc1,rnumpsc1,dnumpsc1,rnamepsc1,groupIdpsc1,dtypepsc1;
-  String devicename="name";
+  String devicename="";
   String status = "OFF";
   Color colorBoth;
   Color colorOn=Colors.green,colorOff = Colors.red;
@@ -31,6 +32,12 @@ class _PLCPageState extends State<PLCPage> {
     super.initState();
 
     colorBoth=colorOff;
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
@@ -135,17 +142,17 @@ class _PLCPageState extends State<PLCPage> {
                           ),
                         ),
 
-                        Center(
-                          child: FittedBox(
-                            fit: BoxFit.fitWidth,
-                            child: Text(
-                              devicename,
+                        Expanded(
+                          child: Center(
+                            child: Text(devicename, maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textDirection: TextDirection.rtl,
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w600,
                                   fontStyle: FontStyle.normal
                               ),
-                              maxLines: 2,
                             ),
                           ),
                         ),

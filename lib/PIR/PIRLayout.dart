@@ -10,6 +10,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
+import 'package:smart_home/Globaltimerdata.dart';
+
 
 String hnamep,hnump,rnump,dnump,rnamep,groupIdp,dtypep,firstp;
 
@@ -19,6 +21,7 @@ class Pirlayout extends StatefulWidget {
 }
 class _PirlayoutState extends State<Pirlayout>{
   GlobalService _globalService = GlobalService();
+  Globaltimer _globaltimer = Globaltimer();
   double currentindex=0;
   int listcount=1;
   int pir;
@@ -177,6 +180,9 @@ class _PirlayoutState extends State<Pirlayout>{
                               child: InkWell(
                                 onTap: (){
                                   print("timersettings");
+                                  _globaltimer.ondataarrayset=[];
+                                  _globaltimer.offdataarrayset=[];
+                                  _globaltimer.switchnumberset=[];
                                   showAlertDialog(context);
                                 },
                                 child: ClipRRect(
@@ -204,32 +210,41 @@ class _PirlayoutState extends State<Pirlayout>{
 
   showAlertDialog(BuildContext context) async {
 
-    AlertDialog alert = AlertDialog(
 
-      // elevation:0,
-      contentPadding: EdgeInsets.zero,
-      titlePadding: EdgeInsets.zero,
-      clipBehavior:Clip.antiAliasWithSaveLayer,
-      insetPadding: EdgeInsets.all(25.0),
-      shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-      title: Text(""),
-      content: Container(
-
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child:Timerpage(),
-      ),
-      backgroundColor: Colors.white,
-      actions: [
-
-      ],
+    showDialog(
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) {
+        return Timerpage();
+      },
     );
 
-    showDialog(context: context, builder: (BuildContext context){
-      return alert;
-    }
-    );
+    // AlertDialog alert = AlertDialog(
+    //
+    //   // elevation:0,
+    //   contentPadding: EdgeInsets.zero,
+    //   titlePadding: EdgeInsets.zero,
+    //   clipBehavior:Clip.antiAliasWithSaveLayer,
+    //   insetPadding: EdgeInsets.all(25.0),
+    //   shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+    //
+    //   title: Text(""),
+    //   content: Container(
+    //
+    //     width: MediaQuery.of(context).size.width,
+    //     color: Colors.white,
+    //     child:Timerpage(),
+    //   ),
+    //   backgroundColor: Colors.white,
+    //   actions: [
+    //
+    //   ],
+    // );
+    //
+    // showDialog(context: context, builder: (BuildContext context){
+    //   return alert;
+    // }
+    // );
   }
 
 

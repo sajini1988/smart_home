@@ -86,7 +86,7 @@ class _TimerpageState extends State<Timerpage>{
 
   String hname,hnum,rnum,rname,dnum,devicemodel,devicemodelnum,devicename,deviceID,groupId;
 
-  int sun,mon,tue,wed,thur,frid,sat;
+  int sun=0,mon=0,tue=0,wed=0,thur=0,frid=0,sat=0;
   String repeat,repeatw;
 
   bool repVisible,cycVisible,dateVisible,repPatternVisible,setoperationvisible;
@@ -97,7 +97,7 @@ class _TimerpageState extends State<Timerpage>{
   String datec,Date;
   DateFormat dateFormat;
 
-  Color colorOn=Colors.black,colorOff= Color.fromRGBO(211, 211, 211, 0.9);
+  Color colorOn=Colors.black54,colorOff= Color.fromRGBO(211, 211, 211, 0.9);
   Color colorBoth1,colorBoth2,colorBoth3;
   Color colorNumberCyc,colorNumberDate;
 
@@ -212,7 +212,7 @@ class _TimerpageState extends State<Timerpage>{
     else if(devicemodel == 'GSK1'){
       setoperationvisible = false;
     }
-    else if(devicemodel == 'PSC1' || devicemodel == 'PLC1' || devicemodel == 'SWG1' || devicemodel == 'SLG1' || devicemodel == 'ACR1' || devicemodel == 'GSR1'){
+    else if(devicemodel == 'PSC1' || devicemodel == 'PLC1' || devicemodel == 'SWG1' || devicemodel == 'SLG1' || devicemodel == 'ACR1' || devicemodel == 'GSR1' || devicemodel == 'FMD1'){
       setoperationvisible = false;
     }
     else if(devicemodel == 'SDG1' || devicemodel == 'DLS1' || devicemodel == 'SOSH'){
@@ -243,6 +243,12 @@ class _TimerpageState extends State<Timerpage>{
       switchnumber.add("0");
     }
     else if(devicemodel == 'GSK1'){
+      sendonData("201", "01");
+      sendoffData("301", "01");
+      switchnumber.add("0");
+    }
+
+    else if(devicemodel == 'FMD1'){
       sendonData("201", "01");
       sendoffData("301", "01");
       switchnumber.add("0");
@@ -282,23 +288,40 @@ class _TimerpageState extends State<Timerpage>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-              child:Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height ,
-                  padding: EdgeInsets.all(0),
-                  color: Colors.white,
+    return Dialog(
+
+        // debugShowCheckedModeBanner: false,
+        // home: Scaffold(
+        //   body: Center(
+        //       child:Container(
+        //           width: MediaQuery.of(context).size.width,
+        //           padding: EdgeInsets.all(0),
+        //           color: Colors.white,
+
+
+        elevation: 0,
+
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(30.0),
+        backgroundColor: Color(0xffffffff),
+        shape: RoundedRectangleBorder(
+          //borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(25.0),
+            bottomLeft: Radius.circular(25.0),
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
+          ),
+        ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
 
+                      Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/50),),
                       Expanded(
                         flex:1,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             Expanded(
                               flex:2,
@@ -310,7 +333,7 @@ class _TimerpageState extends State<Timerpage>{
                                       Expanded(
                                         flex:1,
                                           child: Transform.scale(
-                                            scale: 1.5,
+                                            scale: 1.75,
                                             child: IconButton(
                                               icon: Image.asset("images/Timer/set_operation.png"),
                                               splashRadius: 0.1,
@@ -318,429 +341,234 @@ class _TimerpageState extends State<Timerpage>{
                                               onPressed: () {
 
                                                 if(devicemodel=="S051"){
-                                                AlertDialog alert = AlertDialog(
-                                                  elevation: 0,
-                                                  contentPadding: EdgeInsets.zero,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  title: Text(""),
-                                                  //content: S051TimerPage(),
-                                                  shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child:S051TimerPage(number: '0',),
-                                                  ),
-                                                  backgroundColor: Colors.transparent,
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
-                                              }
-                                              else if(devicemodel=="RGB1"){
-                                                  AlertDialog alert = AlertDialog(
-
-                                                    elevation: 0,
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    title: Text(""),
-                                                    shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child:RGBTimerPage(number: '0',),
-                                                    ),
-                                                    backgroundColor: Colors.transparent,
-                                                    actions: [],
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return S051TimerPage(
+                                                          number: "0"
+                                                      );
+                                                    },
                                                   );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
+
+                                                }
+                                              else if(devicemodel=="RGB1"){
+                                                  // AlertDialog alert = AlertDialog(
+                                                  //
+                                                  //   elevation: 0,
+                                                  //   contentPadding: EdgeInsets.zero,
+                                                  //   titlePadding: EdgeInsets.zero,
+                                                  //   title: Text(""),
+                                                  //   shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+                                                  //   content: Container(
+                                                  //     width: MediaQuery.of(context).size.width*0.75,
+                                                  //     child:RGBTimerPage(number: '0',),
+                                                  //   ),
+                                                  //   backgroundColor: Colors.transparent,
+                                                  //   actions: [],
+                                                  // );
+                                                  // showDialog(context: context, builder: (BuildContext context) {
+                                                  //   return alert;
+                                                  // }
+                                                  // );
+
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return RGBTimerPage(number: '0',);
+                                                    },
                                                   );
                                               }
                                               else if(devicemodel=="S010" || devicemodel == "SLT1"){
-                                                AlertDialog alert = AlertDialog(
-                                                  elevation: 0,
-                                                  //insetPadding: EdgeInsets.zero,
-                                                  // contentPadding: EdgeInsets.zero,
-                                                  //clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  contentPadding: EdgeInsets.zero,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-                                                  title: Text(""),
-                                                 // content: TimerS010Page(),
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child:TimerS010Page(number: '0',),
-                                                  ),
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
+
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS010Page(number: '0',);
+                                                    },
+                                                  );
+
                                               }
                                               else if(devicemodel=="S020"){
 
-                                                AlertDialog alert = AlertDialog(
-                                                  elevation: 0,
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS020Page(number: '0',);
+                                                    },
+                                                  );
 
-                                                  //insetPadding: EdgeInsets.zero,
-                                                  // contentPadding: EdgeInsets.zero,
-                                                  //clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  contentPadding: EdgeInsets.zero,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-                                                  title: Text(""),
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child:TimerS020Page(number: '0',),
-                                                  ),
-                                                  //content: TimerS020Page(),
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
-                                                );
+
 
                                               }
                                               else if(devicemodel=="S021"){
 
-                                                AlertDialog alert = AlertDialog(
 
-                                                  elevation: 0,
-                                                  //insetPadding: EdgeInsets.zero,
-                                                  // contentPadding: EdgeInsets.zero,
-                                                  //clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  contentPadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-                                                  title: Text(""),
-                                                  //content: TimerS021Page(),
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child:TimerS021Page(number:'0'),
-                                                  ),
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS021Page(
+                                                          number: "0"
+                                                      );
+                                                    },
+                                                  );
 
                                               }
                                               else if(devicemodel=="S030"){
 
-                                                AlertDialog alert = AlertDialog(
 
-                                                  elevation: 0,
-                                                  //insetPadding: EdgeInsets.zero,
-                                                  // contentPadding: EdgeInsets.zero,
-                                                  //clipBehavior: Clip.antiAliasWithSaveLayer,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  contentPadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-                                                  title: Text(""),
-                                                  //content: TimerS030Page()
-
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child:TimerS030Page(number: '0',),
-                                                  ),
-
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS030Page(
+                                                          number: "0"
+                                                      );
+                                                    },
+                                                  );
 
                                               }
                                               else if(devicemodel=="S080"){
 
-                                                AlertDialog alert = AlertDialog(
 
-                                                  elevation: 0,
-                                                  //insetPadding: EdgeInsets.zero,
-                                                  // contentPadding: EdgeInsets.zero,
-                                                  //clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                                                  contentPadding: EdgeInsets.zero,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-
-                                                  title: Text(""),
-                                                  // content: TimerS080Page(),
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child:TimerS080Page(number: '0',),
-                                                  ),
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS080Page(
+                                                          number: "0"
+                                                      );
+                                                    },
+                                                  );
                                               }
                                               else if((devicemodel == "CLNRSH") || (devicemodel == "CLNR")){
 
-                                                AlertDialog alert = AlertDialog(
 
-                                                  elevation: 0,
-                                                  contentPadding: EdgeInsets.zero,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-
-                                                  title: Text(""),
-                                                 // content: TimerCurtainPage(),
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child:TimerCurtainPage(number: '0',),
-                                                  ),
-
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
-
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerCurtainPage(number: '0',);
+                                                    },
+                                                  );
 
                                               }
                                               else if(devicemodel == "WPS1"){
 
-                                                AlertDialog alert = AlertDialog(
 
-                                                  elevation: 0,
-                                                  //insetPadding: EdgeInsets.zero,
-                                                  // contentPadding: EdgeInsets.zero,
-                                                  //clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                                                  contentPadding: EdgeInsets.zero,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-
-                                                  title: Text(""),
-                                                 // content: TimerPIRPage(number: "0",),
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child: TimerPIRPage(number: "0"),
-                                                  ),
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerPIRPage(
+                                                          number: "0"
+                                                      );
+                                                    },
+                                                  );
                                               }
                                               else if(devicemodel == "WPD1"){
 
-                                                AlertDialog alert = AlertDialog(
 
-                                                  elevation: 0,
-                                                  //insetPadding: EdgeInsets.zero,
-                                                  // contentPadding: EdgeInsets.zero,
-                                                  //clipBehavior: Clip.antiAliasWithSaveLayer,
 
-                                                  contentPadding: EdgeInsets.zero,
-                                                  titlePadding: EdgeInsets.zero,
-                                                  backgroundColor: Colors.transparent,
-
-                                                  title: Text(""),
-                                                 // content: TimerPIRPage(number: "0",),
-                                                  content: Container(
-                                                    width: MediaQuery.of(context).size.width*0.75,
-                                                    child: TimerPIRPage(number: "0",),
-                                                  ),
-                                                  actions: [],
-                                                );
-                                                showDialog(context: context, builder: (BuildContext context) {
-                                                  return alert;
-                                                }
-                                                );
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerPIRPage(
+                                                          number: "0"
+                                                      );
+                                                    },
+                                                  );
                                               }
 
                                                 else if(devicemodel == "DFN1"){
 
-                                                  AlertDialog alert = AlertDialog(
 
-                                                    elevation: 0,
-                                                    //insetPadding: EdgeInsets.zero,
-                                                    // contentPadding: EdgeInsets.zero,
-                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    backgroundColor: Colors.transparent,
-
-                                                    title: Text(""),
-                                                    // content: TimerPIRPage(number: "0",),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child: TimerDFanPage(number: "0",),
-                                                    ),
-                                                    actions: [],
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerDFanPage(number: '0',);
+                                                    },
                                                   );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
-                                                  );
+
+
                                                 }
                                                 else if(devicemodel == "S042"){
 
-                                                  AlertDialog alert = AlertDialog(
-
-                                                    elevation: 0,
-                                                    //insetPadding: EdgeInsets.zero,
-                                                    // contentPadding: EdgeInsets.zero,
-                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    backgroundColor: Colors.transparent,
-
-                                                    title: Text(""),
-                                                    // content: TimerPIRPage(number: "0",),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child: TimerS042Page(number: "0",),
-                                                    ),
-                                                    actions: [],
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS042Page(number: '0',);
+                                                    },
                                                   );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
-                                                  );
+
+
                                                 }
                                                 else if(devicemodel == "S110"){
 
-                                                  AlertDialog alert = AlertDialog(
-
-                                                    elevation: 0,
-                                                    //insetPadding: EdgeInsets.zero,
-                                                    // contentPadding: EdgeInsets.zero,
-                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    backgroundColor: Colors.transparent,
-
-                                                    title: Text(""),
-                                                    // content: TimerPIRPage(number: "0",),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child: TimerS110Page(number: "0",),
-                                                    ),
-                                                    actions: [],
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS110Page(number: '0',);
+                                                    },
                                                   );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
-                                                  );
+
                                                 }
                                                 else if(devicemodel == "S120"){
 
-                                                  AlertDialog alert = AlertDialog(
 
-                                                    elevation: 0,
-                                                    //insetPadding: EdgeInsets.zero,
-                                                    // contentPadding: EdgeInsets.zero,
-                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    backgroundColor: Colors.transparent,
-
-                                                    title: Text(""),
-                                                    // content: TimerPIRPage(number: "0",),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child: TimerS120Page(number: "0",),
-                                                    ),
-                                                    actions: [],
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS120Page(number: '0',);
+                                                    },
                                                   );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
-                                                  );
+
+
                                                 }
                                                 else if(devicemodel == "S141"){
 
-                                                  AlertDialog alert = AlertDialog(
-
-                                                    elevation: 0,
-                                                    //insetPadding: EdgeInsets.zero,
-                                                    // contentPadding: EdgeInsets.zero,
-                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    backgroundColor: Colors.transparent,
-
-                                                    title: Text(""),
-                                                    // content: TimerPIRPage(number: "0",),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child: S141TimerPage(number: "0",),
-                                                    ),
-                                                    actions: [],
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return S141TimerPage(number: '0',);
+                                                    },
                                                   );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
-                                                  );
+
+
                                                 }
                                                 else if(devicemodel == "S160"){
 
-                                                  AlertDialog alert = AlertDialog(
-
-                                                    elevation: 0,
-                                                    //insetPadding: EdgeInsets.zero,
-                                                    // contentPadding: EdgeInsets.zero,
-                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    backgroundColor: Colors.transparent,
-
-                                                    title: Text(""),
-                                                    // content: TimerPIRPage(number: "0",),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child: TimerS160Page(number: "0",),
-                                                    ),
-                                                    actions: [],
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerS160Page(number: '0',);
+                                                    },
                                                   );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
-                                                  );
+
+
                                                 }
                                                 else if(devicemodel == "SFN1"){
 
-                                                  AlertDialog alert = AlertDialog(
-
-                                                    elevation: 0,
-                                                    //insetPadding: EdgeInsets.zero,
-                                                    // contentPadding: EdgeInsets.zero,
-                                                    //clipBehavior: Clip.antiAliasWithSaveLayer,
-
-                                                    contentPadding: EdgeInsets.zero,
-                                                    titlePadding: EdgeInsets.zero,
-                                                    backgroundColor: Colors.transparent,
-
-                                                    title: Text(""),
-                                                    // content: TimerPIRPage(number: "0",),
-                                                    content: Container(
-                                                      width: MediaQuery.of(context).size.width*0.75,
-                                                      child: TimerFanPage(number: "0",),
-                                                    ),
-                                                    actions: [],
-                                                  );
-                                                  showDialog(context: context, builder: (BuildContext context) {
-                                                    return alert;
-                                                  }
+                                                  showDialog(
+                                                    barrierColor: Colors.black26,
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return TimerFanPage(number: '0',);
+                                                    },
                                                   );
                                                 }
                                               }
@@ -758,7 +586,9 @@ class _TimerpageState extends State<Timerpage>{
                             Expanded(
                               flex:6,
                               child: Container(
-                                child: Center(child: Text("TIMER")),
+                                child: Center(child: Text("TIMER",style: TextStyle(
+                                    decoration: TextDecoration.underline,fontSize: 14.0
+                                ),)),
                               ),
                             ),
                             Expanded(
@@ -769,7 +599,7 @@ class _TimerpageState extends State<Timerpage>{
                                     Expanded(
                                         flex:1,
                                         child: Transform.scale(
-                                          scale: 1.5,
+                                          scale: 1.75,
                                           child: IconButton(
                                               icon: Image.asset("images/Timer/timer_list.png"),
                                               splashRadius: 0.1,
@@ -792,10 +622,12 @@ class _TimerpageState extends State<Timerpage>{
                         ),
                       ),
 
+
+
                       Expanded(
-                        flex:1,
+                        flex:0,
                         child:Padding(
-                          padding:EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding:EdgeInsets.fromLTRB(10, 5, 10, 8),
                           child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -816,11 +648,11 @@ class _TimerpageState extends State<Timerpage>{
 
 
                       Expanded(
-                        flex:1,
+                        flex:0,
                         child: Container(
                           color: Colors.white,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children:[
                               // Expanded(
                               //   flex:1,
@@ -851,16 +683,33 @@ class _TimerpageState extends State<Timerpage>{
                                       Expanded(
                                         flex:1,
                                         child: NumberPicker(
-                                          itemCount: 4,
+                                          itemCount: 3,
                                           value: _currentvalue1,
                                           minValue: 00,
                                           maxValue: 23,
                                           zeroPad: true,
+                                          step: 1,
+                                          infiniteLoop: true,
+                                          itemHeight: 22,
+                                          itemWidth: 100,
+                                          axis: Axis.vertical,
+                                          haptics: false,
+                                          textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                          decoration: BoxDecoration(
+                                            //borderRadius: BorderRadius.circular(16),
+                                            //border: Border.all(color: Colors.black26),
+                                            border: Border(
+                                                top:BorderSide(color: Colors.grey,width: 1),
+                                                bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                            ),
+
+                                          ),
                                           onChanged: (value) => setState(() => _currentvalue1 = value),
                                           selectedTextStyle:TextStyle(
                                             color: Color.fromRGBO( 66,130, 208,1),
-                                            fontWeight: FontWeight.bold,
-                                            //fontSize: 5.0,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13.0,
                                             fontStyle: FontStyle.normal,
                                           ),
 
@@ -874,16 +723,33 @@ class _TimerpageState extends State<Timerpage>{
                                       Expanded(
                                         flex:1,
                                         child: NumberPicker(
-                                          itemCount: 4,
+                                          itemCount: 3,
                                           value: _currentvalue2,
                                           minValue: 00,
                                           maxValue: 59,
                                           zeroPad: true,
+                                          step: 1,
+                                          infiniteLoop: true,
+                                          itemHeight: 22,
+                                          itemWidth: 100,
+                                          axis: Axis.vertical,
+                                          haptics: false,
+                                          textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                          decoration: BoxDecoration(
+                                            //borderRadius: BorderRadius.circular(16),
+                                            //border: Border.all(color: Colors.black26),
+                                            border: Border(
+                                                top:BorderSide(color: Colors.grey,width: 1),
+                                                bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                            ),
+
+                                          ),
                                           onChanged: (value) => setState(() => _currentvalue2 = value),
                                           selectedTextStyle:TextStyle(
                                             color: Color.fromRGBO( 66,130, 208,1),
-                                            fontWeight: FontWeight.bold,
-                                            //fontSize: 5.0,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13,
                                             fontStyle: FontStyle.normal,
                                           ),
 
@@ -898,16 +764,33 @@ class _TimerpageState extends State<Timerpage>{
                                       Expanded(
                                         flex:1,
                                         child: NumberPicker(
+                                          itemCount: 3,
                                           value: _currentvalue3,
-                                          itemCount: 4,
                                           minValue: 00,
                                           maxValue: 24,
                                           zeroPad: true,
+                                          step: 1,
+                                          infiniteLoop: true,
+                                          itemHeight: 22,
+                                          itemWidth: 100,
+                                          axis: Axis.vertical,
+                                          haptics: false,
+                                          textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                          decoration: BoxDecoration(
+                                            //borderRadius: BorderRadius.circular(16),
+                                            //border: Border.all(color: Colors.black26),
+                                            border: Border(
+                                                top:BorderSide(color: Colors.grey,width: 1),
+                                                bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                            ),
+
+                                          ),
                                           onChanged: (value) => setState(() => _currentvalue3 = value),
                                           selectedTextStyle:TextStyle(
                                             color: Color.fromRGBO( 66,130, 208,1),
-                                            fontWeight: FontWeight.bold,
-                                            //fontSize: 5.0,
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
                                             fontStyle: FontStyle.normal,
                                           ),
 
@@ -920,20 +803,34 @@ class _TimerpageState extends State<Timerpage>{
                                       Expanded(
                                         flex:1,
                                         child: NumberPicker(
+                                          itemCount: 3,
                                           value: _currentvalue4,
-                                          itemCount: 4,
                                           minValue: 00,
                                           maxValue: 59,
                                           zeroPad: true,
-                                          infiniteLoop: false,
-                                          haptics: false,
-                                          selectedTextStyle:TextStyle(
-                                              color: Color.fromRGBO( 66,130, 208,1),
-                                              fontWeight: FontWeight.bold,
-                                              //fontSize: 5.0,
-                                              fontStyle: FontStyle.normal,
+                                          step: 1,
+                                          infiniteLoop: true,
+                                          itemHeight: 22,
+                                          itemWidth: 100,
+                                          axis: Axis.vertical, haptics: false,
+                                          textStyle: TextStyle(color: Colors.grey,fontSize: 13,fontWeight: FontWeight.w500,),
+                                          decoration: BoxDecoration(
+                                            //borderRadius: BorderRadius.circular(16),
+                                            //border: Border.all(color: Colors.black26),
+                                            border: Border(
+                                                top:BorderSide(color: Colors.grey,width: 1),
+                                                bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                            ),
+
                                           ),
                                           onChanged: (value) => setState(() => _currentvalue4 = value),
+                                          selectedTextStyle:TextStyle(
+                                            color: Color.fromRGBO( 66,130, 208,1),
+                                            fontSize: 13,fontWeight: FontWeight.w500,
+                                            fontStyle: FontStyle.normal,
+                                          ),
+
                                         ),
                                       ),
                                       Expanded(
@@ -947,6 +844,8 @@ class _TimerpageState extends State<Timerpage>{
                           ),
                         ),
                       ),
+
+                      Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/60),),
 
                       Expanded(
                         flex:1,
@@ -1315,7 +1214,7 @@ class _TimerpageState extends State<Timerpage>{
                                         child: Center(child: Text("ON TIME",style: TextStyle(color: colorBoth2),)),
                                       ),
                                       Expanded(
-                                        flex:2,
+                                        flex:1,
                                         child: NumberPicker(
                                           itemCount: 3,
                                           value: _currentvalue5,
@@ -1323,26 +1222,44 @@ class _TimerpageState extends State<Timerpage>{
                                           maxValue: 60,
                                           step: 2,
                                           zeroPad: false,
-                                          textStyle: TextStyle(
-                                              color: colorBoth2
-                                          ),
+                                          infiniteLoop: true,
+                                          itemHeight: 25,
+                                          itemWidth: 100,
+                                          textStyle: TextStyle(color: colorBoth2,fontSize: 13,fontWeight: FontWeight.w500,),
                                           selectedTextStyle:TextStyle(
                                             color: colorNumberCyc,
-                                            fontWeight: FontWeight.bold,
-                                            //fontSize: 5.0,
+                                            fontSize: 13,fontWeight: FontWeight.w500,
                                             fontStyle: FontStyle.normal,
+                                          ),
+
+                                          decoration: BoxDecoration(
+                                            //borderRadius: BorderRadius.circular(16),
+                                            //border: Border.all(color: Colors.black26),
+                                            border: Border(
+                                                top:BorderSide(color: Colors.grey,width: 1),
+                                                bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                            ),
+
                                           ),
                                           onChanged: (value) => setState(() => _currentvalue5 = value),
 
                                         ),
                                       ),
+
+                                      Expanded(
+                                        flex:1,
+                                        child: Container(),
+                                      ),
+
+
                                       Expanded(
                                         flex:2,
                                         child: Center(child: Text("OFF TIME",style: TextStyle(
                                           color: colorBoth2),)),
                                       ),
                                       Expanded(
-                                        flex:2,
+                                        flex:1,
                                         child: NumberPicker(
                                           value: _currentvalue6,
                                           itemCount: 3,
@@ -1350,15 +1267,28 @@ class _TimerpageState extends State<Timerpage>{
                                           maxValue: 60,
                                           step: 2,
                                           zeroPad: false,
+                                          infiniteLoop: true,
+                                          itemHeight: 25,
+                                          itemWidth: 100,
 
                                           textStyle: TextStyle(
-                                              color: colorBoth2
+                                              color: colorBoth2,fontSize: 13,fontWeight: FontWeight.w500,
                                           ),
                                           selectedTextStyle:TextStyle(
                                             color: colorNumberCyc,
-                                            fontWeight: FontWeight.bold,
-                                            //fontSize: 5.0,
+                                            fontSize: 13,fontWeight: FontWeight.w500,
                                             fontStyle: FontStyle.normal,
+                                          ),
+
+                                          decoration: BoxDecoration(
+                                            //borderRadius: BorderRadius.circular(16),
+                                            //border: Border.all(color: Colors.black26),
+                                            border: Border(
+                                                top:BorderSide(color: Colors.grey,width: 1),
+                                                bottom: BorderSide(color: Colors.grey,width: 1)
+
+                                            ),
+
                                           ),
                                           onChanged: (value) => setState(() => _currentvalue6 = value),
 
@@ -1588,49 +1518,62 @@ class _TimerpageState extends State<Timerpage>{
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
 
-                                        MaterialButton(
-                                          padding: EdgeInsets.all(5.0),
-                                          textColor: Colors.white,
-                                          // splashColor: Colors.greenAccent,
-                                          elevation: 8.0,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage('images/Moods/save_button.png'),
-                                                  fit: BoxFit.fill),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(10.0),
-                                              child: Text("CANCEL"),
-                                            ),
-                                          ),
+                                        ElevatedButton(
+                                          // padding: EdgeInsets.all(5.0),
+                                          // textColor: Colors.white,
+                                          // // splashColor: Colors.greenAccent,
+                                          // elevation: 8.0,
+                                          // child: Container(
+                                          //   decoration: BoxDecoration(
+                                          //     image: DecorationImage(
+                                          //         image: AssetImage('images/Moods/save_button.png'),
+                                          //         fit: BoxFit.fill),
+                                          //   ),
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.all(10.0),
+                                          //     child: Text("CANCEL"),
+                                          //   ),
                                           // ),
+                                          // // ),
+
+                                          child: Text('CANCEL'),
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Color.fromRGBO(66, 130, 208, 1),
+                                              shape: StadiumBorder()
+                                          ),
                                           onPressed: () {
 
                                             Navigator.pop(context);
                                             print('Tapped');
                                           },
                                         ),
-                                        MaterialButton(
-                                          padding: EdgeInsets.all(8.0),
-                                          textColor: Colors.white,
-                                          // splashColor: Colors.greenAccent,
-                                          elevation: 8.0,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage('images/Moods/save_button.png'),
-                                                  fit: BoxFit.fill),
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Center(child: Text("SET TIMER")),
-                                            ),
-                                          ),
+                                        ElevatedButton(
+                                          // padding: EdgeInsets.all(8.0),
+                                          // textColor: Colors.white,
+                                          // // splashColor: Colors.greenAccent,
+                                          // elevation: 8.0,
+                                          // child: Container(
+                                          //   decoration: BoxDecoration(
+                                          //     image: DecorationImage(
+                                          //         image: AssetImage('images/Moods/save_button.png'),
+                                          //         fit: BoxFit.fill),
+                                          //   ),
+                                          //   child: Padding(
+                                          //     padding: const EdgeInsets.all(8.0),
+                                          //     child: Center(child: Text("SET TIMER")),
+                                          //   ),
                                           // ),
+                                          // // ),
+
+                                          child: Text('SET TIMER'),
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Color.fromRGBO(66, 130, 208, 1),
+                                              shape: StadiumBorder()
+                                          ),
                                           onPressed: () async {
 
                                             print(_globalService.modeltype);
+
 
 
                                             if(_globalService.modeltype == "SWB" || _globalService.modeltype == 'PIR' || _globalService.modeltype=="RGB"){
@@ -1664,6 +1607,7 @@ class _TimerpageState extends State<Timerpage>{
                                               toTime=(_currentvalue3.toString()).padLeft(2,'0')+":"+(_currentvalue4.toString()).padLeft(2,'0');
 
                                               print("$fromTime,$toTime");
+                                              print(ondataarray.length);
 
                                               if(ondataarray.length==0){
                                                 print("Please select the Operation");
@@ -1716,7 +1660,7 @@ class _TimerpageState extends State<Timerpage>{
 
                                                           if(s.socketconnected==true){
                                                             s.socket1(senddata);
-                                                            Navigator.pop(context);
+
                                                           }
                                                           else {
                                                             fluttertoast("Not connected");
@@ -1730,7 +1674,7 @@ class _TimerpageState extends State<Timerpage>{
                                                           print("s");
                                                           print(switchnumber[i]);
 
-                                                          String data = t1+","+t2+","+t3+","+t4+","+daterep+","+fromTime+","+toTime+","+t1+","+sun.toString()+","+mon.toString()+","+tue.toString()+","+wed.toString()+","+thur.toString()+","+frid.toString()+","+sat.toString()+","+repeat+","+devicemodel+","+ondataarray[i]+","+offdataarray[i]+","+devicemodelnum+","+dnum+","+deviceID+","+switchnumber[i]+","+rnum+","+devicename;
+                                                          String data = t1+","+t2+","+t3+","+t4+","+daterep+","+fromTime+","+toTime+","+t1+","+mon.toString()+","+tue.toString()+","+wed.toString()+","+thur.toString()+","+frid.toString()+","+sat.toString()+","+sun.toString()+","+repeat+","+devicemodel+","+ondataarray[i]+","+offdataarray[i]+","+devicemodelnum+","+dnum+","+deviceID+","+switchnumber[i]+","+rnum+","+devicename;
                                                           String senddata = "["+data+']';
                                                           print(senddata);
 
@@ -1749,7 +1693,7 @@ class _TimerpageState extends State<Timerpage>{
                                                           t3 = "0";
                                                           t4 = "1";
 
-                                                          String data = t1+","+t2+","+t3+","+t4+","+Date+","+fromTime+","+toTime+","+t1+","+sun.toString()+","+mon.toString()+","+tue.toString()+","+wed.toString()+","+thur.toString()+","+frid.toString()+","+sat.toString()+","+repeat+","+devicemodel+","+ondataarray[i]+","+offdataarray[i]+","+devicemodelnum+","+dnum+","+deviceID+","+switchnumber[i]+","+rnum+","+devicename;
+                                                          String data = t1+","+t2+","+t3+","+t4+","+Date+","+fromTime+","+toTime+","+t1+","+mon.toString()+","+tue.toString()+","+wed.toString()+","+thur.toString()+","+frid.toString()+","+sat.toString()+","+sun.toString()+","+repeat+","+devicemodel+","+ondataarray[i]+","+offdataarray[i]+","+devicemodelnum+","+dnum+","+deviceID+","+switchnumber[i]+","+rnum+","+devicename;
                                                           String senddata = "["+data+"]";
                                                           print(senddata);
 
@@ -1778,15 +1722,19 @@ class _TimerpageState extends State<Timerpage>{
                           ),
                         ),
                       ),
+
+                      Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/30),)
+
+
                     ],
 
                   )
 
 
-            )
-          )
-        )
-    );
+            );
+    //       )
+    //     )
+    // );
   }
 
 

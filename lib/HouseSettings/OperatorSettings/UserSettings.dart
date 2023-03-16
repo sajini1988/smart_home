@@ -367,7 +367,7 @@ class _UserSettings extends State<UserSettings>{
       }, child:Scaffold(
         appBar: AppBar(
           toolbarHeight: 40.0,
-          title: Text("User Settings"),
+          title: Text("User Settings",style:TextStyle(fontSize: 18)),
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
 
           actions: <Widget>[

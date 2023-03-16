@@ -149,7 +149,7 @@ class Singleton {
 
         print("Local");
         networkconnected = "LWi-Fi";
-        localconnection(hnum,hname);
+        localConnection(hnum,hname);
       }
       else if(ssidm.compareTo("NONE") == 0){
 
@@ -376,13 +376,16 @@ class Singleton {
         }
         else {
           print('Request failed with status: ${response.statusCode}.');
+          errorHttp(hnum1, hname1);
         }
 
       }
       on TimeoutException catch (e) {
         print('Timeout Error: $e');
+        errorHttp(hnum1, hname1);
       } on SocketException catch (e) {
         print('Socket Error: $e');
+        errorHttp(hnum1, hname1);
       } on Error catch (e) {
         print('General Error: $e');
       }
@@ -390,14 +393,43 @@ class Singleton {
 
     } on TimeoutException catch (e) {
       print('Timeout Errorhttp: $e');
+      errorHttp(hnum1, hname1);
     } on SocketException catch (e) {
       print('Socket Errorhttp: $e');
+      errorHttp(hnum1, hname1);
     } on Error catch (e) {
       print('General Errorhttp: $e');
     }
 
   }
-  Future<void> localconnection(String hnum, String hname) async{
+
+  void errorHttp(String hnum,hname) async{
+
+    dbHelper = DBHelper();
+
+    List res = await dbHelper.getStudents1(hname,hnum);
+    print(res);
+
+    var res1=[];
+    res1 = await DBProvider.db.getServerDataWithHNum(hnum,hname);
+    print("res1 $res1");
+
+    adminName = res[0]["ld"];
+    adminPassword = res[0]["le"];
+
+    serverIp = res1[0]["ri"];
+    serverPort = res1[0]["p"].toString();
+
+
+    print("Name $adminName Pass $adminPassword ServerIp $serverIp ServerPort $serverPort");
+
+    String sendsocket = "$adminName$adminPassword";
+    socket1(sendsocket);
+
+  }
+
+
+  Future<void> localConnection(String hnum, String hname) async{
 
     dbHelper = DBHelper();
 
@@ -1348,7 +1380,7 @@ class Singleton {
 
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
+      //  timeInSecForIosWeb: 0.1,
         backgroundColor: Colors.grey,
         textColor: Colors.white,
         fontSize: 16.0

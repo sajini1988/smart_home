@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -37,9 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
   var s=Singleton();
   int val,val1;
 
-
-
-
   Image imageup = Image.asset('images/switchicons/speed_up.png' );
   Image imagedown = Image.asset('images/switchicons/speed_down.png');
   Image imagezero = Image.asset('images/switchicons/0.png');
@@ -53,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   bool fanimgChange1=false;
 
-  String devicename="name2f";
+  String devicename="";
 
   String hname21,hnum21,rnum21,dnum21,rname21,GroupId21;
 
@@ -64,6 +62,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState(){
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'socketconndevice');
     FNC.DartNotificationCenter.registerChannel(channel: 'socketconndevice');

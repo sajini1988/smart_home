@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool imgchange2=false;
   bool imgchange3=false;
 
-  String devicename="name30";
+  String devicename="";
 
   String hname30,hnum30,rnum30,dnum30,rname30,GroupId30;
   String icon1,icon2,icon3;
@@ -792,7 +792,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   children: [
 
                     Expanded(
-                      child:Center(
+                      child: Center(
                         child: Text(devicename, maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textDirection: TextDirection.rtl,
@@ -805,7 +805,6 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                       ),
                     ),
-
                   ],
                 ), Padding(
                   padding: const EdgeInsets.all(05.0),

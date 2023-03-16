@@ -1,5 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -104,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool imgchange1=false;
   bool imgchange2=false;
 
-  String devicename="name20";
+  String devicename="";
 
   String hname20,hnum20,rnum20,dnum20,rname20,GroupId20;
   String icon1,icon2;
@@ -114,6 +115,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState(){
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'socketconndevice');
     FNC.DartNotificationCenter.registerChannel(channel: 'socketconndevice');
@@ -127,9 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
       SwResponce(options);
     }, observer: null);
 
-    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch20');
-    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch20");
-    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch20", observer: null, onNotification: (options){
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch11');
+    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch11");
+    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch11", observer: null, onNotification: (options){
       print('SWNOtified:$options');
       swdetails();
     });

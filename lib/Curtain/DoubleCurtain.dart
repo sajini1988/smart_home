@@ -47,7 +47,7 @@ class _MyHomePageState extends State<DoubleCurtain> {
   bool sheerlabel = false;
   bool bothlabel  = false;
 
-  String devicename ="name";
+  String devicename =" ";
   String hnamedcur,hnumdcur,rnumdcur,dnumdcur,rnamedcur,groupIddcur,dnumsheer;
 
   @override
@@ -245,13 +245,20 @@ class _MyHomePageState extends State<DoubleCurtain> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Center(child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child:
-                        Text(devicename, style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontStyle: FontStyle.normal), maxLines: 2,
+                  Expanded(
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal
                         ),
-                        )
                       ),
+                    ),
+                  ),
                 ],
               ),
               Padding(padding: const EdgeInsets.all(10.0)),

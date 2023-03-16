@@ -55,6 +55,9 @@ dev_dependencies:
   week_of_year: ^2.0.0
   intl: ^0.17.0
   flutter_colorpicker: ^1.0.3
+  package_info_plus: ^1.0.6
+
+
 
 
 # For information on the generic Dart part of this file, see the
@@ -306,6 +309,7 @@ flutter:
     - images/Moods/mood2.png
     - images/Moods/mood3.png
     - images/Moods/save_button.png
+    - images/Moods/config1.png
     - images/Moods/moods.png
 
     - images/RGB/blue.png
@@ -375,10 +379,31 @@ flutter:
     - images/Timer/check_box.png
     - images/Timer/check_box01.png
 
+    - images/FM/backward01_fm.png
+    - images/FM/backward_fm.png
+    - images/FM/forward01_fm.png
+    - images/FM/forward_fm.png
+    - images/FM/mode01_fm.png
+    - images/FM/mode_fm.png
+    - images/FM/mute_fm.png
+    - images/FM/mute_fm01.png
+    - images/FM/vol_down01_fm.png
+    - images/FM/vol_down_fm.png
+    - images/FM/vol_up01_fm.png
+    - images/FM/vol_up_fm.png
+    - images/FM/fm.jpg
+    - images/FM/uwithb.png
 
-
-
-
+    - images/Dimmer/dimmer00.png
+    - images/Dimmer/dimmer01.png
+    - images/Dimmer/dimmer02.png
+    - images/Dimmer/dimmer03.png
+    - images/Dimmer/dimmer04.png
+    - images/Dimmer/dimmer05.png
+    - images/Dimmer/dimmer06.png
+    - images/Dimmer/dimmer07.png
+    - images/Dimmer/dimmer08.png
+    - images/Dimmer/dimmer09.png
 
 
 

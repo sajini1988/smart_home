@@ -21,7 +21,7 @@ class _BellIViewState extends State<BellIViewState> {
   var s=Singleton();
 
   String hnameBell,hnumBell,rnumBell,dnumBell,rnameBell,groupIdBell,dtypeBell;
-  String devicename="name";
+  String devicename="";
   String status="OFF";
   Color colorBoth;
   Color colorOn=Colors.green,colorOff=Colors.red;
@@ -160,20 +160,18 @@ class _BellIViewState extends State<BellIViewState> {
                     ),
                   ),
                   Expanded(
-                  child:Center(
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        devicename,
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal
                         ),
-                        maxLines: 2,
                       ),
                     ),
-                  ),
                   ),
                   Expanded(
                     child: IconButton(

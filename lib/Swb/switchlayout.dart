@@ -22,6 +22,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_home/GlobalService.dart';
 import 'package:smart_home/Devicesettings.dart';
 import 'package:smart_home/Timer/TimerPopUp.dart';
+import 'package:smart_home/Globaltimerdata.dart';
 
 String hnames,hnums,rnums,dnums,rnames,groupIds,dtypes,firsts;
 
@@ -33,6 +34,7 @@ class Switchlayout extends StatefulWidget {
 class _SwitchlayoutState extends State<Switchlayout> {
 
   GlobalService _globalService = GlobalService();
+  Globaltimer _globaltimer = Globaltimer();
 
   double currentindex=0;
   int listcount=1;
@@ -162,51 +164,67 @@ class _SwitchlayoutState extends State<Switchlayout> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(width: 15.0,height: 0.0),
+                            Expanded(flex: 2,child:Container()),
                             Expanded(
-                              child:Center(
-                                child:new DotsIndicator(
-                                dotsCount:listcount,
-                                position: currentindex,
+
+                                flex:4,
+                                child:Center(
+                                  child:Container(alignment: Alignment.center,
+                                    child:new DotsIndicator(
+                                      dotsCount:listcount,
+                                      position: currentindex,
+                                      decorator: DotsDecorator(
+                                        color: Colors.black12, // Inactive color
+                                        activeColor: Colors.blue,
+                                      ),
+                                      onTap:(position){
+                                        print(position);
+                                      },
+                                    ),
+                                  ),)),
 
 
-                                onTap:(position){
-                                    print(position);
-                                  },
-                                ),
-                              ) ,
-                            ),
+                            Expanded(
+                                flex:1,
+                                child:Container(
+                                  child:Visibility(
+                                    visible: settingsVisible,
+                                    child: InkWell(
+                                      onTap: (){
+                                        print("devicesettings");
+                                        devicesettings();
+                                      },
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(20.0),
+                                        child: Image.asset('images/settings_icon.png',
+                                            width:MediaQuery.of(context).size.width/11, fit: BoxFit.fill),
+                                      ),
+                                    ),
+                                  ),)),
 
-
-                            Visibility(
-                              visible: settingsVisible,
-                              child: InkWell(
-                                onTap: (){
-                                  print("devicesettings");
-                                  devicesettings();
-                                },
-                                child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                  child: Image.asset('images/settings_icon.png', width:30, height: 30),
-                               ),
-                              ),
-                            ),
-                            Container(width: 2.0,height: 0.0),
-
-                            Visibility(
-                              visible: timerVisible,
-                              child: InkWell(
-                                onTap: ()
-                                {
-                                  showAlertDialog(context);
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  child: Image.asset('images/timer_settings.png', width:30, height: 30),
-                                ),
-                              ),
-                            ),
-                            Container(width: 2.0,height: 0.0),
+                            Expanded(
+                                flex:1,
+                                child:Container(
+                                  margin: EdgeInsets.only(right: 02),
+                                  child: Visibility(
+                                    visible: timerVisible,
+                                    child: InkWell(
+                                      onTap: (){
+                                        print("timersettings");
+                                        _globaltimer.ondataarrayset=[];
+                                        _globaltimer.offdataarrayset=[];
+                                        _globaltimer.switchnumberset=[];
+                                        showAlertDialog(context);
+                                      },
+                                      //child: ClipRRect(
+                                        //borderRadius: BorderRadius.circular(20.0),
+                                        child: Image.asset('images/timer_settings.png',
+                                            width:MediaQuery.of(context).size.width/11, fit: BoxFit.fill),
+                                      ),
+                                    ),
+                                  ),
+                            )
+                          //)
 
                           ],
                         ),
@@ -227,32 +245,40 @@ class _SwitchlayoutState extends State<Switchlayout> {
 
   showAlertDialog(BuildContext context) async {
 
-      AlertDialog alert = AlertDialog(
+      // AlertDialog alert = AlertDialog(
+      //
+      //  // elevation:0,
+      //   contentPadding: EdgeInsets.zero,
+      //   titlePadding: EdgeInsets.zero,
+      //   clipBehavior:Clip.antiAliasWithSaveLayer,
+      //   insetPadding: EdgeInsets.all(30.0),
+      //   shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+      //
+      //   title: Text(""),
+      //   content: Container(
+      //
+      //     width: MediaQuery.of(context).size.width,
+      //     color: Colors.white,
+      //     child:Timerpage(),
+      //   ),
+      //   backgroundColor: Colors.white,
+      //   actions: [
+      //
+      //   ],
+      // );
+      //
+      // showDialog(context: context, builder: (BuildContext context){
+      //   return alert;
+      // }
+      // );
 
-       // elevation:0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        insetPadding: EdgeInsets.all(30.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        title: Text(""),
-        content: Container(
-
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
-          child:Timerpage(),
-        ),
-        backgroundColor: Colors.white,
-        actions: [
-
-        ],
-      );
-
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
+    showDialog(
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) {
+        return Timerpage();
+      },
+    );
   }
 
   fluttertoast(String message){

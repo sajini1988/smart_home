@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/PIR/PIRLayout.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -42,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var s=Singleton();
 
   String hnamepir,hnumpir,rnumpir,dnumpir,rnamepir,groupIdpir,dtypepir;
-  String devicename="name";
+  String devicename="";
 
   Image radio = Image.asset('images/PIR/radio.png');
   Image radio1 = Image.asset('images/PIR/radio01.png');
@@ -72,7 +73,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
 
+    // TODO: implement initState
+
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     Time_Controller = new TextEditingController(text:alerttimetext);
 
@@ -82,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
       print('PIRNotified: $options');
       pirResponce(options);
     }, observer: null);
-    // TODO: implement initState
+
 
     hnamepir = hnamep;
     hnumpir = hnump;
@@ -167,20 +176,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        devicename,
+                  Expanded(
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal
                         ),
-                        maxLines: 2,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),

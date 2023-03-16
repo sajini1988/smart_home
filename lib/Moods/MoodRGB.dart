@@ -264,16 +264,31 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
   @override
   Widget build(BuildContext context) {
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Align(
-          alignment: Alignment.center,
-          child:Container(
-            color: Colors.transparent,
-            child: ListView(
-              shrinkWrap: true,
+    return Dialog(
+      // debugShowCheckedModeBanner: false,
+      // home: Scaffold(
+      //   backgroundColor: Colors.transparent,
+      //   body: Align(
+      //     alignment: Alignment.center,
+      //     child:Container(
+      //       color: Colors.transparen,
+
+      elevation:0,
+      clipBehavior:Clip.antiAliasWithSaveLayer,
+      insetPadding: EdgeInsets.all(70.0),
+      backgroundColor: Color(0xffffffff),
+      shape: RoundedRectangleBorder(
+        //borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(25.0),
+          bottomLeft: Radius.circular(25.0),
+          topLeft: Radius.circular(25.0),
+          topRight: Radius.circular(25.0),
+        ),
+
+      ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
 
               children:<Widget> [
 
@@ -1085,9 +1100,8 @@ class _MoodRGBPageState extends State<MoodRGBPage> {
 
               ],
             ),
-          ),
-        ),
-      ), );
+    );
+
   }
 
   Widget customSwitch1(bool status1, Function rgbOnOffStatus) {

@@ -125,19 +125,30 @@ class _AclayoutState extends State<Aclayout>{
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(width: 32.0,height: 0.0),
+                            Expanded(flex: 2,child:Container()),
 
                             Expanded(
 
-                              child: new DotsIndicator(
+                              flex:4,
+                              child:Center(
+                                child:Container(alignment: Alignment.center,
+                                  child:new DotsIndicator(
                                 dotsCount:listcount,
                                 position: currentindex,
+                                    decorator: DotsDecorator(
+                                      color: Colors.black12, // Inactive color
+                                      activeColor: Colors.grey,
+                                    ),
                                 onTap:(position){
                                   print(position);
                                 },
                               ),
-                            ),
-                            Visibility(
+                            ),)),
+
+                            Expanded(
+                              flex:1,
+                            child:Container(
+                            child:Visibility(
                               visible: settingsVisible,
                               child: InkWell(
                                 onTap: (){
@@ -145,14 +156,18 @@ class _AclayoutState extends State<Aclayout>{
                                 devicesettings();
                               },
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
+                                borderRadius: BorderRadius.circular(10.0),
                                 child: Image.asset('images/settings_icon.png',
-                                    width:30, height: 30),
+                                  width:MediaQuery.of(context).size.width/11, fit: BoxFit.fill,),
                               ),
                               ),
-                            ),
+                            ),)),
 
-                            Visibility(
+                            Expanded(
+                              flex:1,
+                              child:Container(
+                                margin: EdgeInsets.only(right: 02),
+                              child: Visibility(
                               visible: timerVisible,
                               child: InkWell(
                               onTap: (){
@@ -162,10 +177,10 @@ class _AclayoutState extends State<Aclayout>{
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 child: Image.asset('images/timer_settings.png',
-                                    width:30, height: 30),
+                                  width:MediaQuery.of(context).size.width/11, fit: BoxFit.fill,),
                               ),
                             ),
-                            ),
+                            ),))
                           ],
                         ),
 
@@ -186,31 +201,14 @@ class _AclayoutState extends State<Aclayout>{
 
   showAlertDialog(BuildContext context) async {
 
-    AlertDialog alert = AlertDialog(
+    //
 
-      // elevation:0,
-      contentPadding: EdgeInsets.zero,
-      titlePadding: EdgeInsets.zero,
-      clipBehavior:Clip.antiAliasWithSaveLayer,
-      insetPadding: EdgeInsets.all(25.0),
-      shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-      title: Text(""),
-      content: Container(
-
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child:Timerpage(),
-      ),
-      backgroundColor: Colors.white,
-      actions: [
-
-      ],
-    );
-
-    showDialog(context: context, builder: (BuildContext context){
-      return alert;
-    }
+    showDialog(
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) {
+        return Timerpage();
+      },
     );
   }
 

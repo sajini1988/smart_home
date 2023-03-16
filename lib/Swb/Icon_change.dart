@@ -16,9 +16,16 @@ class _IconChangePageState extends State<IconchangePage>{
   GlobalService _globalService = GlobalService();
   String hname,hnum,rnum,rname,dnum,devicemodel,devicemodelnum,devicename,deviceID,bulbnumber;
 
-  List<String> images=["ac_off","aqua_off","bulb_off","cfl_off","cur_off","dimmer_off","dlock_off","eb_off","gey_off","lamp_off","nameboard_off","rgb_off","socket_off","speaker_off","tb_off","tv_off"];
-  List<String> names = ["ac","auqa","bulb","cfl","curtain","dimmr","door","ebulb","geyser","bedlamp","disp","rgb","socket","speaker","tubelight","tv"];
-  List<String> imagesHv;
+  List<String> images;
+  List<String> names;
+
+
+  List<String> images1=["ac_off","aqua_off","bulb_off","cfl_off","cur_off","dimmer_off","dlock_off","eb_off","gey_off","lamp_off","nameboard_off","rgb_off","socket_off","speaker_off","tb_off","tv_off"];
+  List<String> names1 = ["ac","auqa","bulb","cfl","curtain","dimmr","door","ebulb","geyser","bedlamp","disp","rgb","socket","speaker","tubelight","tv"];
+
+  List<String> imagesHv=["ac_off","highvolt_off","gey_off"];
+  List<String> namesHv = ["ac","Bulb","geyser"];
+
   String name;
   var details = new Map();
 
@@ -38,10 +45,117 @@ class _IconChangePageState extends State<IconchangePage>{
     deviceID=_globalService.deviceID;
     bulbnumber=_globalService.bulb;
 
+    print("details $devicemodel $devicemodelnum $bulbnumber");
+
+    if(devicemodel =="S051"){
+
+      if(bulbnumber == "b4t" || bulbnumber == "b5t" ){
+
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+
+    }
+    else if(devicemodel == "S030"){
+
+      if(bulbnumber == "b3t"){
+
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+
+    }
+    else if(devicemodel == "S080"){
+
+      if(bulbnumber == "b7t" || bulbnumber == "b8t" ){
+
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+
+    }
+    else if(devicemodel == "S020"){
+
+      if(bulbnumber == "b2t"){
+
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+    }
+    else if(devicemodel == "S021"){
+
+      if(bulbnumber == "b2t"){
+
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+    }
+    else if(devicemodel == "S141"){
+      if(bulbnumber == "b3t" || bulbnumber == "b4t"){
+
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+    }
+
+    else if(devicemodel == "S120"){
+
+      if(bulbnumber == "b2t"){
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+    }
+    else if(devicemodel == "S160"){
+
+      if(bulbnumber == "b6t"){
+        images=imagesHv;
+        names=namesHv;
+      }
+      else{
+        images=images1;
+        names=names1;
+      }
+
+    }
+    else{
+
+      images=images1;
+      names=names1;
+    }
+
     setState(() {
       bulbnumber=bulbnumber;
+      images=images;
+      names=names;
     });
-
 
     swdetails();
   }
@@ -71,6 +185,12 @@ class _IconChangePageState extends State<IconchangePage>{
     print(details);
     print(details['bi1']);
     print(details['bi2']);
+    print(details['bi3']);
+    print(details['bi4']);
+    print(details['bi5']);
+    print(details['bi6']);
+    print(details['bi7']);
+    print(details['bi8']);
   }
 
   @override
@@ -207,6 +327,8 @@ class _IconChangePageState extends State<IconchangePage>{
 
   changeimageindb()async{
 
+
+
     if(bulbnumber == "b1t"){
       details['bi1']=name;
     }
@@ -242,7 +364,35 @@ class _IconChangePageState extends State<IconchangePage>{
 
   reload(){
 
-    if(devicemodel=="S051"){
+
+    if(devicemodel=="S141"){
+
+      FNC.DartNotificationCenter.post(
+          channel: 'changeicon_switch141', options: "done");
+
+    }
+
+    else if(devicemodel=="S160"){
+
+      FNC.DartNotificationCenter.post(
+          channel: 'changeicon_switch16', options: "done");
+
+    }
+
+    else if(devicemodel=="S120"){
+
+      FNC.DartNotificationCenter.post(
+          channel: 'changeicon_switch12', options: "done");
+
+    }
+
+    else if(devicemodel=="S110"){
+
+      FNC.DartNotificationCenter.post(
+          channel: 'changeicon_switch11', options: "done");
+
+    }
+    else if(devicemodel=="S051"){
 
       FNC.DartNotificationCenter.post(
           channel: 'changeicon_switch51', options: "done");
@@ -272,12 +422,7 @@ class _IconChangePageState extends State<IconchangePage>{
           channel: 'changeicon_switch20', options: "done");
 
     }
-    else if(devicemodel == "S030"){
 
-      FNC.DartNotificationCenter.post(
-          channel: 'changeicon_switch30', options: "done");
-
-    }
     else if(devicemodel == "S080"){
 
       FNC.DartNotificationCenter.post(

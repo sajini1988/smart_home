@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/RGB/RGBLayout.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -25,7 +26,7 @@ class _RGBIViewState extends State<RGBIViewState> {
   int iSpeed1 = 0;
 
   String hnameRgb,hnumRgb,rnumRgb,dnumRgb,rnameRgb,groupIdRgb,dtypeRgb;
-  String devicename="name";
+  String devicename="";
 
   Color pickerColor =  Color(0xff443a49);
   Color currentColor1 = Colors.amber;
@@ -52,6 +53,8 @@ class _RGBIViewState extends State<RGBIViewState> {
   Image strobe01 = Image.asset('images/RGB/strobe01.png');
   Image strobe02 = Image.asset('images/RGB/strobe02.png');
 
+  Color colorBoth=Colors.black;
+  Color colorOn=Colors.green,colorOff=Colors.red,colorNormal=Colors.black;
 
   void changeColor(Color color) {
     setState(() {
@@ -71,6 +74,14 @@ class _RGBIViewState extends State<RGBIViewState> {
   void initState() {
 
     super.initState();
+
+    colorBoth = colorNormal;
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
@@ -118,9 +129,7 @@ class _RGBIViewState extends State<RGBIViewState> {
     String userAdmin = result[0]['lg'];
     print(userAdmin);
 
-    if (userAdmin == 'U' || userAdmin == 'G') {
 
-    }
 
     List acdata = await DBProvider.db.DataFromMTRNumAndHNumGroupIdDetails1WithDN(rnumRgb, hnumRgb, hnameRgb, groupIdRgb, dnumRgb);
     devicename = acdata[0]['ec'];
@@ -250,6 +259,7 @@ class _RGBIViewState extends State<RGBIViewState> {
 
         if (ds == "01") {
           rgbStatus = true;
+          colorBoth=colorOn;
 
           if (effectsVal == "0") {
 
@@ -311,6 +321,7 @@ class _RGBIViewState extends State<RGBIViewState> {
         }
         else if(ds == "02"){
 
+          colorBoth=colorOff;
           currentColor = Colors.transparent;
           iSpeed1 = 0;
           myValue = 1;
@@ -355,17 +366,15 @@ class _RGBIViewState extends State<RGBIViewState> {
                     ),
                   ),
                   Expanded(
-                    child:Center(
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                          devicename,
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                              fontStyle: FontStyle.normal
-                          ),
-                          maxLines: 2,
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal
                         ),
                       ),
                     ),

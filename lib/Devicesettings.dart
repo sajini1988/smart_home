@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> {
 
   List deviceListViewData;
 
-  String versionNo="****";
+  String versionNo="1.30";
+  String oldVersion= "1.30";
 
   bool val1=false;
   bool val2=false;
@@ -366,21 +367,38 @@ class _MyAppState extends State<MyApp> {
   }
 
   iRButton(){
-      return
-       IconButton(
-          icon: irBtnImg,
-          onPressed: () {
+      // return
+      //  IconButton(
+      //     icon: irBtnImg,
+      //     onPressed: () {
+      //       sendDataDimmerBoard(chr: "930",castType: "01");
+      //       },
+      // );
+
+      return Container(
+
+        child: InkWell(
+          onTap: (){
             sendDataDimmerBoard(chr: "930",castType: "01");
-            },
+
+          },
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset('images/switchicons/ir_reset.png',
+              height:MediaQuery.of(context).size.height/17,
+              width :MediaQuery.of(context).size.width/17, fit: BoxFit.contain,),
+          ),
+        ),
       );
+
   }
 
 
   setIconButton() {
-    return
-      IconButton(
-        icon:setBtnImg,
-        onPressed: () {
+    return Container(
+      child: InkWell(
+        onTap: (){
+
           setState(() {
             print("I_am_set_Button");
             if(dropdownValue=="1"){
@@ -410,39 +428,72 @@ class _MyAppState extends State<MyApp> {
 
           });
         },
-      );
-    }
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10.0),
+            child: Image.asset('images/switchicons/set.png',
+              height:MediaQuery.of(context).size.height/17,
+              width :MediaQuery.of(context).size.width/17, fit: BoxFit.contain,),
+          ),
+      ),
+    );
+  }
 
 
   buildDropDown() {
 
-    return DropdownButton<String>(
-          value: dropdownValue,
-          icon: const Icon(Icons.arrow_drop_down_sharp),
-          elevation: 10,
-          style: const TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height:2,
-            //color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-            });
-          },
-          items: <String>['1', '2', '3', '4', '5', '6']
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        );
+    return
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 3.1),
+            child: SizedBox(
+              //width: 50,
+
+              child: ButtonTheme(
+                minWidth: 30,
+
+                alignedDropdown: true,
+                child: DropdownButton<String>(
+                  itemHeight: null,
+                  isDense: true,
+                  isExpanded: true,
+                  value: dropdownValue,
+                  icon: const Icon(Icons.arrow_drop_down_sharp),
+                  elevation: 10,
+                  style: const TextStyle(color: Colors.black),
+                  underline: Container(
+                    height:1,
+                    //color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (String newValue) {
+                    setState(() {
+                      dropdownValue = newValue;
+                    });
+                  },
+                  items: <String>['1', '2', '3', '4', '5', '6']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Container(
+                        // width: 5,
+                        //alignment: Alignment.center,
+                          child: Text(value)),
+
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+          )
+        ],
+      );
 
     // else { // Just Divider with zero Height xD
     //   return Divider(color: Colors.white, height: 0.0);
     // }
   }
+
 
   Widget swbS051(){
 
@@ -456,16 +507,32 @@ class _MyAppState extends State<MyApp> {
             visible: fanBtnImgV,
             child: Expanded(
               flex: 2,
-              child: IconButton(
-                icon: fanBtnImg,
-                onPressed: () {
-                  setState(() {
-                    if(mounted) {
-                      showAlertDialog(context);
+              child: Container(
 
-                    }
-                  });
-                },
+                child: InkWell(
+                  onTap: (){
+                    setState(() {
+                      if(mounted) {
+                        //showAlertDialog(context);
+
+                        showDialog(
+                          barrierColor: Colors.black26,
+                          context: context,
+                          builder: (context) {
+                            return  Fanspeed();
+                          },
+                        );
+
+                      }
+                    });
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.asset('images/switchicons/fan_speed.png',
+                      height:MediaQuery.of(context).size.height/17,
+                      width :MediaQuery.of(context).size.width/17, fit: BoxFit.contain,),
+                  ),
+                ),
               ),
             ),
           ),
@@ -496,41 +563,41 @@ class _MyAppState extends State<MyApp> {
 
   }
 
-  showAlertDialog(BuildContext context){
-    Widget cancelButton = TextButton(
-      child: Text("Cancel"),
-      onPressed: (){
-        Navigator.of(context,rootNavigator: true).pop();
-      },
-    );
-    Widget continueButton = TextButton(
-      child: Text("Save"),
-        onPressed: (){
-        if(this.mounted){
-          ani.Calculate();
-          Navigator.of(context,rootNavigator: true).pop();
-        }
-      }
-    );
-    AlertDialog alert = AlertDialog(
-      insetPadding: EdgeInsets.symmetric(
-        horizontal: 50.0,
-        vertical: 100.0,
-      ),
-      title: Text("Alert Dialog"),
-      content: Fanspeed(),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-    );
-
-  }
+  // showAlertDialog(BuildContext context){
+  //   Widget cancelButton = TextButton(
+  //     child: Text("Cancel"),
+  //     onPressed: (){
+  //       Navigator.of(context,rootNavigator: true).pop();
+  //     },
+  //   );
+  //   Widget continueButton = TextButton(
+  //     child: Text("Save"),
+  //       onPressed: (){
+  //       if(this.mounted){
+  //         ani.Calculate();
+  //         Navigator.of(context,rootNavigator: true).pop();
+  //       }
+  //     }
+  //   );
+  //   AlertDialog alert = AlertDialog(
+  //     insetPadding: EdgeInsets.symmetric(
+  //       horizontal: 50.0,
+  //       vertical: 100.0,
+  //     ),
+  //     title: Text("Alert Dialog"),
+  //     content: Fanspeed(),
+  //     actions: [
+  //       cancelButton,
+  //       continueButton,
+  //     ],
+  //   );
+  //
+  //   showDialog(context: context, builder: (BuildContext context){
+  //       return alert;
+  //     }
+  //   );
+  //
+  // }
 
   void sendDataDimmerBoard({String chr, String castType}) {
 
@@ -869,13 +936,20 @@ class _MyAppState extends State<MyApp> {
       val8=val8;
       versionNo=versionNo;
       dropdownValue=dropdownValue;
+      deviceListViewData=deviceListViewData;
     });
   }
 
   void userAdmin()async{
 
-    if(ddevmodel.contains("S051") || ddevmodel.contains("S021")){
-      fanBtnImgV=true;
+    if(ddevmodel==("S051") || ddevmodel==("S021")){
+
+      if(double.parse(versionNo) > double.parse(oldVersion)){
+        fanBtnImgV=false;
+      }
+      else if(double.parse(versionNo) <= double.parse(oldVersion)){
+        fanBtnImgV=true;
+      }
     }
     else{
       fanBtnImgV=false;
@@ -889,7 +963,14 @@ class _MyAppState extends State<MyApp> {
     if(userAdmin.contains("SA")){
       switch(modeltypeset){
         case 'SWB':
-          deviceListViewData=["Touch", "IR", "Buzzer","LED", "Memory", "Hardware", "Manual Override", "Config Mode", "Version"];
+
+          if(double.parse(versionNo) > double.parse(oldVersion)){
+            deviceListViewData=["Touch", "IR", "Buzzer","LED", "Memory", "Hardware", "Manual Override", "Config Mode", "Version"];
+          }
+          else {
+            deviceListViewData=["Touch", "IR", "Buzzer", "Memory", "Hardware", "Manual Override", "Config Mode", "Version"];
+          }
+
           break;
         case 'PIR':
           deviceListViewData=["Hardware", "Config Mode", "Version"];
@@ -920,6 +1001,9 @@ class _MyAppState extends State<MyApp> {
           deviceListViewData=["Touch", "IR", "Buzzer", "Memory", "Hardware", "Manual Override", "Config Mode", "Version"];
           break;
         case 'sosh':
+          deviceListViewData=["Touch", "IR", "Buzzer", "Memory", "Hardware", "Manual Override", "Config Mode", "Version"];
+          break;
+        case 'FM':
           deviceListViewData=["Touch", "IR", "Buzzer", "Memory", "Hardware", "Manual Override", "Config Mode", "Version"];
           break;
 
@@ -958,6 +1042,10 @@ class _MyAppState extends State<MyApp> {
           deviceListViewData=["Touch", "IR", "Buzzer", "Memory", "Hardware", "Manual Override","Version"];
           break;
         case 'sosh':
+          deviceListViewData=["Touch", "IR", "Buzzer", "Memory", "Hardware", "Manual Override","Version"];
+          break;
+
+        case 'FM':
           deviceListViewData=["Touch", "IR", "Buzzer", "Memory", "Hardware", "Manual Override","Version"];
           break;
 
@@ -1000,40 +1088,47 @@ class _MyAppState extends State<MyApp> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children:<Widget> [
+                  // Expanded(
+                  //   flex:0,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //       Container(
+                  //         //color: Colors.green,
+                  //         width: MediaQuery.of(context).size.width*0.70,
+                  //         child:  Center(
+                  //           child: Text(devicenameset, maxLines: 2,
+                  //             overflow: TextOverflow.ellipsis,
+                  //             textDirection: TextDirection.rtl,
+                  //             textAlign: TextAlign.center,
+                  //             style: TextStyle(
+                  //                 color: Colors.black,
+                  //                 fontWeight: FontWeight.w600,
+                  //                 fontStyle: FontStyle.normal
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                   Expanded(
-                    flex:1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                          //color: Colors.green,
-                          width: MediaQuery.of(context).size.width*0.70,
-                          child:  Center(
-                            child: Text(devicenameset, maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              textDirection: TextDirection.rtl,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontStyle: FontStyle.normal
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    flex:7,
+                    flex:9,
                     child:Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children:[
-                         Container(
-                             // color: Colors.yellowAccent,
-                              width: MediaQuery.of(context).size.width*0.70,
-                              child: deviceelement(),
-                        )
+                        Expanded(flex: 80,
+                            child: Container()),
+                        Expanded(
+                          flex: 840,
+                          child: Container(
+                            // color: Colors.yellowAccent,
+                            width: MediaQuery.of(context).size.width*0.69,
+                            child: deviceelement(),
+                          ),
+                        ),
+                        Expanded(flex: 80,
+                            child: Container()),
                       ],
                     ),
 
@@ -1047,10 +1142,9 @@ class _MyAppState extends State<MyApp> {
                       children:[
                         Container(
                              // color: Colors.redAccent,
-                              width: MediaQuery.of(context).size.width*0.70,
+                              width: MediaQuery.of(context).size.width*0.69,
                               child: swbS051()
-
-                              )
+                        )
 
                       ],
                     ),
@@ -1100,8 +1194,8 @@ class _MyAppState extends State<MyApp> {
                           child:  Row(
                             children: [
                               Expanded(child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(deviceListViewData[index],style: TextStyle(fontSize: 15),),
+                                padding: const EdgeInsets.all(0.0),
+                                child: Text("$data".toUpperCase(),style: TextStyle(fontSize: 13,color: Colors.grey[600],fontWeight: FontWeight.w400),),
                               )),
                               Column(
                                 children: [

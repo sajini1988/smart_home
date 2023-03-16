@@ -97,6 +97,7 @@ class _TimerListState extends State<TimerList>{
       s.socket1('\$125&');
       setState(() {
         circularindicator=true;
+        circularindicator=true;
       });
     }
     else if(s.socketconnected == false){
@@ -420,32 +421,39 @@ class _TimerListState extends State<TimerList>{
                           _globalServiceEditTimer.ontimeset=ontime;
                           _globalServiceEditTimer.offtimeset=offtime;
 
+                          showDialog(
+                            barrierColor: Colors.black26,
+                            context: context,
+                            builder: (context) {
+                              return EditTimerPage();
+                            },
+                          );
 
 
-                          AlertDialog alert = AlertDialog(
-
-                              elevation:0,
-                              titlePadding: EdgeInsets.zero,
-                              contentPadding: EdgeInsets.zero,
-                              clipBehavior:Clip.antiAliasWithSaveLayer,
-                              insetPadding: EdgeInsets.all(25.0),
-                              shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-                              title: Text(""),
-                              content: Container(
-                                width: MediaQuery.of(context).size.width,
-                                color: Colors.white,
-                                child:EditTimerPage(),
-                              ),
-                              backgroundColor: Colors.white,
-                              actions: [
-
-                              ],
-                            );
-                            showDialog(context: context, builder: (BuildContext context){
-                                return alert;
-                              }
-                            );
+                          // AlertDialog alert = AlertDialog(
+                          //
+                          //     elevation:0,
+                          //     titlePadding: EdgeInsets.zero,
+                          //     contentPadding: EdgeInsets.zero,
+                          //     clipBehavior:Clip.antiAliasWithSaveLayer,
+                          //     insetPadding: EdgeInsets.all(25.0),
+                          //     shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+                          //
+                          //     title: Text(""),
+                          //     content: Container(
+                          //       width: MediaQuery.of(context).size.width,
+                          //       color: Colors.white,
+                          //       child:EditTimerPage(),
+                          //     ),
+                          //     backgroundColor: Colors.white,
+                          //     actions: [
+                          //
+                          //     ],
+                          //   );
+                          //   showDialog(context: context, builder: (BuildContext context){
+                          //       return alert;
+                          //     }
+                          //   );
 
                             },
                           ),
@@ -463,7 +471,15 @@ class _TimerListState extends State<TimerList>{
     Widget yesButton = TextButton(
       child: Text("Yes"),
       onPressed: () {
-        s.socket1(data);
+
+        Navigator.of(context,rootNavigator: true).pop();
+        if(s.socketconnected==true){
+          s.socket1(data);
+        }
+        else{
+          fluttertoast("Socket not Connected");
+        }
+
       },
     );
 
@@ -502,7 +518,7 @@ class _TimerListState extends State<TimerList>{
         appBar: AppBar(
           toolbarHeight: 40,
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-          title: Text('Timer List'),
+          title: Text('Timer List',style:TextStyle(fontSize: 18)),
           actions: <Widget>[
           ],
         ),

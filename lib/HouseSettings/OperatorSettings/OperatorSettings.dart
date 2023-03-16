@@ -55,6 +55,7 @@ class _OperatorSettings extends State<OperatorSettings>{
   var serverIPController = TextEditingController();
   var portController = TextEditingController();
   var ssidController = TextEditingController();
+  var remoteIPController = TextEditingController();
 
   bool disableIp=false,userSettings=false,gatewaySettings=false,configuration=false,userAccess=false;
   GlobalKey<FormState> _key1 = new GlobalKey();
@@ -358,7 +359,7 @@ class _OperatorSettings extends State<OperatorSettings>{
           appBar: AppBar(
             toolbarHeight: 40.0,
             backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-            title: Text("Operator Settings"),
+            title: Text("Operator Settings",style:TextStyle(fontSize: 18)),
             actions: <Widget>[
             IconButton(
               icon: Image.asset('images/$imgso.png', fit: BoxFit.fill),
@@ -488,7 +489,7 @@ class _OperatorSettings extends State<OperatorSettings>{
 
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage('images/Moods/save_button.png'),
+                                  image: adduserenabled?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                   fit: BoxFit.fill),
                             ),
                             child: Padding(
@@ -515,7 +516,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                             width:MediaQuery.of(context).size.width ,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage('images/Moods/save_button.png'),
+                                  image: edituserenabled?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                   fit: BoxFit.fill),
                             ),
                             child: Padding(
@@ -543,7 +544,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                             width:MediaQuery.of(context).size.width ,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                  image: AssetImage('images/Moods/save_button.png'),
+                                  image: deleteuserenabled?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                   fit: BoxFit.fill),
                             ),
                             child: Padding(
@@ -673,7 +674,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                               width:MediaQuery.of(context).size.width ,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('images/Moods/save_button.png'),
+                                    image: updatehouseenabled?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                     fit: BoxFit.fill),
                               ),
                               child: Padding(
@@ -704,7 +705,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                               width:MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('images/Moods/save_button.png'),
+                                    image: deleteRoomenabled?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                     fit: BoxFit.fill),
                               ),
                               child: Padding(
@@ -743,7 +744,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                               width:MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('images/Moods/save_button.png'),
+                                    image: deleteDeviceenabled?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                     fit: BoxFit.fill),
                               ),
                               child: Padding(
@@ -773,7 +774,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                               width:MediaQuery.of(context).size.width ,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('images/Moods/save_button.png'),
+                                    image: deleteHouseenabled?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                     fit: BoxFit.fill),
                               ),
                               child: Padding(
@@ -810,7 +811,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                              // width:MediaQuery.of(context).size.width ,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('images/Moods/save_button.png'),
+                                    image: editroomname?AssetImage('images/Moods/save_button.png'):AssetImage('images/Moods/config1.png'),
                                     fit: BoxFit.fill),
                               ),
                               child: Padding(
@@ -948,7 +949,7 @@ class _OperatorSettings extends State<OperatorSettings>{
                 children: [
                   Expanded(
                     flex: 3,
-                      child: Text("Server IP")
+                      child: Text("Server LIP")
                   ),
                   Expanded(
                       flex: 7,
@@ -1035,6 +1036,39 @@ class _OperatorSettings extends State<OperatorSettings>{
                           EdgeInsets.symmetric(vertical: 5, horizontal: 5),
 
                           labelText: 'SSID',
+                        ),
+                      )
+                  )
+                ],
+              ),
+              Padding(padding: const EdgeInsets.all(6.0),),
+              Row(
+                children: [
+                  Expanded(
+                      flex: 3,
+                      child: Text("Server RIP")
+                  ),
+                  Expanded(
+                      flex: 7,
+                      child: TextFormField(
+                        enabled: true,
+                        controller: remoteIPController,
+                        //validator: _validateRip,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          // counterText: '',
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(width: 1, color: Colors.black),
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: const BorderSide(width: 1, color: Colors.red),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          contentPadding:
+                          EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                          labelText: 'Server RIP',
                         ),
                       )
                   )
@@ -1148,7 +1182,7 @@ class _OperatorSettings extends State<OperatorSettings>{
 
   savedatabase()async{
 
-   int i = await DBProvider.db.updateServerTableHName(serverIPController.text,portController.text,ssidController.text,hname);
+   int i = await DBProvider.db.updateServerTableHName(serverIPController.text,portController.text,ssidController.text,remoteIPController.text,hname);
    int i2= await DBProvider.db.updateServerDetailsIp(serverIPController.text, portController.text,ssidController.text, hname,1);
 
    print("$i,$i2");
@@ -1222,6 +1256,35 @@ class _OperatorSettings extends State<OperatorSettings>{
     }
   }
 
+  String _validateRip(String value) {
+
+    RegExp ipExp = new RegExp(r"^(?!0)(?!.*\.$)((1?\d?\d|25[0-5]|2[0-4]\d)(\.|$)){4}$", caseSensitive: false, multiLine: false);
+
+    List items = value.split('.');
+
+    print("validator");
+    print(items);
+    print(items.length);
+
+    // if (items.length == 0) {
+    //   return 'Please Enter Valid IP';
+    // }
+    // else
+    if (items.length >  4) {
+      return 'IP should be off 4 characters';
+    }
+    else if( ipExp.hasMatch(value))
+    {
+      return null;
+    }
+    else if(!(ipExp.hasMatch(value))){
+      return 'Invalid IP';
+    }
+    else{
+      return null;
+    }
+  }
+
   getip()async{
 
 
@@ -1246,11 +1309,13 @@ class _OperatorSettings extends State<OperatorSettings>{
     serverIPController.text=res[0]['i'];
     portController.text=res[0]['p'].toString();
     ssidController.text=res[0]['ss'];
+    remoteIPController.text=res[0]['ri'];
 
     setState(() {
      serverIPController.text=serverIPController.text;
      portController.text=portController.text;
      ssidController.text=ssidController.text;
+     remoteIPController.text = remoteIPController.text;
     });
 
   }

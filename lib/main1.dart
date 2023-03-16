@@ -16,6 +16,8 @@ import 'package:smart_home/DLock/DLock.dart';
 import 'package:smart_home/Geyser/Geyser.dart';
 import 'package:smart_home/ProjectorLift/ProjLiftLayout.dart';
 import 'package:smart_home/RGB/RGBLayout.dart';
+import 'package:smart_home/FM/fm.dart';
+
 String device1,roomName1,roomNum1,houseNum1,houseName1,groupId1,deviceType1,deviceNum1,dType1,gType1,first1;
 class MainlayoutPage extends StatefulWidget {
   @override
@@ -58,6 +60,13 @@ class _MainlayoutPageState extends State<MainlayoutPage>{
       });
       print("name $roomName1,$roomNum1,$first1");
 
+    }
+    else if(button == ("FM1")){
+
+      setState(() {
+        layoutcall = "fmView";
+      });
+      print("name $roomName1,$roomNum1,$first1");
     }
     else if(button==("rgb")){
 
@@ -191,15 +200,9 @@ class _MainlayoutPageState extends State<MainlayoutPage>{
       });
 
     }
-    else if(button==("lock")){
 
-      print("Enter lock layout");
-      print("name $roomName1,$roomNum1,$first1");
-      setState(() {
-        layoutcall = "DLock";
-      });
 
-    }
+
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -229,6 +232,17 @@ class _MainlayoutPageState extends State<MainlayoutPage>{
       );
 
     }
+
+    else if(layoutcall == 'fmView'){
+      container1=Container(
+        width:MediaQuery.of(context).size.width/1.4,
+        child: new FmLayout(),
+        color: Colors.white,
+        //child: MainlayoutPage(s:"swb1",Roomname: roomnametest,Roomno: roommnumtest.toString(),Housenum:lb, Housename: name, GroupID:"000", DeviceType:"0000",deviceNum:"0000",GType:"1",DType:"1")
+      );
+
+    }
+
     else if(layoutcall == 'curtain'){
       container1=Container(
         width:MediaQuery.of(context).size.width/1.4,

@@ -20,7 +20,7 @@ class _GeyIViewState extends State<GeyIViewState> {
   var s=Singleton();
 
   String hnameGy,hnumGy,rnumGy,dnumGy,rnameGy,groupIdGy,dtypeGy;
-  String devicename="name";
+  String devicename="";
   String status="OFF";
 
   Color colorBoth;
@@ -158,20 +158,18 @@ class _GeyIViewState extends State<GeyIViewState> {
                     ),
                   ),
                   Expanded(
-                    child:Center(
-                      child: FittedBox(
-                        fit: BoxFit.fitWidth,
-                        child: Text(
-                        devicename,
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal
                         ),
-                        maxLines: 2,
-                        ),
                       ),
-                    )
+                    ),
                   ),
                   Expanded(
                     child: IconButton(

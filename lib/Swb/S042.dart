@@ -1,5 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -120,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage>{
   bool fanimgchange1=false;
   bool fanimgchange2=false;
 
-  String devicename="name51";
+  String devicename="";
 
   String hname51,hnum51,rnum51,dnum51,rname51,GroupId51;
   String icon1,icon2,icon3,icon4,icon5;
@@ -130,6 +131,13 @@ class _MyHomePageState extends State<MyHomePage>{
   void initState(){
 
     super.initState();
+
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch51');
     FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch51");
@@ -559,7 +567,7 @@ class _MyHomePageState extends State<MyHomePage>{
         imagenum_on=bulbon;
     }
 
-    if(swnum.contains("1")){
+    if(swnum==("1")){
 
       setState(() {
         print("1on");
@@ -567,14 +575,14 @@ class _MyHomePageState extends State<MyHomePage>{
         imgchange1=true;
       });
     }
-    else if(swnum.contains("2")){
+    else if(swnum==("2")){
       setState(() {
         print("2on");
         img2_On=imagenum_on;
         imgchange2=true;
       });
     }
-    else if(swnum.contains("3")){
+    else if(swnum==("3")){
 
       setState(() {
         print("3on");
@@ -582,7 +590,7 @@ class _MyHomePageState extends State<MyHomePage>{
         imgchange3=true;
       });
     }
-    else if(swnum.contains("4")){
+    else if(swnum==("4")){
 
       setState(() {
         print("4on");
@@ -680,7 +688,7 @@ class _MyHomePageState extends State<MyHomePage>{
       default:
         imagenum_off=bulboff;
     }
-    if(swnum.contains("1")){
+    if(swnum==("1")){
 
       setState(() {
         img1_Off=imagenum_off;
@@ -688,20 +696,20 @@ class _MyHomePageState extends State<MyHomePage>{
 
       });
     }
-    else if(swnum.contains("2")){
+    else if(swnum==("2")){
       setState(() {
         img2_Off=imagenum_off;
         imgchange2=false;
       });
     }
-    else if(swnum.contains("3")){
+    else if(swnum==("3")){
 
       setState(() {
         img3_Off=imagenum_off;
         imgchange3=false;
       });
     }
-    else if(swnum.contains("4")){
+    else if(swnum==("4")){
 
       setState(() {
         img4_Off=imagenum_off;

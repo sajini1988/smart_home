@@ -1,6 +1,7 @@
 import 'dart:async';
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:smart_home/GlobalService.dart';
@@ -206,8 +207,9 @@ class _Edituser extends State<Edituser> {
         child: Scaffold(
 
           appBar: AppBar(
+            toolbarHeight: 40.0,
             backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-            title: Text('Edit User Settings'),
+            title: Text('Edit User Settings',style:TextStyle(fontSize: 18)),
             actions: <Widget>[
             ],),
           backgroundColor: Colors.white10,

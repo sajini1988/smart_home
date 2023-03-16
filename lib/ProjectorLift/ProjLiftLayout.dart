@@ -162,32 +162,40 @@ class _PlcLayoutState extends State<PlcLayout> {
   }
   showAlertDialog(BuildContext context) async {
 
-    AlertDialog alert = AlertDialog(
-
-      // elevation:0,
-      contentPadding: EdgeInsets.zero,
-      titlePadding: EdgeInsets.zero,
-      clipBehavior:Clip.antiAliasWithSaveLayer,
-      insetPadding: EdgeInsets.all(25.0),
-      shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-      title: Text(""),
-      content: Container(
-
-        width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child:Timerpage(),
-      ),
-      backgroundColor: Colors.white,
-      actions: [
-
-      ],
+    showDialog(
+      barrierColor: Colors.black26,
+      context: context,
+      builder: (context) {
+        return Timerpage();
+      },
     );
 
-    showDialog(context: context, builder: (BuildContext context){
-      return alert;
-    }
-    );
+    // AlertDialog alert = AlertDialog(
+    //
+    //   // elevation:0,
+    //   contentPadding: EdgeInsets.zero,
+    //   titlePadding: EdgeInsets.zero,
+    //   clipBehavior:Clip.antiAliasWithSaveLayer,
+    //   insetPadding: EdgeInsets.all(25.0),
+    //   shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+    //
+    //   title: Text(""),
+    //   content: Container(
+    //
+    //     width: MediaQuery.of(context).size.width,
+    //     color: Colors.white,
+    //     child:Timerpage(),
+    //   ),
+    //   backgroundColor: Colors.white,
+    //   actions: [
+    //
+    //   ],
+    // );
+    //
+    // showDialog(context: context, builder: (BuildContext context){
+    //   return alert;
+    // }
+    // );
   }
 
   fluttertoast(String message){

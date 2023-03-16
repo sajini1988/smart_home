@@ -24,8 +24,6 @@ class _DeleteDevicePageState extends State<DeleteDevicePage>{
 
   var s=Singleton();
 
-
-
   GlobalService _globalService = GlobalService();
 
   String hname,hnum;
@@ -79,7 +77,7 @@ class _DeleteDevicePageState extends State<DeleteDevicePage>{
 
   void nwimage(String options){
 
-    if (options.contains("Mobile")) {
+    if (options==("Mobile")) {
       print("Mobile");
       imgn = "3g";
       setState(() {
@@ -87,19 +85,19 @@ class _DeleteDevicePageState extends State<DeleteDevicePage>{
       });
 
     }
-    else if (options.contains("LWi-Fi")) {
+    else if (options==("LWi-Fi")) {
       imgn = 'local_sig';
       setState(() {
         imgn=imgn;
       });
     }
-    else if (options.contains("RWi-Fi")) {
+    else if (options==("RWi-Fi")) {
       imgn = 'remote01';
       setState(() {
         imgn=imgn;
       });
     }
-    else if (options.contains("No_Net")) {
+    else if (options==("No_Net")) {
       imgn = 'nonet';
       setState(() {
         imgn=imgn;
@@ -295,8 +293,9 @@ class _DeleteDevicePageState extends State<DeleteDevicePage>{
       },
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 40,
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-          title: Text("Delete Device"),
+          title: Text("Delete Device",style:TextStyle(fontSize: 18)),
           actions: <Widget>[
 
             IconButton(

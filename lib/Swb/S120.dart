@@ -1,6 +1,7 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
@@ -107,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool imgchange2=false;
   bool imgchange3=false;
 
-  String devicename="name30";
+  String devicename="";
 
   String hname30,hnum30,rnum30,dnum30,rname30,GroupId30;
   String icon1,icon2,icon3;
@@ -117,6 +118,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState(){
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'socketconndevice');
     FNC.DartNotificationCenter.registerChannel(channel: 'socketconndevice');
@@ -133,9 +140,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
-    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch30');
-    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch30");
-    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch30", observer: null, onNotification: (options){
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch12');
+    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch12");
+    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch12", observer: null, onNotification: (options){
       print('SWNOtified:$options');
       swdetails();
     });
@@ -162,7 +169,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String sdev = dnum30.padLeft(4, '0');
     String rdev = notification.substring(4,8);
 
-    if(sdev.contains(rdev)){
+    if(sdev==(rdev)){
       print("enter sw30 responce");
       switch(notification[8]){
         case '0':

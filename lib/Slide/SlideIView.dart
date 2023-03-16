@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
@@ -31,13 +32,20 @@ class _SlideIViewState extends State<SlideIView> {
   bool closechange = false;
   bool stopchange = false;
 
-  String devicename = "name";
+  String devicename = "";
   String hnameslg,hnumslg,rnumslg,dnumslg,rnameslg,groupIdslg;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
+
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.subscribe(channel: 'MasterNotification', onNotification: (options) {
@@ -122,10 +130,10 @@ class _SlideIViewState extends State<SlideIView> {
     String cdev = dnumSl.padLeft(4, '0');
     String rdev = notification.substring(4, 8);
 
-    if (cdev.contains(rdev)) {
+    if (cdev==(rdev)) {
 
       String state = notification.substring(8,10);
-      if(state.contains("01")){
+      if(state==("01")){
 
         setState(() {
           openchange=true;
@@ -134,14 +142,14 @@ class _SlideIViewState extends State<SlideIView> {
         });
 
       }
-      else if(state.contains("02")){
+      else if(state==("02")){
         setState(() {
           openchange=false;
           closechange=true;
           stopchange=false;
         });
       }
-      else if(state.contains("03")){
+      else if(state==("03")){
         setState(() {
           openchange=false;
           closechange=false;
@@ -170,20 +178,19 @@ class _SlideIViewState extends State<SlideIView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
-                  Center(child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child:
-                    Text(
-                      devicename,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal
+                  Expanded(
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal
+                        ),
                       ),
-
-                      maxLines: 2,
-
-                    ),)
+                    ),
                   ),
 
                 ],

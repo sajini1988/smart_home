@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -121,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage>{
   bool imgchange5=false;
   bool fanimgchange=false;
 
-  String devicename="name51";
+  String devicename="";
 
   String hname51,hnum51,rnum51,dnum51,rname51,GroupId51;
   String icon1,icon2,icon3,icon4,icon5;
@@ -132,9 +133,16 @@ class _MyHomePageState extends State<MyHomePage>{
 
     super.initState();
 
-    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch51');
-    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch51");
-    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch51", observer: null, onNotification: (options){
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
+
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch141');
+    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch141");
+    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch141", observer: null, onNotification: (options){
       print('SWNOtified:$options');
       swdetails();
     });

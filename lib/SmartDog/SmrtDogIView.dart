@@ -1,5 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Singleton.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
@@ -18,7 +19,7 @@ class _SmartDogIViewState extends State<SmartDogIView> {
   GlobalService _globalService = GlobalService();
   var s = Singleton();
 
-  String devicename = "name";
+  String devicename = "";
   String status="OFF";
   String _hnamesdg,_hnumsdg,_rnumsdg,_dnumsdg,_rnamesdg,_groupIdsdg;
   Color colorBoth;
@@ -28,6 +29,12 @@ class _SmartDogIViewState extends State<SmartDogIView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     colorBoth=colorOff;
 
@@ -177,17 +184,15 @@ class _SmartDogIViewState extends State<SmartDogIView> {
                       ),
                     ),
                     Expanded(
-                      child:Center(
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            devicename,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontStyle: FontStyle.normal
-                            ),
-                            maxLines: 2,
+                      child: Center(
+                        child: Text(devicename, maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal
                           ),
                         ),
                       ),

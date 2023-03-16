@@ -399,12 +399,12 @@ class DBProvider {
 
   }
 
-  Future<int>updateServerTableHName(String ip,String port,String ssid,String hname ) async {
+  Future<int>updateServerTableHName(String ip,String port,String ssid,String rip,String hname ) async {
 
     print("update servertable");
     var dbClient = await database;
     int res = await dbClient.rawUpdate(
-        'UPDATE ServerTable SET  i = ? , p = ?, ss= ? WHERE dd = ? ',['$ip','$port','$ssid','$hname']);
+        'UPDATE ServerTable SET  i = ? , p = ?, ss= ?, ri = ? WHERE dd = ? ',['$ip','$port','$ssid','$rip','$hname']);
     print("update servertable $res");
     return res;
 

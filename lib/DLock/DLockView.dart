@@ -15,11 +15,13 @@ class DLockViewState extends StatefulWidget {
 
 class _DLockViewState extends State<DLockViewState> {
 
+
+
   GlobalService _globalService = GlobalService();
   var s=Singleton();
 
   String hnameLock,hnumLock,rnumLock,dnumLock,rnameLock,groupIdLock,dtypeLock;
-  String devicename="name";
+  String devicename="";
   String status="OPEN";
 
   @override
@@ -162,20 +164,20 @@ class _DLockViewState extends State<DLockViewState> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Center(
-                    child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        devicename,
+                  Expanded(
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal
                         ),
-                        maxLines: 2,
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
 

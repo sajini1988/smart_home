@@ -338,7 +338,8 @@ class _DeleteRoomPageState extends State<DeleteRoomPage>{
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Delete Room"),
+          toolbarHeight: 40,
+          title: Text("Delete Room",style:TextStyle(fontSize: 18)),
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
           actions: <Widget>[
 

@@ -13,7 +13,6 @@ class ACIViewState extends StatefulWidget {
   _ACIViewState createState() => _ACIViewState();
 
 }
-
 class _ACIViewState extends State<ACIViewState> {
 
   GlobalService _globalService = GlobalService();
@@ -21,7 +20,7 @@ class _ACIViewState extends State<ACIViewState> {
   var s=Singleton();
 
   String hnameAc,hnumAc,rnumAc,dnumAc,rnameAc,groupIdAc,dtypeAc;
-  String devicename="name";
+  String devicename="";
   String status="OFF";
   Color colorBoth;
   Color colorOn=Colors.green,colorOff=Colors.red;
@@ -125,8 +124,6 @@ class _ACIViewState extends State<ACIViewState> {
           colorBoth=colorOff;
         });
       }
-
-
     }
   }
 
@@ -160,17 +157,15 @@ class _ACIViewState extends State<ACIViewState> {
                     ),
                   ),
                   Expanded(
-                    child:Center(
-                      child: FittedBox(
-                      fit: BoxFit.fitWidth,
-                      child: Text(
-                        devicename,
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w600,
                             fontStyle: FontStyle.normal
-                        ),
-                        maxLines: 2,
                         ),
                       ),
                     ),
@@ -204,13 +199,10 @@ class _ACIViewState extends State<ACIViewState> {
                               fontStyle: FontStyle.normal
                           ),
                           maxLines: 2,
-
                         ),
                       ),
-
                     ),
                   )
-
                 ],
               ),
               Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.width/25),),

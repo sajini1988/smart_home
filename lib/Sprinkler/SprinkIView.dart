@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/Sprinkler/SprinkLayout.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -41,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var s=Singleton();
 
   String hnamespnk,hnumspnk,rnumspnk,dnumspnk,rnamespnk,groupIdspnk,dtypespnk;
-  String devicename="name";
+  String devicename="";
   String status="OFF";
 
   Color colorBoth;
@@ -51,6 +52,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     colorBoth=colorOff;
 
@@ -204,17 +211,15 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     Expanded(
-                      child:Center(
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: Text(
-                            devicename,
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontStyle: FontStyle.normal
-                            ),
-                            maxLines: 2,
+                      child: Center(
+                        child: Text(devicename, maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textDirection: TextDirection.rtl,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontStyle: FontStyle.normal
                           ),
                         ),
                       ),

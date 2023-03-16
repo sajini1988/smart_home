@@ -12,7 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 enum AddHome {LOCAL, REMOTE , URL, IP }
 Datagram dg;
 String ip;
-String ip_port, remoteip_port;
+String ipPort, remoteIpPort;
 
 class MyStatefulWidget extends StatefulWidget {
   MyStatefulWidget({Key key}) : super(key: key);
@@ -34,14 +34,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   // AddHome _site2 = AddHome.IP;
   // AddHome _site3 = AddHome.URL;
 
-  var _isVisibleuserid = false;
+  bool _isVisibleuserid = true;
   var _isVisibleurl = false;
   var _isVisibleip = false;
   var _isVisibleport = false;
-  var editbtn = false;
-  var connectbtn= false;
-  var urlv = false;
-  var ipv= false;
+  var editbtn = true;
+  var connectbtn= true;
+  var urlv = true;
+  var ipv= true;
 
   //bool _showCricle=false;
 
@@ -53,6 +53,14 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   GlobalService _globalService = GlobalService();
 
   String hname,hnum;
+
+  bool Local,Remote,urlradio,Ipradio;
+
+  Image radio = Image.asset('images/PIR/radio.png');
+  Image radio1 = Image.asset('images/PIR/radio01.png');
+
+  bool Remote_visible = true,editurl_visible= true;
+
 
 
   @override
@@ -66,6 +74,12 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
     );
     hname = _globalService.hname;
     hnum = _globalService.hnum;
+
+    Local=false;
+    Remote=true;
+    urlradio = true;
+    Ipradio = false;
+
 
   }
   @override
@@ -83,192 +97,303 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         appBar: AppBar(
             toolbarHeight: 40.0,
             backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-            title: Text("Download Home")
+            title: Text("Download Home",style:TextStyle(fontSize: 18))
         ),
         body:ListView(
           children:[
             Column(
                 children: <Widget>[
-                Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: const Text('LOCAL'),
-                      leading: Radio(
-                        value: AddHome.LOCAL,
-                        groupValue: _site,
-                        onChanged: (AddHome value) {
-                          setState(() {
-                          _site = value;
-                          urlv=false;
-                          ipv=false;
-                          connectbtn=false;
-                          _isVisibleip=false;
-                          _isVisibleport=false;
-                          _isVisibleuserid=false;
-                          _isVisibleurl=false;
-                          editbtn=false;
 
-                          });
-                        },
-                      ) ,
-                      onTap: ()async
-                      {
-                        showDialog(
-                            context: context,
-                            barrierDismissible:false ,
-                            builder: (BuildContext context) {
-                              return Center(child: CircularProgressIndicator(),);
-                            }
-                          );
+                  GestureDetector(
+                    onTap: ()async {
+                      setState(() {
+                        Local = true;
+                        Remote = false;
+                        urlradio = false;
+                        Ipradio = false;
+                        _isVisibleuserid = false;
+                        _isVisibleip = false;
+                        _isVisibleport = false;
+                        connectbtn = false;
+                        ipv = false;
 
-                        //buildShowDialog(context);
-                        lc="false";
-                        ip=await udp();
-                        if(ip.contains('getip')){
+                        urlv = false;
+                        Remote_visible = true;
+                        editurl_visible = false;
+                      });
 
-                          ip=await udp();
-                            // lc='false';
-                            //timer.cancel();
-                            //timer = Timer.periodic(Duration(milliseconds: 2), (timer) async{
-                            // await udp();
-                            // });
+                      showDialog(
+                          context: context,
+                          barrierDismissible:false ,
+                          builder: (BuildContext context) {
+                            return Center(child: CircularProgressIndicator(),);
                           }
-                          if(ip.startsWith("*")){
+                      );
 
-                            lc="true";
-                            //timer.cancel();
-                            //newtimer.cancel();
-                            int idx = ip.indexOf(":");
-                            //List iplist = [ip.substring(0,idx).trim(), ip.substring(idx+1).trim()];
-                            String port = ip.substring(idx+1).trim();
-                            int idx1 = port.indexOf(";");
-                            //List portlist = [port.substring(0,idx1).trim(), port.substring(idx1+1).trim()];
-                            String sip = ip.substring(1,idx).trim();
-                            print(sip);
+                      lc = "false";
+                      ip = await udp();
 
-                            String sport = port.substring(0,idx1).trim();
-                            print(sport);
+                      print("ip loop $ip");
 
-                            ip_port=sip+':'+sport;
+                      if(ip.contains('getip')){
+                        ip=await udp();
+                      }
 
-                            if(sip!=null){
+                      print("ip loop $ip");
 
-                              Navigator.of(context,rootNavigator: true).pop();
 
-                             // Navigator.pop(context);
+                      if(ip.startsWith('*')){
+                        lc="true";
+                        int idx = ip.indexOf(":");
+                        String port = ip.substring(idx+1).trim();
+                        int idx1 = port.indexOf(";");
+                        String sip = ip.substring(1,idx).trim();
+                        print(sip);
 
-                              Timer(Duration(milliseconds: 500), () async {
-                                final ConfirmAction action = await _asyncConfirmDialog(context);
-                                print(action);
-                              });
+                        String sport = port.substring(0,idx1).trim();
+                        print(sport);
 
+                        ipPort=sip+':'+sport;
+
+                        if(sip!=null){
+                          Navigator.of(context,rootNavigator: true).pop();
+
+                          // Navigator.pop(context);
+
+                          Timer(Duration(milliseconds: 500), () async {
+                            final ConfirmAction action = await _asyncConfirmDialog(context);
+                            print(action);
+                          });
+
+                        }
+                        else{
+                          print("Please check your Wi-Fi Connection OR IF Server is ON");
+
+                          Navigator.of(context,rootNavigator: true).pop();
+                          Timer(Duration(milliseconds: 500), () async {
+                            final ConfirmAction1 action = await _asyncConfirmDialog1(context);
+                            print(action);
+                          });
+
+                        }
+                      }
+                      else{
+
+                        print("Please check your Wifi Connection in Setting and Server is ON");
+
+                        //showAlertDialog(context);
+                        // Navigator.pop(context);
+
+                        Navigator.of(context,rootNavigator: true).pop();
+                        Timer(Duration(milliseconds: 500), () async {
+                          final ConfirmAction1 action = await _asyncConfirmDialog1(context);
+                          print(action);
+                        });
+
+
+                      }
+
+
+                    },
+                    child: Row(
+                      children: [
+                        Padding(padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                        Padding(padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                       // Expanded(flex:1,child: Container()),
+                        Expanded(flex:1,child: IconButton(
+                          splashRadius: 5.0,
+                          splashColor: Colors.blue,
+                          icon: Local?radio1:radio,
+                          onPressed: ()async{
+
+                            setState(() {
+                              Local = true;
+                              Remote = false;
+                              urlradio = false;
+                              Ipradio = false;
+                              _isVisibleuserid = false;
+                              _isVisibleip = false;
+                              _isVisibleport = false;
+                              connectbtn = false;
+                              ipv = false;
+
+                              urlv = false;
+                              Remote_visible = true;
+                              editurl_visible = false;
+                            });
+
+                            showDialog(
+                                context: context,
+                                barrierDismissible:false ,
+                                builder: (BuildContext context) {
+                                  return Center(child: CircularProgressIndicator(),);
+                                }
+                            );
+
+                            lc = "false";
+                            ip = await udp();
+                            if(ip==('getip')){
+                              ip=await udp();
                             }
-                            else {
 
-                              print("Please check your Wi-Fi Connection OR IF Server is ON");
+                            if(ip.startsWith('*')){
+                              print("star loop");
+                              lc="true";
+                              int idx = ip.indexOf(":");
+                              String port = ip.substring(idx+1).trim();
+                              int idx1 = port.indexOf(";");
+                              String sip = ip.substring(1,idx).trim();
+                              print(sip);
+
+                              String sport = port.substring(0,idx1).trim();
+                              print(sport);
+
+                              ipPort=sip+':'+sport;
+
+                              if(sip!=null){
+                                Navigator.of(context,rootNavigator: true).pop();
+
+                                // Navigator.pop(context);
+
+                                Timer(Duration(milliseconds: 500), () async {
+                                  final ConfirmAction action = await _asyncConfirmDialog(context);
+                                  print(action);
+                                });
+
+                              }
+                              else{
+                                print("Please check your Wi-Fi Connection OR IF Server is ON");
+
+                                Navigator.of(context,rootNavigator: true).pop();
+                                Timer(Duration(milliseconds: 500), () async {
+                                  final ConfirmAction1 action = await _asyncConfirmDialog1(context);
+                                  print(action);
+                                });
+
+                              }
+                            }
+                            else{
+
+                              print("Please check your Wifi Connection in Setting and Server is ON");
+
+                              //showAlertDialog(context);
+                              // Navigator.pop(context);
 
                               Navigator.of(context,rootNavigator: true).pop();
                               Timer(Duration(milliseconds: 500), () async {
                                 final ConfirmAction1 action = await _asyncConfirmDialog1(context);
                                 print(action);
                               });
-                              // Navigator.pop(context);
-
                             }
-                          }
-                          else{
+                            },
+                        ),
+                        ),
 
-                            print("Please check your Wifi Connection in Setting and Server is ON");
-
-                            //showAlertDialog(context);
-                            // Navigator.pop(context);
-
-                            Navigator.of(context,rootNavigator: true).pop();
-                            Timer(Duration(milliseconds: 500), () async {
-                              final ConfirmAction1 action = await _asyncConfirmDialog1(context);
-                              print(action);
-                            });
-                          }
-                     },
+                        Padding(padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                        Expanded(
+                          flex:8,
+                          child: Text("LOCAL",style: TextStyle(color: Color.fromRGBO(66, 130, 208, 1),fontSize: 20.0),),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-
-              Row(
-              children: [
-                Expanded(
-                child: ListTile(
-                  title: const Text('REMOTE'),
-                  leading: Radio(
-                    value: AddHome.REMOTE,
-                    groupValue: _site,
-                    onChanged: (AddHome value) {
-                      setState(() {
-
-                        _site = value;
-                        urlv=true;
-                        ipv=true;
-                        connectbtn=false;
-                        _isVisibleurl=false;
-                        _isVisibleuserid=false;
-                        _isVisibleip=false;
-                        _isVisibleport=false;
-                        editbtn=false;
-
-                      });
-                    },
+                  SizedBox(
+                    //  height: 60
+                    height: MediaQuery.of(context).size.height/30,
                   ),
-                  onTap:() {
+                  Visibility(
+                    visible: Remote_visible,
+                      child: InkWell(
+                        onTap: (){
+                          setState((){
+                            Local = false;
+                            Remote = true;
+                            _site = AddHome.REMOTE;
 
-                    setState(() {
-                      _site = AddHome.REMOTE;
-                      urlv=true;
-                      ipv=true;
-                      connectbtn=false;
-                      _isVisibleurl=false;
-                      _isVisibleuserid=false;
-                      _isVisibleip=false;
-                      _isVisibleport=false;
+                             _isVisibleuserid = true;
+                             _isVisibleurl = false;
+                            _isVisibleip = false;
+                            _isVisibleport = false;
+                            editbtn = true;
+                            connectbtn= true;
+                             urlv = true;
+                            ipv= true;
 
-                      });
-                    },
-                ),
-                ),
-              ],
-            ),
+                            Remote_visible = true;
+                            editurl_visible= true;
+
+                            urlradio = true;
+                            Ipradio = false;
+
+                          });
+                        },
+                        child: Row(
+                          children: [
+                            Padding(padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                            Padding(padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                            Expanded(
+                              flex:1,
+                               // child:Transform.scale(scale:1.30,
+                                  child: IconButton(
+                                    splashRadius: 5.0,
+                                    splashColor: Colors.blue,
+                                    icon: Remote?radio1:radio,
+                                    onPressed: (){
+                                      setState((){
+                                        Local=false;
+                                        Remote=true;
+                                        _site=AddHome.REMOTE;
+
+                                        _isVisibleuserid = true;
+                                        _isVisibleurl = false;
+                                        _isVisibleip = false;
+                                        _isVisibleport = false;
+                                        editbtn = true;
+                                        connectbtn= true;
+                                        urlv = true;
+                                        ipv= true;
+
+                                        Remote_visible = true;
+                                        editurl_visible= true;
+
+                                        urlradio = true;
+                                        Ipradio = false;
 
 
-              Visibility(
-              visible: urlv,
-                child: Padding(
-                  padding: const EdgeInsets.only(left:20.0),
-                  child:Row(
-                    children: [
+                                      });
+                                    },
+                                 // ),
+                                )
+                            ),
 
-                      Expanded(
-                      child: ListTile(
-                        title: const Text('URL'),
-                        leading: Radio(
-                          value: AddHome.URL,
-                          groupValue: _site,
-                          onChanged: (AddHome value) {
-                          setState(() {
-                            tag=0;
 
-                            _site = value;
+                            Padding(padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                            Expanded(
+                              flex:8,
+                              child: Text("REMOTE",style: TextStyle(color: Colors.grey[500],fontSize: 20.0),),
+                            ),
+
+                          ],
+                        ),
+                      )
+                  ),
+
+                  Visibility(visible: urlv,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: InkWell(
+                        onTap: (){
+                          setState((){
+                            urlradio = true;
+                            Ipradio = false;
+                            tag = 0;
+
+                            //_site = value;
                             editbtn = true;
                             _isVisibleuserid=true;
                             _isVisibleip = false;
                             _isVisibleport = false;
                             connectbtn=true;
-                          });
-                        },
-                      ),
-                        onTap:(){
-
-                          setState(() {
                             tag=0;
 
                             _site = AddHome.URL;
@@ -277,166 +402,240 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                             _isVisibleip = false;
                             _isVisibleport = false;
                             connectbtn=true;
-                          });
 
-                          } ,
-                      ),
-                      ),
-                  ],
-                ),
-                ),
-              ),
-              Padding(
-
-              padding: const EdgeInsets.only(left: 50.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Visibility(
-                    visible:editbtn,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Colors.white),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side:BorderSide(color:Colors.black38,width: 2.0)))),
-                        child:Text('EDIT URL',style:TextStyle(color:Colors.black,fontWeight: FontWeight.w300,),),
-                        onPressed: (){
-                          setState(() {
-                            _isVisibleurl=true;
                           });
                         },
+
+                        child: Row(
+                          children: [
+                            Padding(padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                            Expanded(
+                              flex:1,child:Container()
+                            ),
+                            Expanded(
+                              flex:1,
+                              child: IconButton(
+                                splashRadius: 5.0,
+                                splashColor:Colors.blue,
+                                icon:urlradio?radio1:radio,
+                                onPressed: (){
+                                  setState((){
+                                    urlradio = true;
+                                    Ipradio = false;
+                                    tag=0;
+                                    editbtn = true;
+                                    _isVisibleip = false;
+                                    _isVisibleport = false;
+                                    connectbtn=true;
+                                    tag=0;
+                                    _site = AddHome.URL;
+                                    editbtn = true;
+                                    _isVisibleuserid=true;
+                                    _isVisibleip = false;
+                                    _isVisibleport = false;
+                                    connectbtn=true;
+
+                                  });
+                                },
+                              ),
+                            ),
+
+                            Expanded(
+                              flex:8,
+                              child: Text("URL",style: TextStyle(color: Colors.grey[500],fontSize: 18.0),),
+                            ),
+                          ],
+                        ),
                       ),
+                    ),
                   ),
-                ],
-              ),
-              ),
-              Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Visibility(
-                visible: _isVisibleurl,
-                  child: Expanded(
-                    child: Padding(padding: EdgeInsets.only(left:10.0),
-                      child:TextFormField(
-                        controller: urlcontroller,
-                        // initialValue: "https://edisonbro.in/automation/remoteip.php?q=",
-                        decoration: InputDecoration(labelText: 'URL'),
+                  Padding(
+                    padding:const EdgeInsets.only(left:50.0),
+                    child: Visibility(
+                      visible: editurl_visible,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Visibility(
+                            visible: editbtn,
+                            child: ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.white),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    side: BorderSide(
+                                      color: Colors.grey[300],width: 0.0)))),
+                                  child: Text('EDIT URL',style:TextStyle(
+                                    color: Colors.grey[600],fontWeight: FontWeight.w300,),
+                                  ),
+                              onPressed: (){
+                                setState((){
+                                  _isVisibleurl=true;
+                                });
+                              },
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        flex:1,
+                        child: Container()
+                      ),
+                      _isVisibleurl?Expanded(
+                        flex:4,
+                        child: Padding(padding:EdgeInsets.only(left:10.0),
+                          child: TextFormField(
+                            controller: urlcontroller,
+                            decoration: InputDecoration(labelText:'"URL'),
+                          ),
+                        ),
+                      ):Expanded(
+                        child: Container()),
+
+                      Padding(padding:EdgeInsets.all(8.0)),
+                      Visibility(
+                        visible: _isVisibleuserid,
+                        child: Expanded(
+                          flex:4,
+                          child:Padding(
+                            padding:EdgeInsets.only(left:0.0),
+                            child:TextField(controller:use_idcontroller,
+                            decoration:InputDecoration(labelText: 'USER_ID'),
+                            )
+                          )
+                        ),
+                      )
+                    ],
+                  ),
+                  Visibility(
+                    visible:ipv,
+                    child:Padding(
+                      padding: const EdgeInsets.only(left:20.0),
+                      child:InkWell(
+                        onTap: (){
+                          setState((){
+                            urlradio = false;
+                            Ipradio = true;
+                            tag=1;
+
+                            _isVisibleip = true;
+                            _isVisibleport = true;
+
+                            _isVisibleuserid = false;
+                            _isVisibleurl = false;
+                            editbtn = false;
+                            connectbtn=true;
+                            _site = AddHome.IP;
+
+                          });
+                        },
+                        child: Row(
+                          children: [
+
+                            Padding(padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),),
+                            Expanded(flex:1,child:Container()),
+                            Expanded(
+                              flex:1,
+                             // child: Transform.scale(
+                                //scale:1.30,
+                                child: IconButton(
+                                  splashRadius:5.0,
+                                  splashColor: Colors.blue,
+                                  icon:Ipradio?radio1:radio,
+                                  onPressed: (){
+                                    setState((){
+                                      urlradio = false;
+                                      Ipradio= true;
+
+                                      tag = 1;
+
+                                      _isVisibleip = true;
+                                      _isVisibleport=true;
+                                      _isVisibleuserid = false;
+                                      _isVisibleurl = false;
+                                      editbtn = false;
+                                      connectbtn = true;
+                                      _site = AddHome.IP;
+
+                                    });
+                                  },
+
+                               // ),
+                              ),
+                            ),
+                            Expanded(
+                              flex:8,
+                              child: Text("IP",style: TextStyle(color: Colors.grey[500],fontSize: 18.0),),
+                            ),
+
+                          ],
+                        ),
                       ),
 
                     )
-                )
-              ),
-              Padding(padding: EdgeInsets.all(8.0)),
-              Visibility(
-                visible: _isVisibleuserid,
-                child: Expanded(
-                  child: Padding(padding: EdgeInsets.only(left:10.0),
-                    child: TextField(
-                          controller: use_idcontroller,
-                          decoration: InputDecoration(labelText: 'USER_ID'),
+                  ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex:2,child: Container()
+                  ),
+                  Visibility(
+                      visible: _isVisibleip,
+                      child:Expanded(
+                        flex:4,
+                        child:Padding(
+                          padding: EdgeInsets.only(left:10.0),
+                          child:TextField(
+                            controller:ipcontroller,
+                            decoration:InputDecoration(labelText: 'IP'),
+                          ),
+                        ),
+                      ),
+                  ),
+
+                  Padding(padding: EdgeInsets.all(8.0)),
+                  Visibility(
+                    visible: _isVisibleport,
+                    child:Expanded(
+                      flex:4,
+                      child: Padding(
+                        padding:const EdgeInsets.only(left:10.0),
+                        child:Theme(
+                          data:new ThemeData(
+
+                          ),
+                          child: TextField(
+                            cursorColor: Colors.lightBlueAccent,
+                            controller: portcontroller,
+                            decoration: InputDecoration(labelText: 'PORT'),
+                          ),
                         )
                       ),
-                    ),
-                  ),
+                    )
+                  )
                 ],
               ),
-              Visibility(
-                visible: ipv,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ListTile(
-                          title: const Text('IP'),
-                          leading: Radio(
-                            value: AddHome.IP,
-                            groupValue: _site,
-                            onChanged: (AddHome value) {
-                              setState(() {
-
-                                tag=1;
-                                _site = value;
-                                _isVisibleip = true;
-                                _isVisibleport = true;
-
-                                _isVisibleuserid = false;
-                                _isVisibleurl = false;
-                                editbtn = false;
-                                connectbtn=true;
-                              });
-                            },
-                          ),
-                          onTap: (){
-
-                            setState(() {
-
-                              tag=1;
-                              _site = AddHome.IP;
-                              _isVisibleip = true;
-                              _isVisibleport = true;
-
-                              _isVisibleuserid = false;
-                              _isVisibleurl = false;
-                              editbtn = false;
-                              connectbtn=true;
-                            });
-
-
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-
-
-                ),
-              ),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                     Visibility(
-                        visible: _isVisibleip,
-                        child: Expanded(
-                        child: Padding(padding: EdgeInsets.only(left: 10.0),
-                          child: TextField(
-                            controller: ipcontroller,
-                            decoration: InputDecoration(labelText: 'IP'),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(padding: EdgeInsets.all(8.0)),
-                    Visibility(
-                      visible: _isVisibleport,
-                      child: Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: TextField(
-                              controller: portcontroller,
-                              decoration: InputDecoration(labelText: 'PORT'),
-                          ),
-                        ),
-                       ),
-                    ),
-                  ],
-              ),
               Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Visibility(
-                    visible: connectbtn,
-                    child: ElevatedButton(
-                      style: ButtonStyle(
-                          //backgroundColor: MaterialStateProperty.all(Colors.white),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0),
-                                    side: BorderSide(color: Colors.black38, width: 2.0)))),
-                      child: Text('Connect',style: TextStyle(fontSize: 20.0),),
-                      onPressed: () {
-                          print("Iam url: ${urlcontroller.text}");
+                padding:const EdgeInsets.only(top:20.0),
+                child:Visibility(
+                  visible:connectbtn,
+                    child:ElevatedButton(
+                      style:ElevatedButton.styleFrom(
+                        primary: Color.fromRGBO(66, 130, 208, 1),
+                        shape:StadiumBorder()
+                    ),
+                      child:Text('CONNECT',style:TextStyle(fontSize:20.0,fontWeight:FontWeight.w400)),
+                      onPressed: (){
+
+
+                        print("Iam url: ${urlcontroller.text}");
                           print("Iam user id: ${use_idcontroller.text}");
                           String get = urlcontroller.text+use_idcontroller.text;
                           print("i am concatinated: $get");
@@ -458,15 +657,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
                                 Navigator.of(context,rootNavigator: true).pop();
                                 print("Yeah, this line is printed after 3 seconds");
-                                if (remoteip_port != null) {
+                                if (remoteIpPort != null) {
 
 
                                  Timer(Duration(milliseconds: 100),(){
                                    Navigator.of(context).push(
                                        MaterialPageRoute(builder: (context) =>
-                                           Downloadhome(todo: remoteip_port)));
+                                           Downloadhome(todo: remoteIpPort)));
                                    print(
-                                       "I am Remote IP:PORT going to download home page $remoteip_port");
+                                       "I am Remote IP:PORT going to download home page $remoteIpPort");
                                  });
 
                                 }
@@ -490,25 +689,450 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                               //buildShowRDialog(context);
                               String MIP = ipcontroller.text;
                               String MPORT = portcontroller.text;
-                              ip_port = MIP + ':' + MPORT;
-                              print("manual ip: port is: $ip_port");
+                              ipPort = MIP + ':' + MPORT;
+                              print("manual ip: port is: $ipPort");
 
                               Navigator.of(context).push(
 
                                   MaterialPageRoute(builder: (context) =>
-                                      Downloadhome(todo: ip_port)));
+                                      Downloadhome(todo: ipPort)));
                               print(
-                                  "I am Manual  IP:PORT going to download home page $ip_port");
+                                  "I am Manual  IP:PORT going to download home page $ipPort");
                             }
                             else {
                               buildshowEIP_PDialog(context);
                             }
                           }
-                    },
-                    ),
-                  ),
+
+                      },
                 ),
-              ],
+                )
+              )
+
+
+
+
+            //       Row(
+            //         children: [
+            //         Expanded(
+            //           child: ListTile(
+            //             title: const Text('LOCAL'),
+            //             leading: Radio(
+            //             value: AddHome.LOCAL,
+            //             groupValue: _site,
+            //             onChanged: (AddHome value) {
+            //               setState(() {
+            //               _site = value;
+            //               urlv=false;
+            //               ipv=false;
+            //               connectbtn=false;
+            //               _isVisibleip=false;
+            //               _isVisibleport=false;
+            //               _isVisibleuserid=false;
+            //               _isVisibleurl=false;
+            //               editbtn=false;
+            //
+            //               });
+            //             },
+            //           ) ,
+            //           onTap: ()async
+            //           {
+            //             showDialog(
+            //                 context: context,
+            //                 barrierDismissible:false ,
+            //                 builder: (BuildContext context) {
+            //                   return Center(child: CircularProgressIndicator(),);
+            //                 }
+            //               );
+            //
+            //             //buildShowDialog(context);
+            //             lc="false";
+            //             ip=await udp();
+            //             if(ip.contains('getip')){
+            //
+            //               ip=await udp();
+            //                 // lc='false';
+            //                 //timer.cancel();
+            //                 //timer = Timer.periodic(Duration(milliseconds: 2), (timer) async{
+            //                 // await udp();
+            //                 // });
+            //               }
+            //               if(ip.startsWith("*")){
+            //
+            //                 lc="true";
+            //                 //timer.cancel();
+            //                 //newtimer.cancel();
+            //                 int idx = ip.indexOf(":");
+            //                 //List iplist = [ip.substring(0,idx).trim(), ip.substring(idx+1).trim()];
+            //                 String port = ip.substring(idx+1).trim();
+            //                 int idx1 = port.indexOf(";");
+            //                 //List portlist = [port.substring(0,idx1).trim(), port.substring(idx1+1).trim()];
+            //                 String sip = ip.substring(1,idx).trim();
+            //                 print(sip);
+            //
+            //                 String sport = port.substring(0,idx1).trim();
+            //                 print(sport);
+            //
+            //                 ip_port=sip+':'+sport;
+            //
+            //                 if(sip!=null){
+            //
+            //                   Navigator.of(context,rootNavigator: true).pop();
+            //
+            //                  // Navigator.pop(context);
+            //
+            //                   Timer(Duration(milliseconds: 500), () async {
+            //                     final ConfirmAction action = await _asyncConfirmDialog(context);
+            //                     print(action);
+            //                   });
+            //
+            //                 }
+            //                 else {
+            //
+            //                   print("Please check your Wi-Fi Connection OR IF Server is ON");
+            //
+            //                   Navigator.of(context,rootNavigator: true).pop();
+            //                   Timer(Duration(milliseconds: 500), () async {
+            //                     final ConfirmAction1 action = await _asyncConfirmDialog1(context);
+            //                     print(action);
+            //                   });
+            //                   // Navigator.pop(context);
+            //
+            //                 }
+            //               }
+            //               else{
+            //
+            //                 print("Please check your Wifi Connection in Setting and Server is ON");
+            //
+            //                 //showAlertDialog(context);
+            //                 // Navigator.pop(context);
+            //
+            //                 Navigator.of(context,rootNavigator: true).pop();
+            //                 Timer(Duration(milliseconds: 500), () async {
+            //                   final ConfirmAction1 action = await _asyncConfirmDialog1(context);
+            //                   print(action);
+            //                 });
+            //               }
+            //          },
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            //
+            //   Row(
+            //   children: [
+            //     Expanded(
+            //     child: ListTile(
+            //       title: const Text('REMOTE'),
+            //       leading: Radio(
+            //         value: AddHome.REMOTE,
+            //         groupValue: _site,
+            //         onChanged: (AddHome value) {
+            //           setState(() {
+            //
+            //             _site = value;
+            //             urlv=true;
+            //             ipv=true;
+            //             connectbtn=false;
+            //             _isVisibleurl=false;
+            //             _isVisibleuserid=false;
+            //             _isVisibleip=false;
+            //             _isVisibleport=false;
+            //             editbtn=false;
+            //
+            //           });
+            //         },
+            //       ),
+            //       onTap:() {
+            //
+            //         setState(() {
+            //           _site = AddHome.REMOTE;
+            //           urlv=true;
+            //           ipv=true;
+            //           connectbtn=false;
+            //           _isVisibleurl=false;
+            //           _isVisibleuserid=false;
+            //           _isVisibleip=false;
+            //           _isVisibleport=false;
+            //
+            //           });
+            //         },
+            //     ),
+            //     ),
+            //   ],
+            // ),
+            //
+            //
+            //   Visibility(
+            //   visible: urlv,
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(left:20.0),
+            //       child:Row(
+            //         children: [
+            //
+            //           Expanded(
+            //           child: ListTile(
+            //             title: const Text('URL'),
+            //             leading: Radio(
+            //               value: AddHome.URL,
+            //               groupValue: _site,
+            //               onChanged: (AddHome value) {
+            //               setState(() {
+            //                 tag=0;
+            //
+            //                 _site = value;
+            //                 editbtn = true;
+            //                 _isVisibleuserid=true;
+            //                 _isVisibleip = false;
+            //                 _isVisibleport = false;
+            //                 connectbtn=true;
+            //               });
+            //             },
+            //           ),
+            //             onTap:(){
+            //
+            //               setState(() {
+            //                 tag=0;
+            //
+            //                 _site = AddHome.URL;
+            //                 editbtn = true;
+            //                 _isVisibleuserid=true;
+            //                 _isVisibleip = false;
+            //                 _isVisibleport = false;
+            //                 connectbtn=true;
+            //               });
+            //
+            //               } ,
+            //           ),
+            //           ),
+            //       ],
+            //     ),
+            //     ),
+            //   ),
+            //   Padding(
+            //
+            //   padding: const EdgeInsets.only(left: 50.0),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       Visibility(
+            //         visible:editbtn,
+            //         child: ElevatedButton(
+            //           style: ButtonStyle(
+            //             backgroundColor: MaterialStateProperty.all(Colors.white),
+            //             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            //                 RoundedRectangleBorder(
+            //                     borderRadius: BorderRadius.circular(18.0),
+            //                     side:BorderSide(color:Colors.black38,width: 2.0)))),
+            //             child:Text('EDIT URL',style:TextStyle(color:Colors.black,fontWeight: FontWeight.w300,),),
+            //             onPressed: (){
+            //               setState(() {
+            //                 _isVisibleurl=true;
+            //               });
+            //             },
+            //           ),
+            //       ),
+            //     ],
+            //   ),
+            //   ),
+            //   Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //   children: [
+            //     Visibility(
+            //     visible: _isVisibleurl,
+            //       child: Expanded(
+            //         child: Padding(padding: EdgeInsets.only(left:10.0),
+            //           child:TextFormField(
+            //             controller: urlcontroller,
+            //             // initialValue: "https://edisonbro.in/automation/remoteip.php?q=",
+            //             decoration: InputDecoration(labelText: 'URL'),
+            //           ),
+            //
+            //         )
+            //     )
+            //   ),
+            //   Padding(padding: EdgeInsets.all(8.0)),
+            //   Visibility(
+            //     visible: _isVisibleuserid,
+            //     child: Expanded(
+            //       child: Padding(padding: EdgeInsets.only(left:10.0),
+            //         child: TextField(
+            //               controller: use_idcontroller,
+            //               decoration: InputDecoration(labelText: 'USER_ID'),
+            //             )
+            //           ),
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            //   Visibility(
+            //     visible: ipv,
+            //     child: Padding(
+            //       padding: const EdgeInsets.only(left: 20.0),
+            //       child: Row(
+            //         children: [
+            //           Expanded(
+            //             child: ListTile(
+            //               title: const Text('IP'),
+            //               leading: Radio(
+            //                 value: AddHome.IP,
+            //                 groupValue: _site,
+            //                 onChanged: (AddHome value) {
+            //                   setState(() {
+            //
+            //                     tag=1;
+            //                     _site = value;
+            //                     _isVisibleip = true;
+            //                     _isVisibleport = true;
+            //
+            //                     _isVisibleuserid = false;
+            //                     _isVisibleurl = false;
+            //                     editbtn = false;
+            //                     connectbtn=true;
+            //                   });
+            //                 },
+            //               ),
+            //               onTap: (){
+            //
+            //                 setState(() {
+            //
+            //                   tag=1;
+            //                   _site = AddHome.IP;
+            //                   _isVisibleip = true;
+            //                   _isVisibleport = true;
+            //
+            //                   _isVisibleuserid = false;
+            //                   _isVisibleurl = false;
+            //                   editbtn = false;
+            //                   connectbtn=true;
+            //                 });
+            //
+            //
+            //               },
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //
+            //
+            //     ),
+            //   ),
+            //   Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //          Visibility(
+            //             visible: _isVisibleip,
+            //             child: Expanded(
+            //             child: Padding(padding: EdgeInsets.only(left: 10.0),
+            //               child: TextField(
+            //                 controller: ipcontroller,
+            //                 decoration: InputDecoration(labelText: 'IP'),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         Padding(padding: EdgeInsets.all(8.0)),
+            //         Visibility(
+            //           visible: _isVisibleport,
+            //           child: Expanded(
+            //             child: Padding(
+            //               padding: const EdgeInsets.only(left: 10.0),
+            //               child: TextField(
+            //                   controller: portcontroller,
+            //                   decoration: InputDecoration(labelText: 'PORT'),
+            //               ),
+            //             ),
+            //            ),
+            //         ),
+            //       ],
+            //   ),
+            //   Padding(
+            //       padding: const EdgeInsets.only(top: 20.0),
+            //       child: Visibility(
+            //         visible: connectbtn,
+            //         child: ElevatedButton(
+            //           style: ButtonStyle(
+            //               //backgroundColor: MaterialStateProperty.all(Colors.white),
+            //               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            //                     RoundedRectangleBorder(
+            //                         borderRadius: BorderRadius.circular(18.0),
+            //                         side: BorderSide(color: Colors.black38, width: 2.0)))),
+            //           child: Text('Connect',style: TextStyle(fontSize: 20.0),),
+            //           onPressed: () {
+            //               print("Iam url: ${urlcontroller.text}");
+            //               print("Iam user id: ${use_idcontroller.text}");
+            //               String get = urlcontroller.text+use_idcontroller.text;
+            //               print("i am concatinated: $get");
+            //               print("Iam ip_text: ${ipcontroller.text}");
+            //               print("Iam port_text: ${portcontroller.text}");
+            //               if(tag==0) {
+            //
+            //                 if (use_idcontroller.text.isNotEmpty) {
+            //                   print("user_id is filled:");
+            //                   showDialog(
+            //                       context: context,
+            //                       barrierDismissible:false ,
+            //                       builder: (BuildContext context) {
+            //                         return Center(child: CircularProgressIndicator(),);
+            //                       });
+            //
+            //                   remoteConnection();
+            //                   Timer(Duration(seconds: 3), () {
+            //
+            //                     Navigator.of(context,rootNavigator: true).pop();
+            //                     print("Yeah, this line is printed after 3 seconds");
+            //                     if (remoteip_port != null) {
+            //
+            //
+            //                      Timer(Duration(milliseconds: 100),(){
+            //                        Navigator.of(context).push(
+            //                            MaterialPageRoute(builder: (context) =>
+            //                                Downloadhome(todo: remoteip_port)));
+            //                        print(
+            //                            "I am Remote IP:PORT going to download home page $remoteip_port");
+            //                      });
+            //
+            //                     }
+            //                     else {
+            //
+            //                       Timer(Duration(milliseconds: 100),(){
+            //                         buildShowEDialog(context);
+            //                       });
+            //
+            //                     }
+            //                   });
+            //                 }
+            //                 else {
+            //                   buildShowEUIDDialog(context);
+            //                 }
+            //               }
+            //               else if(tag==1) {
+            //                 if (ipcontroller.text.isNotEmpty &&
+            //                     portcontroller.text.isNotEmpty) {
+            //                   //ManualRemoteConnection();
+            //                   //buildShowRDialog(context);
+            //                   String MIP = ipcontroller.text;
+            //                   String MPORT = portcontroller.text;
+            //                   ip_port = MIP + ':' + MPORT;
+            //                   print("manual ip: port is: $ip_port");
+            //
+            //                   Navigator.of(context).push(
+            //
+            //                       MaterialPageRoute(builder: (context) =>
+            //                           Downloadhome(todo: ip_port)));
+            //                   print(
+            //                       "I am Manual  IP:PORT going to download home page $ip_port");
+            //                 }
+            //                 else {
+            //                   buildshowEIP_PDialog(context);
+            //                 }
+            //               }
+            //         },
+            //         ),
+            //       ),
+            //     ),
+
+                ],
             ),
           ],
         ),
@@ -534,10 +1158,10 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         String IP = (data[0]['IP']);
         String Port = (data[0]['PORT']);
 
-        remoteip_port = IP+':'+Port;
-        print("iam Remote ip:port $remoteip_port");
-        ip_port = remoteip_port;
-        print("rrip: $ip_port");
+        remoteIpPort = IP+':'+Port;
+        print("iam Remote ip:port $remoteIpPort");
+        ipPort = remoteIpPort;
+        print("rrip: $ipPort");
       }
       else{
         print("Error while downloading");
@@ -560,8 +1184,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   void ManualRemoteConnection() {
     String MIP = ipcontroller.text;
     String MPORT = portcontroller.text;
-    ip_port = MIP+':'+MPORT;
-    print("manual ip: port is: $ip_port");
+    ipPort = MIP+':'+MPORT;
+    print("manual ip: port is: $ipPort");
   }
 
   progressIos() {
@@ -710,7 +1334,7 @@ Future<ConfirmAction> _asyncConfirmDialog(BuildContext context) async {
               //         (Route<dynamic> route) => false
               // );
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => Downloadhome(todo: ip_port)));
+                  MaterialPageRoute(builder: (context) => Downloadhome(todo: ipPort)));
             },
           )
         ],
@@ -744,15 +1368,15 @@ Future<ConfirmAction1> _asyncConfirmDialog1(BuildContext context) async {
 
 fluttertoast(String message){
 
-  Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.grey,
-      textColor: Colors.white,
-      fontSize: 16.0
-  );
+  // Fluttertoast.showToast(
+  //     msg: message,
+  //     toastLength: Toast.LENGTH_SHORT,
+  //     gravity: ToastGravity.BOTTOM,
+  //     timeInSecForIosWeb: 1,
+  //     backgroundColor: Colors.grey,
+  //     textColor: Colors.white,
+  //     fontSize: 16.0
+  // );
 
 }
 
@@ -798,11 +1422,14 @@ Future<String>udp() async{
   }
 
   var dESTINATIONADDRESS=InternetAddress(ipNew);
-  print(dESTINATIONADDRESS);
+  print("destination $dESTINATIONADDRESS");
 
   ip="";
 
-  RawDatagramSocket.bind(InternetAddress.anyIPv4, 9952).then((RawDatagramSocket udpSocket) {
+
+
+  RawDatagramSocket.bind(InternetAddress.anyIPv4, 9952).then((RawDatagramSocket udpSocket) async {
+    print("enter socket");
     udpSocket.broadcastEnabled = true;
     udpSocket.listen((e) {
       Datagram dg = udpSocket.receive();
@@ -822,10 +1449,13 @@ Future<String>udp() async{
 
       }
 
+
     });
 
     List<int> data = utf8.encode('getip\r\n');
     udpSocket.send(data, dESTINATIONADDRESS, 9952);
+    await Future.delayed(Duration(seconds: 5));
+    udpSocket.close();
     print("data sent");
 
   });

@@ -30,7 +30,7 @@ class _Downloadhome extends State<Downloadhome> {
   double errorContainerHeight = 0.0;
   //final _formKey = GlobalKey<FormState>();
   GlobalKey<FormState> _key = new GlobalKey();
- // bool _autoValidate = false;
+  // bool _autoValidate = false;
   var hName;
   DBHelper dbHelper;
   Future<List<Student>> students;
@@ -68,6 +68,8 @@ class _Downloadhome extends State<Downloadhome> {
   Timer timer;
   Timer timer1;
 
+  bool _passwordVisible;
+
   void _onFocusChange(){
     SystemChrome.setEnabledSystemUIMode
       (SystemUiMode.manual, overlays: [SystemUiOverlay.bottom]);// hide status + action buttons
@@ -89,12 +91,14 @@ class _Downloadhome extends State<Downloadhome> {
     _focus2.addListener(_onFocusChange);
     _focus3.addListener(_onFocusChange);
 
-    print("Remote and local $ip_port");
+    print("Remote and local $ipPort");
 
     cleartext();
     dbHelper = DBHelper();
     refreshStudentList();
     print(students);
+
+    _passwordVisible = false;
 
     //Remote and local 192.168.0.105:9951
 
@@ -129,7 +133,7 @@ class _Downloadhome extends State<Downloadhome> {
           appBar: AppBar(
               toolbarHeight: 40.0,
               backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-              title: Text("Download Home")
+              title: Text("Download Home",style:TextStyle(fontSize: 18))
           ),
 
           body: Form(
@@ -162,7 +166,7 @@ class _Downloadhome extends State<Downloadhome> {
                         focusNode: _focus2,
                         maxLength: 8,
                         validator: _validatePwd,
-                        obscureText: true,
+                        obscureText: !_passwordVisible,
                         controller: passwordController,
                         decoration: InputDecoration(
                           counterText: '',
@@ -170,6 +174,21 @@ class _Downloadhome extends State<Downloadhome> {
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           labelText: 'Enter Password',
+                          // suffixIcon: IconButton(
+                          //   icon: Icon(
+                          //     // Based on passwordVisible state choose the icon
+                          //     _passwordVisible
+                          //         ? Icons.visibility
+                          //         : Icons.visibility_off,
+                          //     color: Theme.of(context).primaryColorDark,
+                          //   ),
+                          //   onPressed: () {
+                          //     // Update the state i.e. toogle the state of passwordVisible variable
+                          //     setState(() {
+                          //       _passwordVisible = !_passwordVisible;
+                          //     });
+                          //   },
+                          // ),
                         ),
 
                       ),
@@ -193,6 +212,24 @@ class _Downloadhome extends State<Downloadhome> {
                     ),
 
                     Container(
+
+                        child:CheckboxListTile(
+                          title: Transform.translate(
+                              offset: const Offset(0, 0),
+                              child: Text("Show Password",style: TextStyle(color: Colors.black),)),
+                          value: _passwordVisible,
+                          onChanged: (newValue) {
+                            setState(() {
+
+                              _passwordVisible = newValue;
+                            });
+                          },
+                          controlAffinity: ListTileControlAffinity.leading,  //  <-- leading Checkbox
+                        )
+                    ),
+
+
+                    Container(
                         height: 50,
                         padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: Wrap(
@@ -201,7 +238,7 @@ class _Downloadhome extends State<Downloadhome> {
 
                             ElevatedButton(
                                 child: Text('Clear', style: TextStyle(color: Colors.white),),
-                                  style: ElevatedButton.styleFrom(
+                                style: ElevatedButton.styleFrom(
                                   onPrimary: Colors.white,
                                   primary: Color.fromRGBO(66, 130, 208, 1),
                                   onSurface: Colors.grey,
@@ -228,13 +265,15 @@ class _Downloadhome extends State<Downloadhome> {
 
                                   print("enter download");
 
-                                  int idx = ip_port.indexOf(":");
+                                  print(ipPort);
+
+                                  int idx = ipPort.indexOf(":");
                                   // List parts = [ip.substring(0,idx).trim(), ip.substring(idx+1).trim()];
                                   // print(parts);
 
                                   //server Ip and Port Adress
-                                  serverip = ip_port.substring(0,idx).trim();
-                                  serverport = ip_port.substring(idx+1).trim();
+                                  serverip = ipPort.substring(0,idx).trim();
+                                  serverport = ipPort.substring(idx+1).trim();
                                   serverportaddress = int.parse(serverport);
 
                                   print(serverport);
@@ -270,7 +309,7 @@ class _Downloadhome extends State<Downloadhome> {
                                   }
                                   else{
 
-                                  //  showAlertDialogerror_text(context);
+                                    //  showAlertDialogerror_text(context);
 
                                   }
                                 }
@@ -517,7 +556,7 @@ class _Downloadhome extends State<Downloadhome> {
               socketconnect = true;
               ok="*OK#";
             }
-            else if (decrypt==('*ERRUSER#')) {
+            else if (decrypt.contains('*ERRUSER#')) {
               ok="false";
               socket.destroy();
               socketconnect=false;
@@ -554,8 +593,8 @@ class _Downloadhome extends State<Downloadhome> {
                 File(path).writeAsBytes(
                     buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
 
-               // socket.destroy();
-              //  close();
+                // socket.destroy();
+                //  close();
 
                 DBProvider.db.close();
                 DBProvider.dbname = download.text;
@@ -614,7 +653,7 @@ class _Downloadhome extends State<Downloadhome> {
           },
           // handle server ending connection
           onDone: () {
-           // socketconnect = true;
+            // socketconnect = true;
             print("close");
           },
 
@@ -631,9 +670,9 @@ class _Downloadhome extends State<Downloadhome> {
         showAlertDialogerr(this.context);
         print('Socket Error: $e');
       } on Error catch (e) {
-       // Navigator.of(this.context,rootNavigator: true).pop();
-       // socketconnect=false;
-      //  showAlertDialogerr(this.context);
+        // Navigator.of(this.context,rootNavigator: true).pop();
+        // socketconnect=false;
+        //  showAlertDialogerr(this.context);
         print('General Error: $e');
       }
     }
@@ -842,7 +881,7 @@ class _Downloadhome extends State<Downloadhome> {
         TextButton(
           onPressed: () {
 
-            },
+          },
           child: Text("OK"),
         ),
       ],
@@ -915,7 +954,7 @@ class _Downloadhome extends State<Downloadhome> {
 
             }
             //Navigator.canPop(this.context);
-           // Navigator.of(this.context,rootNavigator: true).pop();
+            // Navigator.of(this.context,rootNavigator: true).pop();
             // Navigator.of(context1).pop();
             // if (Platform.isAndroid) {
             //   SystemNavigator.pop();

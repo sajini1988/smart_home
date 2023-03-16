@@ -32,7 +32,7 @@ class _SingleCurtainState extends State<SingleCurtain> {
   bool closeChange = false;
   bool stopChange = false;
 
-  String devicename = "name";
+  String devicename = "";
   String hnameSCur,hnumSCur,rnumSCur,dnumSCur,rnameSCur,groupIdSCur;
 
   @override
@@ -131,7 +131,7 @@ class _SingleCurtainState extends State<SingleCurtain> {
     if (cdev.contains(rdev)) {
 
       String state = notification.substring(8,10);
-      if(state.contains("01")){
+      if(state==("01")){
 
         setState(() {
           openChange=true;
@@ -140,14 +140,14 @@ class _SingleCurtainState extends State<SingleCurtain> {
         });
 
       }
-      else if(state.contains("02")){
+      else if(state==("02")){
         setState(() {
           openChange=false;
           closeChange=true;
           stopChange=false;
         });
       }
-      else if(state.contains("03")){
+      else if(state==("03")){
         setState(() {
           openChange=false;
           closeChange=false;
@@ -176,20 +176,19 @@ class _SingleCurtainState extends State<SingleCurtain> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
-                  Center(child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child:
-                    Text(
-                      devicename,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.normal
+                  Expanded(
+                    child: Center(
+                      child: Text(devicename, maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.normal
+                        ),
                       ),
-
-                      maxLines: 2,
-
-                    ),)
+                    ),
                   ),
 
                 ],

@@ -1,6 +1,7 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dart_notification_center/dart_notification_center.dart' as FNC;
+import 'package:flutter/services.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
@@ -104,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool imgchange2=false;
   bool imgchange3=false;
 
-  String devicename="name30";
+  String devicename="";
 
   String hname30,hnum30,rnum30,dnum30,rname30,GroupId30;
   String icon1,icon2,icon3;
@@ -114,6 +115,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState(){
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'socketconndevice');
     FNC.DartNotificationCenter.registerChannel(channel: 'socketconndevice');
@@ -159,7 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String sdev = dnum30.padLeft(4, '0');
     String rdev = notification.substring(4,8);
 
-    if(sdev.contains(rdev)){
+    if(sdev==(rdev)){
       print("enter sw30 responce");
       switch(notification[8]){
         case '0':
@@ -333,6 +340,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   imagechageOn(String icontype, String swnum,Image image_on){
 
+    print("Ontttt");
+
     switch(icontype) {
       case 'dimmr':
         imagenum_on = dimmerOn;
@@ -389,7 +398,14 @@ class _MyHomePageState extends State<MyHomePage> {
         imagenum_on = bulbon;
         break;
       case 'Bulb':
-        imagenum_on = bulbon;
+
+        if(swnum == "3"){
+          imagenum_on = imagehvon;
+        }
+        else{
+          imagenum_on = bulbon;
+        }
+
         break;
       case 'tubelight':
         imagenum_on = tbOn;
@@ -410,7 +426,7 @@ class _MyHomePageState extends State<MyHomePage> {
         imagenum_on = bulbon;
     }
 
-    if(swnum.contains("1")){
+    if(swnum==("1")){
 
       setState(() {
         print("1on");
@@ -418,14 +434,14 @@ class _MyHomePageState extends State<MyHomePage> {
         imgchange1=true;
       });
     }
-    else if(swnum.contains("2")){
+    else if(swnum==("2")){
       setState(() {
         print("2on");
         img2_On=imagenum_on;
         imgchange2=true;
       });
     }
-    else if(swnum.contains("3")){
+    else if(swnum==("3")){
 
       setState(() {
         print("3on");
@@ -491,10 +507,20 @@ class _MyHomePageState extends State<MyHomePage> {
         imagenum_off = cflOff;
         break;
       case 'bulb':
-        imagenum_off = bulboff;
+        if(swnum == "3"){
+          imagenum_off = imagehvoff;
+        }
+        else{
+          imagenum_off = bulboff;
+        }
         break;
       case 'Bulb':
-        imagenum_off = bulboff;
+        if(swnum == "3"){
+          imagenum_off= imagehvoff;
+        }
+        else{
+          imagenum_off = bulboff;
+        }
         break;
       case 'tubelight':
         imagenum_off = tbOff;
@@ -515,7 +541,7 @@ class _MyHomePageState extends State<MyHomePage> {
       default:
         imagenum_off=bulboff;
     }
-    if(swnum.contains("1")){
+    if(swnum==("1")){
 
       setState(() {
         img1_Off=imagenum_off;
@@ -523,13 +549,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
       });
     }
-    else if(swnum.contains("2")){
+    else if(swnum==("2")){
       setState(() {
         img2_Off=imagenum_off;
         imgchange2=false;
       });
     }
-    else if(swnum.contains("3")){
+    else if(swnum==("3")){
 
       setState(() {
         img3_Off=imagenum_off;
@@ -565,6 +591,8 @@ class _MyHomePageState extends State<MyHomePage> {
       icon1=res1[0]['bi1'];
       icon2=res1[0]['bi2'];
       icon3=res1[0]['bi3'];
+
+      print("$icon1,$icon2,$icon3");
 
       switch(icon1){
         case 'dimmr':

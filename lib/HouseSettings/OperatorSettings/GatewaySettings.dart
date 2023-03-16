@@ -243,8 +243,9 @@ class _GatewaySettingsPageState extends State<GatewaySettingsPage>{
         },
         child:Scaffold(
           appBar: AppBar(
+            toolbarHeight: 40.0,
             backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-            title: Text("Gateway Settings"),
+            title: Text("Gateway Settings",style:TextStyle(fontSize: 18)),
             actions: <Widget>[
               IconButton(
                 icon: Image.asset(
@@ -320,7 +321,7 @@ class _GatewaySettingsPageState extends State<GatewaySettingsPage>{
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                       image: AssetImage('images/GatewaySettings/set.png'),
-                                      fit: BoxFit.cover),
+                                      fit: BoxFit.fill),
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(10.0),

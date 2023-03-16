@@ -63,174 +63,359 @@ class FanspeedState extends State<Fanspeed> {
 
   @override
   Widget build(BuildContext context) {
-   return MaterialApp(
-     debugShowCheckedModeBanner: false,
-     home: Scaffold(
-       body: Stack(
-         children: [
-           Container(
-             width: MediaQuery.of(context).size.width,
-             height: MediaQuery.of(context).size.height*0.35,
-             color: Colors.white,
-             child: Center(
-               child: Column(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                 children: [
-                   Expanded(
-                     flex:1,
-                       child: Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                           Row(
-                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                             children: [
-                               Text("1",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),),
-                               IconButton(onPressed: (){
+    return Dialog(
+      // MaterialApp(
+      // debugShowCheckedModeBanner: false,
+      // home: Scaffold(
+      //   body: Stack(
+      //     children: [
+      //       Container(
+      //         width: MediaQuery.of(context).size.width,
+      //         height: MediaQuery.of(context).size.height*0.35,
+      //         color: Colors.white,
+      //         child: Center(
+      //           child: Column(
+      //             mainAxisAlignment: MainAxisAlignment.center,
+      //             children: [
+      //               Expanded(
+      //                   flex:1,
+        elevation: 0,
 
-                                 setState(() {
-                                   if(itemCount1 > _mincount1) {
-                                     itemCount1--;
-                                   }
-                                   else{
-                                     print("u reched mincount");
-                                   }
-                                 });
+        clipBehavior:Clip.antiAliasWithSaveLayer,
+        insetPadding: EdgeInsets.all(50.0),
+        backgroundColor: Color(0xffffffff),
+        shape: RoundedRectangleBorder(
+          //borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(25.0),
+            bottomLeft: Radius.circular(25.0),
+            topLeft: Radius.circular(25.0),
+            topRight: Radius.circular(25.0),
 
 
-                               },
-                                   icon: minusimg),
+          ),
 
-                               Text(itemCount1.toString()),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
 
-                               IconButton(onPressed:(){
-                                 setState(() {
-                                   if(itemCount1 < _maxcount1) {
-                                     itemCount1++;
-                                   }
-                                   else{
-                                     print("u reched maxcount");
-                                   }
-                                 });
+          //mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(flex: 1,
+                    child: Container()),
+                Expanded(
+                    flex: 2,
+                    child: Text("1",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.bold),)),
+                Expanded(flex: 2,
+                  child: IconButton(onPressed: (){
 
-                               },
+                    setState(() {
+                      if(itemCount1 > _mincount1) {
+                        itemCount1--;
+                      }
+                      else{
+                        print("u reched mincount");
+                      }
+                    });
 
-                                   icon: plusimg)
-                             ],
 
-                           ),
+                  },
+                      icon: minusimg),
+                ),
 
-                           Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children:[
-                                 Text("2", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)) ,
-                                 IconButton(onPressed:(){
-                                   setState(() {
-                                     if(itemCount2 > _mincount2) {
-                                       itemCount2--;
-                                     }
-                                     else{
-                                       print("u reched mincount");
-                                     }
-                                   });
-                                   },
-                                     icon: minusimg),
-                                 Text(itemCount2.toString()),
+                Expanded(flex: 2,
+                    child:
+                    Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color.fromRGBO(66, 130, 208, 1),   width: 3),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(8.0) //                 <--- border radius here
+                          ),
+                        ),
 
-                                 IconButton(onPressed:(){
-                                   setState(() {
-                                     if(itemCount2 < _maxcount2) {
-                                       itemCount2++;
-                                     }
-                                     else{
-                                       print("u reched maxcount");
-                                     }
-                                   });
+                        child: Text(itemCount1.toString(),textAlign: TextAlign.center,style: TextStyle(fontSize: 18.0,color: Color.fromRGBO(66, 130, 208, 1)),))),
 
-                                 },
+                Expanded(flex: 2,
+                  child: IconButton(onPressed:(){
+                    setState(() {
+                      if(itemCount1 < _maxcount1) {
+                        itemCount1++;
+                      }
+                      else{
+                        print("u reched maxcount");
+                      }
+                    });
 
-                                     icon: plusimg)
+                  },
 
-                               ]
-                           ),
+                      icon: plusimg),
+                ),
+                Expanded(flex: 1,
+                    child: Container()),
+              ],
 
-                           Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children:[
-                                 Text("3", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)) ,
-                                 IconButton(onPressed:(){
-                                   setState(() {
-                                     if(itemCount3 > _mincount3) {
-                                       itemCount3--;
-                                     }
-                                     else{
-                                       print("u reched mincount");
-                                     }
-                                   });
+            ),
 
-                                 },
-                                     icon: minusimg),
-                                 Text(itemCount3.toString()),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:[
+                  Expanded(flex: 1,
+                      child: Container()),
+                  Expanded(flex: 2,child: Text("2", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold))) ,
+                  Expanded(flex: 2,
+                    child: IconButton(onPressed:(){
+                      setState(() {
+                        if(itemCount2 > _mincount2) {
+                          itemCount2--;
+                        }
+                        else{
+                          print("u reched mincount");
+                        }
+                      });
+                    },
+                        icon: minusimg),
+                  ),
+                  Expanded(flex: 2,child:
+                  Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color.fromRGBO(66, 130, 208, 1),   width: 3),
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(8.0) //                 <--- border radius here
+                        ),
+                      ),child: Text(itemCount2.toString(),textAlign: TextAlign.center,style: TextStyle(fontSize: 18.0,color: Color.fromRGBO(66, 130, 208, 1))))),
 
-                                 IconButton(onPressed:(){
-                                   setState(() {
-                                     if(itemCount3 < _maxcount3) {
-                                       itemCount3++;
-                                     }
-                                     else{
-                                       print("u reched maxcount");
-                                     }
-                                   });
+                  Expanded(flex: 2,
+                    child: IconButton(onPressed:(){
+                      setState(() {
+                        if(itemCount2 < _maxcount2) {
+                          itemCount2++;
+                        }
+                        else{
+                          print("u reched maxcount");
+                        }
+                      });
 
-                                 },
-                                     icon: plusimg)
+                    },
 
-                               ]
-                           ),
+                        icon: plusimg),
+                  ),
+                  Expanded(flex: 1,
+                      child: Container()),
 
-                           Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children:[
-                                 Text("4", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)) ,
-                                 IconButton(onPressed:(){
-                                   setState(() {
-                                     if(itemCount4 > _mincount4) {
-                                       itemCount4--;
-                                     }
-                                     else{
-                                       print("u reched mincount");
-                                     }
-                                   });
+                ]
+            ),
 
-                                 },
-                                     icon: minusimg),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:[
+                  Expanded(flex: 1,
+                      child: Container()),
 
-                                 Text(itemCount4.toString()),
+                  Expanded(flex: 2,child: Text("3", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold))) ,
+                  Expanded(flex: 2,
+                    child: IconButton(onPressed:(){
+                      setState(() {
+                        if(itemCount3 > _mincount3) {
+                          itemCount3--;
+                        }
+                        else{
+                          print("u reched mincount");
+                        }
+                      });
 
-                                 IconButton(onPressed:(){
-                                   setState(() {
-                                     if(itemCount4 < _maxcount4) {
-                                       itemCount4++;
-                                     }
-                                     else{
-                                       print("u reched maxcount");
-                                     }
-                                    });
-                                   },
-                                     icon: plusimg)
-                               ]
-                           )
-                         ],
-                       ))
-                 ],
-               ),
-             ),
+                    },
+                        icon: minusimg),
+                  ),
+                  Expanded(flex: 2,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color.fromRGBO(66, 130, 208, 1),   width: 3),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(8.0) //                 <--- border radius here
+                          ),
+                        ),child: Text(itemCount3.toString(),textAlign: TextAlign.center,style: TextStyle(fontSize: 18.0,color: Color.fromRGBO(66, 130, 208, 1)))),
+                  ),
 
-           )
-         ],
-       ),
-     ),
-   );
+                  Expanded(flex: 2,
+                    child: IconButton(onPressed:(){
+                      setState(() {
+                        if(itemCount3 < _maxcount3) {
+                          itemCount3++;
+                        }
+                        else{
+                          print("u reched maxcount");
+                        }
+                      });
+
+                    },
+                        icon: plusimg),
+                  ),
+
+                  Expanded(flex: 1,
+                      child: Container()),
+
+                ]
+
+            ),
+
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children:[
+                  Expanded(flex: 1,
+                      child: Container()),
+                  Expanded(flex: 2,child: Text("4", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold))) ,
+                  Expanded(flex: 2,
+                    child: IconButton(onPressed:(){
+                      setState(() {
+                        if(itemCount4 > _mincount4) {
+                          itemCount4--;
+                        }
+                        else{
+                          print("u reched mincount");
+                        }
+                      });
+
+                    },
+                        icon: minusimg),
+                  ),
+                  Expanded(flex: 2,
+                    child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color.fromRGBO(66, 130, 208, 1),   width: 3),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(8.0) //                 <--- border radius here
+                          ),
+                        ),child: Text(itemCount4.toString(),textAlign: TextAlign.center,style: TextStyle(fontSize: 18.0,color: Color.fromRGBO(66, 130, 208, 1)))),
+                  ),
+
+                  // Text(itemCount4.toString()),
+
+                  Expanded(flex: 2,
+                    child: IconButton(onPressed:(){
+                      setState(() {
+                        if(itemCount4 < _maxcount4) {
+                          itemCount4++;
+                        }
+                        else{
+                          print("u reched maxcount");
+                        }
+                      });
+                    },
+                        icon: plusimg),
+                  ),
+                  Expanded(flex: 1,
+                      child: Container()),
+                ]
+            ),
+
+            Container(
+              height: 2,
+              color: Colors.grey,
+            ),
+
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  flex: 10,
+                  child: Container(
+                    color: Colors.white,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+
+                        MaterialButton(
+                          padding: EdgeInsets.all(8.0),
+                          textColor: Colors.white,
+                          // splashColor: Colors.greenAccent,
+                          elevation: 8.0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('images/Moods/save_button.png'),
+                                  fit: BoxFit.fill),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text("CANCEL"),
+                            ),
+                          ),
+                          // ),
+                          onPressed: () {
+
+                            Navigator.of(context,rootNavigator: true).pop();
+                            print('Tapped');
+                          },
+                          //   color: Colors.blueAccent,
+                          //
+                          //   onPressed: () =>
+                          //   {
+                          //   },
+                          // child: Text(
+                          //       "Cancel", softWrap: false, maxLines: 1,),
+                        ),
+
+                        MaterialButton(
+                          padding: EdgeInsets.all(8.0),
+                          textColor: Colors.white,
+                          // splashColor: Colors.greenAccent,
+                          elevation: 8.0,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('images/Moods/save_button.png'),
+                                  fit: BoxFit.fill),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Center(child: Text("  SAVE  ")),
+                            ),
+                          ),
+                          // ),
+                          onPressed: () {
+                            //savefan();
+                            Calculate();
+
+                            Navigator.of(context,rootNavigator: true).pop();
+
+                            print('Tapped');
+                          },
+                          //   color: Colors.blueAccent,
+                          //
+                          //   onPressed: () =>
+                          //   {
+                          //   },
+                          // child: Text(
+                          //       "Cancel", softWrap: false, maxLines: 1,),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
+    //               ],
+    //             ),
+    //           ),
+    //
+    //         )
+    //       ],
+    //     ),
+    //   ),
+    // );
+    //);
+
+
   }
+
+
 
   SwResponce(String notification) {
     print("Sw $notification");

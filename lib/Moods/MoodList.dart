@@ -21,7 +21,6 @@ import 'package:smart_home/Moods/MoodCurtain.dart';
 import 'package:smart_home/Moods/MoodPrjSosh.dart';
 import 'package:smart_home/Moods/MoodOn.dart';
 import 'package:smart_home/Moods/MoodRGB.dart';
-import 'package:smart_home/Timer/RGBTimer.dart';
 
 class MoodListPage extends StatefulWidget {
 
@@ -100,8 +99,9 @@ class _MoodListPageState extends State<MoodListPage>{
       },
       child: Scaffold(
         appBar: AppBar(
+          toolbarHeight: 40,
           backgroundColor: Color.fromRGBO(66, 130, 208, 1),
-          title: Text('Mood List'),
+          title: Text('Mood List',style:TextStyle(fontSize: 18)),
           actions: <Widget>[
           ],
         ),
@@ -316,13 +316,14 @@ class _MoodListPageState extends State<MoodListPage>{
                   print("data is $data");
 
 
-                  String dds,dds1,dds2,dds3;
+                  String dds,dds1,dds2,dds3,dds4;
                   if(devtype == "RGB1"){
                     List<String> dd = data.split(';');
                     String dd0=dd[0];
 
 
                     List<String> dd1 = dd0.split(',');
+                    print("datas is $dd1");
 
                     if(dd1.length == 1){
 
@@ -330,7 +331,7 @@ class _MoodListPageState extends State<MoodListPage>{
                       dds1="0";
                       dds2="0";
                       dds3="0";
-
+                      dds4="0";
                     }
                     else{
 
@@ -338,34 +339,46 @@ class _MoodListPageState extends State<MoodListPage>{
                       dds1=dd1[1];
                       dds2=dd1[2];
                       dds3=dd1[3];
+                      dds4=dd1[4];
+
                     }
 
+                    print("data is $dds $dds1 $dds2 $dds3 $dds4");
 
+                    if(dds4 == "A"){
 
-                    if(dds=="104"){
-                      fdata = "Flash";
-                      color=Colors.black;
+                      if(dds=="104"){
+                        fdata = "Flash";
+                        color=Colors.black;
+                      }
+                      else if(dds == "105"){
+                        fdata = "Strobe";
+                        color=Colors.black;
+                      }
+                      else if(dds == "106"){
+                        fdata ="Smooth";
+                        color=Colors.black;
+                      }
+                      else if (dds == "107"){
+                        fdata ="Fade";
+                        color=Colors.black;
+                      }
+                      else if(dds == "0" && dds1 == "0" && dds2 == "0" && dds3 == "0"){
+                        fdata = "Off";
+                        color = Colors.black;
+                      }
+
                     }
-                    else if(dds == "105"){
-                      fdata = "Strobe";
-                      color=Colors.black;
+                    else if(dds4 == "B"){
+
+                      fdata = "Color";
+                      //color=Colors.red;
+                      color = Color.fromRGBO(int.parse(dds1), int.parse(dds2), int.parse(dds3), 1);
                     }
-                    else if(dds == "106"){
-                      fdata ="Smooth";
-                      color=Colors.black;
-                    }
-                    else if (dds == "107"){
-                      fdata ="Fade";
-                      color=Colors.black;
-                    }
-                    else if(dds == "0"){
+                    else if(dds4 == "0"){
+
                       fdata = "Off";
                       color = Colors.black;
-                    }
-                    else{
-                      fdata = "Color";
-                      color=Colors.red;
-
                     }
 
                   }
@@ -384,9 +397,7 @@ class _MoodListPageState extends State<MoodListPage>{
                       fdata = "OPEN";
                     }
                     else if(data == "102"){
-
                       fdata = "CLOSE";
-
                     }
                   }
                   else if(devtype == "CRS1"){
@@ -450,405 +461,214 @@ class _MoodListPageState extends State<MoodListPage>{
 
     if ((ddevmodel==("S010"))|| ddevmodel==("SLT1")) {
 
-      AlertDialog alert = AlertDialog(
-
-        elevation:0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/2.75,
-          child:MoodS010Page(number: "1"),
-        ),
-
-        backgroundColor: Colors.white,
-        actions: [],
-      );
       showDialog(
-        // barrierColor: Colors.white.withOpacity(0),
-          barrierDismissible: false,
-          context: context, builder: (BuildContext context) {
-
-        return alert;
-      }
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS010Page(
+              number: "1"
+          );
+        },
       );
 
     }
     else if(ddevmodel==("S051")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/1.75,
-          child:S051Page(number: "1"),
-        ),
-        backgroundColor: Colors.white,
-        actions: [],
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return S051Page(
+              number: "1"
+          );
+        },
       );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
 
     }
     else if(ddevmodel==("S080")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/1.75,
-          child:MoodS080Page(number: "1"),
-        ),
-
-        actions: [],
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS080Page(
+              number: "1"
+          );
+        },
       );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
+
 
     }
     else if(ddevmodel==("S020")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/3,
-          child:MoodS020Page(number: "1"),
-        ),
-        actions: [],
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS020Page(
+              number: "1"
+          );
+        },
       );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
     }
-
     else if(ddevmodel==("S021")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS021Page(
+              number: "1"
+          );
+        },
+      );
 
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/2.50,
-          child:MoodS021Page(number: "1"),
-        ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
     }
 
     else if(ddevmodel==("S030")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/2.75,
-          child:MoodS030Page(number: "1"),
-        ),
-        actions: [],
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS030Page(
+              number: "1"
+          );
+        },
       );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
 
     }
 
     else if(ddevmodel==("S110")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/2.75,
-          child:MoodS110Page(number: "1"),
-        ),
-        actions: [],
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS110Page(
+              number: "1"
+          );
+        },
       );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
     }
 
     else if(ddevmodel==("S120")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*2.75,
-          child:MoodS120Page(number: "1"),
-        ),
-        actions: [],
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS120Page(
+              number: "1"
+          );
+        },
       );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
-
 
     }
-
     else if(ddevmodel==("S141")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return S141Page(
+              number: "1"
+          );
+        },
+      );
 
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*1.75,
-          child:S141Page(number: "1"),
-        ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
 
     }
 
     else if(ddevmodel==("S160")){
-      AlertDialog alert = AlertDialog(
 
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodS160Page(
+              number: "1"
+          );
+        },
+      );
 
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height*1.75,
-          child:MoodS160Page(number: "1"),
-        ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
 
     }
     else if(ddevmodel==("CLS1")){
 
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/3,
-          child:MoodCurtain(number: "1"),
-        ),
-
-        actions: [],
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodCurtain(
+              number: "1"
+          );
+        },
       );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
-      );
+
+
 
     }
     else if(ddevmodel==("CRS1")){
 
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/3,
-          child:MoodCurtain(number: "1"),
-        ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodCurtain(
+              number: "1"
+          );
+        },
       );
     }
     else if(ddevmodel==("CLNR")) {
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/1.75,
-          child:MoodCurtain(number: "1"),
-        ),
-
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context) {
-        return alert;
-      }
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodCurtain(
+              number: "1"
+          );
+        },
       );
     }
 
     else if(ddevmodel =="PSC1" || ddevmodel=="SOSH" || ddevmodel == "SWG1" || ddevmodel == "SLG1") {
-      AlertDialog alert = AlertDialog(
-
-        elevation: 0,
-        titlePadding: EdgeInsets.zero,
-        contentPadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        backgroundColor: Colors.white,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/3,
-          child:MoodProjSom(number: "1"),
-        ),
-        actions: [],
-      );
-      showDialog(context: context, builder: (BuildContext context){
-        return alert;
-      }
+      showDialog(
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodProjSom(
+              number: "1"
+          );
+        },
       );
     }
     else if(ddevmodel =="RGB1"){
 
-      AlertDialog alert = AlertDialog(
-
-        elevation:0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
-
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/1.75,
-          child:MoodRGBPage(number: "1"),
-        ),
-        backgroundColor: Colors.white,
-        actions: [],
-      );
       showDialog(
-        // barrierColor: Colors.white.withOpacity(0),
-          barrierDismissible: false,
-          context: context, builder: (BuildContext context) {
-        return alert;
-      }
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodRGBPage(
+              number: "1"
+          );
+        },
       );
     }
-    else if(ddevmodel =="ACR1" || ddevmodel == "GSR1" || ddevmodel == "GSK1" || ddevmodel == "SDG1" || ddevmodel == "PLC1") {
-      AlertDialog alert = AlertDialog(
+    else if(ddevmodel =="ACR1" || ddevmodel == "GSR1" || ddevmodel == "GSK1" || ddevmodel == "SDG1" || ddevmodel == "PLC1" || ddevmodel =="FMD1") {
 
-        elevation:0,
-        contentPadding: EdgeInsets.zero,
-        titlePadding: EdgeInsets.zero,
-        clipBehavior:Clip.antiAliasWithSaveLayer,
-        insetPadding: EdgeInsets.all(50.0),
-        shape:RoundedRectangleBorder(borderRadius:BorderRadius.circular(25)),
 
-        content: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height/2.75,
-          child:MoodOnPage(number: "1"),
-        ),
-        backgroundColor: Colors.white,
-        actions: [],
-      );
       showDialog(
-        // barrierColor: Colors.white.withOpacity(0),
-          barrierDismissible: false,
-          context: context, builder: (BuildContext context) {
-
-        return alert;
-      }
+        barrierColor: Colors.black26,
+        context: context,
+        builder: (context) {
+          return MoodOnPage(
+              number: "1"
+          );
+        },
       );
+
 
     }
 

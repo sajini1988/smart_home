@@ -1,5 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -97,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Image sprinklerOff = Image.asset('images/switchicons/eb_off.png');
 
   bool imgchange1=false;
-  String devicename="name10";
+  String devicename="";
   String hname10,hnum10,rnum10,dnum10,rname10,GroupId10;
   String icon1;
   Image img1_On,img1_Off;
@@ -107,6 +108,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
+
     FNC.DartNotificationCenter.unregisterChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.registerChannel(channel: 'MasterNotification');
     FNC.DartNotificationCenter.subscribe(channel: 'MasterNotification', onNotification: (options) {
@@ -146,7 +154,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String sdev = dnum10.padLeft(4, '0');
     String rdev = notification.substring(4,8);
 
-    if(sdev.contains(rdev)) {
+    if(sdev==(rdev)) {
         print("enter sw10 responce");
         switch (notification[8]) {
           case '0':
@@ -294,7 +302,7 @@ class _MyHomePageState extends State<MyHomePage> {
         imagenum_on = bulbon;
     }
 
-    if(swnum.contains("1")){
+    if(swnum==("1")){
 
       setState(() {
         print("1on");
@@ -382,7 +390,7 @@ class _MyHomePageState extends State<MyHomePage> {
       default:
         imagenum_off=bulboff;
     }
-    if(swnum.contains("1")){
+    if(swnum==("1")){
 
       setState(() {
         img1_Off=imagenum_off;

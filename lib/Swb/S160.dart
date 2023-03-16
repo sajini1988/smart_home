@@ -1,5 +1,6 @@
 //import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_home/Swb/switchlayout.dart';
 import 'package:smart_home/LDatabase.dart';
 import 'package:smart_home/ServerDB.dart';
@@ -110,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool imgchange7=false;
 
 
-  String devicename="name80";
+  String devicename="";
 
   String hname80,hnum80,rnum80,dnum80,rname80,GroupId80;
   String icon1,icon2,icon3,icon4,icon5,icon6,icon7;
@@ -120,6 +121,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState(){
 
     super.initState();
+
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setEnabledSystemUIMode(
+      SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom],
+    );
 
 
     FNC.DartNotificationCenter.unregisterChannel(channel: 'socketconndevice');
@@ -136,9 +143,9 @@ class _MyHomePageState extends State<MyHomePage> {
       swresponce(options);
     }, observer: null);
 
-    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch80');
-    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch80");
-    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch80", observer: null, onNotification: (options){
+    FNC.DartNotificationCenter.unregisterChannel(channel: 'changeicon_switch16');
+    FNC.DartNotificationCenter.registerChannel(channel: "changeicon_switch16");
+    FNC.DartNotificationCenter.subscribe(channel: "changeicon_switch16", observer: null, onNotification: (options){
       print('SWNOtified8i:$options');
       swdetails();
     });
@@ -172,7 +179,7 @@ class _MyHomePageState extends State<MyHomePage> {
     String sdev = dnum80.padLeft(4, '0');
     String rdev = notification.substring(4,8);
 
-    if(sdev.contains(rdev)){
+    if(sdev==(rdev)){
 
       print("enter sw80 responce");
       switch(notification[8]){
@@ -618,7 +625,7 @@ class _MyHomePageState extends State<MyHomePage> {
         imagenum_on = bulbon;
     }
 
-    if(swnum.contains("1")){
+    if(swnum==("1")){
 
       setState(() {
         print("1on");
@@ -626,14 +633,14 @@ class _MyHomePageState extends State<MyHomePage> {
         imgchange1=true;
       });
     }
-    else if(swnum.contains("2")){
+    else if(swnum==("2")){
       setState(() {
         print("2on");
         img2_On=imagenum_on;
         imgchange2=true;
       });
     }
-    else if(swnum.contains("3")){
+    else if(swnum==("3")){
 
       setState(() {
         print("3on");
@@ -641,7 +648,7 @@ class _MyHomePageState extends State<MyHomePage> {
         imgchange3=true;
       });
     }
-    else if(swnum.contains("4")){
+    else if(swnum==("4")){
 
       setState(() {
         print("4on");
@@ -650,7 +657,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
 
     }
-    else if(swnum.contains("5")){
+    else if(swnum==("5")){
 
       setState(() {
         print("5on");
@@ -658,7 +665,7 @@ class _MyHomePageState extends State<MyHomePage> {
         imgchange5=true;
       });
     }
-    else if(swnum.contains("6")){
+    else if(swnum==("6")){
 
       setState(() {
         print("6on");
@@ -666,7 +673,7 @@ class _MyHomePageState extends State<MyHomePage> {
         imgchange6=true;
       });
     }
-    else if(swnum.contains("7")){
+    else if(swnum==("7")){
 
       setState(() {
         print("7on");
